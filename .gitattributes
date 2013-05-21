@@ -1,0 +1,7 @@
+*.cpp filter=openssl diff=openssl
+*.h filter=openssl diff=openssl
+*.hxx filter=openssl diff=openssl
+*.cxx filter=openssl diff=openssl
+
+[merge]
+    renormalize=true
