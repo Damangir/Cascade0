@@ -59,6 +59,17 @@ Any scientific work derived from the result of this software or its modification
 > Damangir S, Manzouri A, Oppedal K, Carlsson S, Firbank MJ, Sonnesyn H, Tysnes OB, O'Brien JT, Beyer MK, Westman E, Aarsland D, Wahlund LO, Spulber G. Multispectral MRI segmentation of age related white matter changes using a cascade of support vector machines. J Neurol Sci. 2012 Nov 15;322(1-2):211-6. doi: 10.1016/j.jns.2012.07.064. Epub 2012 Aug 24. PubMed PMID: 22921728.
 
 
+Copyright
+-------
+Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+
+Licence
+-------
+[![Creative Commons License](http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png "Creative Commons License")](http://creativecommons.org/licenses/by-nc-nd/3.0/)
+
+This work is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](http://creativecommons.org/licenses/by-nc-nd/3.0/).
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/.
+
 Manual
 -------
 
