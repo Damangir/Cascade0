@@ -17,11 +17,9 @@ do
     if [[ $? -eq 0 ]]
     then
       echo -e "${green}OK${reset}"
-      echo mv $f.dec $f
-     
+      mv $f.dec $f  
     else
       echo -e "${red}Failed${reset}"
-
       rm $f.dec
     fi
   done
