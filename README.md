@@ -52,24 +52,6 @@ You can assert the installation
 cascade --version
 ```
 
-Citation
--------
-Any scientific work derived from the result of this software or its modifications should refer to [our paper](http://www.ncbi.nlm.nih.gov/pubmed/22921728):
-
-> Damangir S, Manzouri A, Oppedal K, Carlsson S, Firbank MJ, Sonnesyn H, Tysnes OB, O'Brien JT, Beyer MK, Westman E, Aarsland D, Wahlund LO, Spulber G. Multispectral MRI segmentation of age related white matter changes using a cascade of support vector machines. J Neurol Sci. 2012 Nov 15;322(1-2):211-6. doi: 10.1016/j.jns.2012.07.064. Epub 2012 Aug 24. PubMed PMID: 22921728.
-
-
-Copyright
--------
-Copyright (C) 2013 Soheil Damangir - All Rights Reserved
-
-Licence
--------
-[![Creative Commons License](http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png "Creative Commons License")](http://creativecommons.org/licenses/by-nc-nd/3.0/)
-
-This work is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](http://creativecommons.org/licenses/by-nc-nd/3.0/).
-To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/.
-
 Manual
 -------
 
@@ -108,3 +90,22 @@ cascade -l FLAIR.nii.gz -d T1.nii.gz -m pveseg.nii.gz -t 2
 
 #### Registration to standard template is available
 If you have the registration information to the standard space, you can perform additional post-processing to the output result. The post-processor is not part of the cascade distribution however you are welcome to contact us and we will provide you with the post-processor software.
+
+
+Citation
+-------
+Any scientific work derived from the result of this software or its modifications should refer to [our paper](http://www.ncbi.nlm.nih.gov/pubmed/22921728):
+
+> Damangir S, Manzouri A, Oppedal K, Carlsson S, Firbank MJ, Sonnesyn H, Tysnes OB, O'Brien JT, Beyer MK, Westman E, Aarsland D, Wahlund LO, Spulber G. Multispectral MRI segmentation of age related white matter changes using a cascade of support vector machines. J Neurol Sci. 2012 Nov 15;322(1-2):211-6. doi: 10.1016/j.jns.2012.07.064. Epub 2012 Aug 24. PubMed PMID: 22921728.
+
+Copyright
+-------
+Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+
+Licence
+-------
+[![Creative Commons License](http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png "Creative Commons License")](http://creativecommons.org/licenses/by-nc-nd/3.0/)
+
+Cascade by [Soheil Damangir](http://www.linkedin.com/in/soheildamangir) is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](http://creativecommons.org/licenses/by-nc-nd/3.0/).
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/.
+
