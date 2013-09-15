@@ -1,20 +1,19 @@
-/*=========================================================================
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
  *
- *  Copyright Insight Software Consortium
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0.txt
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
- *=========================================================================*/
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
 #ifndef __itkTrainSingleNodeFilter_h
 #define __itkTrainSingleNodeFilter_h
 
