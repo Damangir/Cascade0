@@ -23,30 +23,33 @@ ${bold}usage${normal}: $0 options
 This script runs the main procedure of the Cascade pipeline
 
 ${bold}OPTIONS$normal:
-   -h      Show this message
+General:
    -r      Image root directory
+   -s      State image
+Measurement mode:
    -c      Chi-squared cutoff
    -p      Minimum physical size
+Training mode:   
+   -m      WML mask
+   -n      Updated state image
+Misc.:
+   -h      Show this message
    -f      Fource run all steps
    -v      Verbose
    -l      Show licence
 EOF
 }
 
+source $(dirname $0)/cascade-setup.sh
 source $(dirname $0)/cascade-util.sh
 
-trans_dir='transformations'
-proc_space_dir='proc_space'
-t1_space_dir='t1_space'
-
-CASCADEDIR=/home/soheil/workspace/Cascade/build
-
-MIN_PHYS=0
-CHI_CUTOFF=0.9
+MIN_PHYS=20
+CHI_CUTOFF=0.875
 IMAGEROOT=.
 VERBOSE=
 FOURCERUN=1
-while getopts “hr:p:c:vfl” OPTION
+MODE="MEASURE"
+while getopts “hr:p:c:s:m:n:vfl” OPTION
 do
   case $OPTION in
 		h)
@@ -56,13 +59,24 @@ do
     r)
       IMAGEROOT=`readlink -f $OPTARG`
       ;;
+    n)
+      NEWSTATEIMAGE=`readlink -f $OPTARG`
+      MODE="TRAIN"
+      ;;
+    m)
+      MASKIMAGE=`readlink -f $OPTARG`
+      MODE="TRAIN"
+      ;;
+    s)
+      STATEIMAGE=`readlink -f $OPTARG`
+      ;;
     c)
       CHI_CUTOFF=$OPTARG
       ;;
     p)
       MIN_PHYS=$OPTARG
       ;;
-   f)
+    f)
       FOURCERUN=
       ;;
     v)
@@ -81,129 +95,155 @@ do
 done
 
 copyright
-
-echo "${bold}System compatibility check${normal}"
-runname "  Checking Cascade executable"
-for ce in cascade-{outlier,smoothing}
-do
-  if [ ! -x $CASCADEDIR/$ce ]
-  then
-    rundone 1
-    echo_fatal "Cascade executable ${underline}${ce}${normal} is not available. Please check your Cascade installation."
-  fi
-done
-rundone 0
-
-runname "  Checking FSL installation"
-if [ ! $FSLDIR ]
+if [ $# == 0 ]
 then
-  rundone 1
-  echo_fatal "Can not find FSL installation."
-else
-  for ce in {fslmaths,}
-  do
-    if [ ! -x $FSLDIR/bin/$ce ]
-    then
-      rundone 1
-      echo_fatal "$ce executable is not available. Please check your FSL installation."
-    fi
-  done
+    usage
+    exit 1
+fi
 
-  if echo "$LD_LIBRARY_PATH" | grep -qv "$FSLDIR/bin"
-  then
-	  OLD_LD="$LD_LIBRARY_PATH"
-	  trap "LD_LIBRARY_PATH=$OLD_LD" EXIT
-	  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${FSLDIR}/bin 
-  fi
-  
+if [ $MODE == "MEASURE" ]
+then
+  echo "${bold}Running the Cascade in measurement mode.${normal}"
+[ $STATEIMAGE ] || echo_fatal "State file not set."
+else
+  echo "${bold}Running the Cascade in training mode.${normal}"
+  [ $NEWSTATEIMAGE ] || echo_fatal "New state file not set."
+  [ -d $(dirname $NEWSTATEIMAGE) ] || echo_fatal "Can not write to the folder: $(dirname $NEWSTATEIMAGE)"
+  [ $MASKIMAGE ] || echo_fatal "Mask file not set."
+  [ -r $MASKIMAGE ] || echo_fatal "Can not read the ground truth mask file: $MASKIMAGE"
+fi
+
+mkdir -p $IMAGEROOT/${report_dir}
+IMAGEROOT=$(readlink -f $IMAGEROOT)
+SUBJECTID=$(basename $IMAGEROOT)
+
+
+check_fsl
+check_cascade
+
+set_filenames
+get_allimages
+
+runname "Checking input directory"
+if [ ! -s $FSL_STD_TRANSFORM ]
+then
+ rundone 1
+ echo_fatal "Transform matrix to standard is required but missing.\nThe file should be created in the Cascade pre-processing script. Did you run the Cascade pre-processing script?"
+fi
+if [ ! ALL_IMAGES ]
+then
+ rundone 1
+ echo_fatal "There is no brain image in the image directory.\nThe file should be created in the Cascade pre-processing script. Did you run the Cascade pre-processing script?"
 fi
 rundone 0
 
-echo "${bold}Pre-processing check${normal}"
-runname "  Checking directory structure"
 (
-for d in {$tradsfns_dir,$proc_space_dir,$t1_space_dir}
-do
-  if [ ! -d $IMAGEROOT/${d} ]
-  then
-    rundone 1
-    echo_warning "${underline}$IMAGEROOT${normal} is not a valid Cascade directory structure."
-    exit 1
-  fi
-done
+set -- $ALL_IMAGES
+$CASCADEDIR/c3d_affine_tool -ref $STDIMAGE -src $1 $FSL_STD_TRANSFORM -fsl2ras -oitk $ITK_STD_TRANSFORM 
 )
-[ $? -eq 0 ] && rundone 0
-
-runname "  Checking required files"
-for d in $proc_space_dir/{T1_brain_pveseg.nii.gz,FLAIR_brain.nii.gz}
-do
-  if [ ! -f $IMAGEROOT/${d} ]
-  then
-    rundone 1
-    echo_fatal "${underline}$IMAGEROOT/${d}${normal} is required but missing.\nThe file should be created in the Cascade pre-processing script. Did you run the Cascade pre-processing script?"
-  fi
-done
-rundone 0
 
 echo "${bold}Running the Cascade pipeline${normal}"
-runname "  Setting up initial mask (Cascade level 0)"
-if [ $FOURCERUN ] && [ -s $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz ]
+
+if [ $MODE == "TRAIN" ]
 then
-  rundone 0 "CACHED"
-else
-	(
-  # Create a mask of WM-GM as an initial guess (WML is less likely to be in a CSF area even with imperfect PVE)
-  fslmaths $IMAGEROOT/$proc_space_dir/T1_brain_pveseg.nii.gz -thr 2 -bin $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz
-  
-  # Create an initial aggresve brain mask to remove potentially remaining skull and also outer layer of the cortex.
-  # These area are likely to be detected as the WML because of their intensity but they are less likely to be.
-    fslmaths $IMAGEROOT/$proc_space_dir/T1_brain_pveseg.nii.gz -thr 1 -bin -kernel 2D -ero $IMAGEROOT/$proc_space_dir/agg_brain_mask.nii.gz
-  for i in range 3
+  runname "Training"
+  (
+  set -e
+  INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
+	for img in $ALL_IMAGES
+	do
+	  INPUT_ARGS="$INPUT_ARGS --input $(range_image $img)"
+	done
+
+  for CLASS_INDEX in {1..3}
   do
-    fslmaths $IMAGEROOT/$proc_space_dir/agg_brain_mask.nii.gz -kernel 2D -ero $IMAGEROOT/$proc_space_dir/agg_brain_mask.nii.gz
+    CLASS_MASK=$IMAGEROOT/${temp_dir}/class_traing_${CLASS_INDEX}_mask.nii.gz
+    CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
+    NEW_CLASS_STATE=${NEWSTATEIMAGE}_${CLASS_INDEX}.nii.gz
+    
+    fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
+    fslmaths $MASKIMAGE -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
+
+	  if [ -f $CLASS_STATE ]
+	  then
+	    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $CLASS_STATE
+	    train_result=$?
+	  else
+	    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $STDIMAGE --size 40
+	    train_result=$?
+	  fi
   done
+  )
 
-  # Narrawing initial mask
-  fslmaths $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz -mas $IMAGEROOT/$proc_space_dir/agg_brain_mask.nii.gz $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz	    
-	) 1>/dev/null 2>/dev/null
+  if [ $? ]
+  then
+	  rundone 0
+    echo "Training completed and the updated state was written to:"
+    echo "$STATEIMAGE"
+  else
+    rundone 1
+    echo "Training failed."
+  fi
+  
+else
+  
+  runname "Calculating likelihood"
+  (
+  set -e
+  INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
+  for img in $ALL_IMAGES
+  do
+    INPUT_ARGS="$INPUT_ARGS --$(sequence_type $img) $(range_image $img)"
+  done
+  fslmaths ${BRAIN_WMGM} -mul 0 ${LIKELIHOOD}
+  for CLASS_INDEX in {1..3}
+  do
+    CLASS_MASK=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_mask.nii.gz
+    CLASS_LIKELIHOOD=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_likelihood.nii.gz
+    CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
+    fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
+    
+    $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
+    fslmaths ${LIKELIHOOD} -add ${CLASS_LIKELIHOOD} ${LIKELIHOOD}
+  done
+  )
+  if [ $? -eq 0 ]
+  then
+    rundone 0
+  else
+    rundone 1
+    echo_fatal "Unable to calculate likelihood."
+  fi
+
+  ####### POSTPROCESSING
+  echo "${bold}Post-processing${normal}"
+  runname "Processing likelihood"
+  # Threshold likelihood
+  fslmaths $LIKELIHOOD -thr 0.5 $LIKELIHOOD 
+  fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
+    
+  $CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize -- threshold $MIN_PHYS 
   rundone $?
-
-  fslmaths $IMAGEROOT/$proc_space_dir/T1_brain.nii.gz -mas $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz $IMAGEROOT/$proc_space_dir/T1_brain.nii.gz    
-  fslmaths $IMAGEROOT/$proc_space_dir/FLAIR_brain.nii.gz -mas $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz $IMAGEROOT/$proc_space_dir/FLAIR_brain.nii.gz    
-		
-	checkmsg "  Cleaning up"	"rm $IMAGEROOT/$proc_space_dir/agg_brain_mask.nii.gz $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz"
-fi
-exit 0
-# We run the actual Cascade runtime anyway! And remove the previous results.
-rm -rf $IMAGEROOT/$proc_space_dir/wml 
-mkdir $IMAGEROOT/$proc_space_dir/wml
-
-checkmsg "  Creating potential map" "$CASCADEDIR/cascade-outlier -l $IMAGEROOT/$proc_space_dir/FLAIR_brain.nii.gz -m $IMAGEROOT/$proc_space_dir/initial_mask.nii.gz -o $IMAGEROOT/$proc_space_dir/wml/wml_f.nii.gz"
-
-runname "  Creating mask"
-(
-	set -e
-  fslmaths $IMAGEROOT/$proc_space_dir/wml/wml_f.nii.gz -thr $CHI_CUTOFF -bin $IMAGEROOT/$proc_space_dir/wml/wml_m.nii.gz
-  NUM_LABELS=$($CASCADEDIR/cascade-labeler -i $IMAGEROOT/$proc_space_dir/wml/wml_m.nii.gz -o $IMAGEROOT/$proc_space_dir/wml/wml_l.nii.gz -p $MIN_PHYS)  
-	#>$IMAGEROOT/$proc_space_dir/wml/labels.txt
-	#for LAB_ID in `seq $NUM_LABELS`
-	#do
-	  #fslmaths $IMAGEROOT/$proc_space_dir/wml/wml_l.nii.gz -thr $LAB_ID -uthr $LAB_ID $IMAGEROOT/$proc_space_dir/wml/wml_$LAB_ID.nii.gz
+  
+  ####### REPORTING  
+  echo "${bold}Reporting${normal}"
+  mkdir -p $IMAGEROOT/${report_dir}/overlays
+  if [ -f $OUTMASK ]
+  then
+	  echo "\"ID\",\"CSF VOL\",\"GM VOL\",\"WM VOL\",\"WML VOL\"">${REPORTCSV}
+	  echo -n "\"$SUBJECTID\",">>${REPORTCSV}
+	  fslstats $IMAGEROOT/${temp_dir}/brain_pve_0.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV} 
+	  fslstats $IMAGEROOT/${temp_dir}/brain_pve_1.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
+	  fslstats $IMAGEROOT/${temp_dir}/brain_pve_2.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
+	  fslstats $IMAGEROOT/${report_dir}/wm.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
 	  
-	  #MAXLOC=$($CASCADEDIR/cascade-maxmask -i $IMAGEROOT/$proc_space_dir/wml/wml_f.nii.gz -m $IMAGEROOT/$proc_space_dir/wml/wml_$LAB_ID.nii.gz)
-	  #echo $MAXLOC >> $IMAGEROOT/$proc_space_dir/wml/labels.txt
-	  #$CASCADEDIR/cascade-grow -s $MAXLOC -i $IMAGEROOT/$proc_space_dir/FLAIR_brain.nii.gz -o $IMAGEROOT/$proc_space_dir/wml/wml_$LAB_ID.nii.gz -m 0.2 -n 1
-	  #if [ -e $IMAGEROOT/$proc_space_dir/wml/wml_mask.nii.gz ]
-	  #then
-	    #  fslmaths $IMAGEROOT/$proc_space_dir/wml/wml_$LAB_ID.nii.gz -add $IMAGEROOT/$proc_space_dir/wml/wml_mask.nii.gz $IMAGEROOT/$proc_space_dir/wml/wml_mask.nii.gz
-	  #else
-	    #  cp $IMAGEROOT/$proc_space_dir/wml/wml_$LAB_ID.nii.gz $IMAGEROOT/$proc_space_dir/wml/wml_mask.nii.gz
-	  #fi
-	  #rm -f $IMAGEROOT/$proc_space_dir/wml/wml_$LAB_ID.nii.gz
-	#done
-	#fslmaths $IMAGEROOT/$proc_space_dir/wml/wml_mask.nii.gz -bin $IMAGEROOT/$proc_space_dir/wml/wml_mask.nii.gz
-) 
-rundone $?
+		for img in $ALL_IMAGES
+		do
+		  image_type=$(basename $img|sed "s/brain_//g"|sed "s/\..*//g")
+		  $CASCADEDIR/cascade-report --input $img --mask $IMAGEROOT/${report_dir}/wm.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
+		  montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png 
+		done
+  fi  
+fi 
 
-echo "${bold}Post-processing${normal}"
-echo "${bold}Reporting${normal}"
+echo
