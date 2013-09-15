@@ -1,142 +1,204 @@
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#ifndef __itkRobustOutlierPipeline_h
+#define __itkRobustOutlierPipeline_h
+
+#include "itkImageToImageFilter.h"
+#include "itkTransform.h"
+#include "itkNumericTraits.h"
+#include "itkCastImageFilter.h"
+#include "itkUnaryFunctorImageFilter.h"
+
+#include "pipeline/itkRobustMeanVariancePipeline.h"
+#include "util/itkMahalanobisDistanceImageFilter.h"
+#include "util/itkChiSquaredFunctor.h"
+
+namespace itk
+{
+template< class TInputImage, class TOutputImage = Image<
+    typename TInputImage::InternalPixelType, TInputImage::ImageDimension > >
+class ITK_EXPORT RobustOutlierPipeline: public ImageToImageFilter< TInputImage,
+    TOutputImage >
+{
+public:
+  /** Standard "Self" & Superclass typedef.   */
+  typedef RobustOutlierPipeline Self;
+  typedef ImageToImageFilter< TInputImage, TOutputImage > Superclass;
+
+  /** Extract some information from the image types.  Dimensionality
+   * of the two images is assumed to be the same. */
+  typedef typename TOutputImage::PixelType OutputImagePixelType;
+  typedef typename TOutputImage::InternalPixelType OutputInternalPixelType;
+  typedef typename TInputImage::PixelType InputImagePixelType;
+  typedef typename TInputImage::InternalPixelType InputInternalPixelType;
+
+  typedef VectorImage< InputInternalPixelType, TInputImage::ImageDimension > StateImageType;
+  typedef Image< InputInternalPixelType, TInputImage::ImageDimension > ScalarImageType;
+
+  /** Image typedef support. */
+  typedef TInputImage InputImageType;
+  typedef TOutputImage OutputImageType;
+  typedef typename InputImageType::Pointer InputImagePointer;
+  typedef typename NumericTraits< InputImagePixelType >::RealType RealType;
+
+  /** Smart pointer typedef support.   */
+  typedef SmartPointer< Self > Pointer;
+  typedef SmartPointer< const Self > ConstPointer;
+
+  typedef RobustMeanVariancePipeline< InputImageType > MeanVariancePipelineType;
+  typedef MahalanobisDistanceImageFilter< InputImageType, ScalarImageType > MahalanobisDistanceImageFilterType;
+  typedef typename MahalanobisDistanceImageFilterType::StateFunc StateFunc;
+  typedef typename MahalanobisDistanceImageFilterType::TransformType TransformType;
+
+  typedef typename MahalanobisDistanceImageFilterType::MaskImageType MaskImageType;
+  typedef typename MaskImageType::PixelType MaskPixelType;
+
+  typedef Functor::ChiSquaredFunctor< InputInternalPixelType,
+      InputInternalPixelType > ChiSquaredFunctorType;
+  typedef UnaryFunctorImageFilter< ScalarImageType, ScalarImageType,
+      ChiSquaredFunctorType > ChiFilterType;
+  typedef CastImageFilter< ScalarImageType, OutputImageType > CastToOutputType;
+
+  typedef typename MeanVariancePipelineType::MeanType MeanType;
+  typedef typename MeanVariancePipelineType::CovarianceType CovarianceType;
+
+  /** Run-time type information (and related methods)  */
+  itkTypeMacro(RobustOutlierPipeline, ImageToImageFilter)
+  ;
+
+  /** Method for creation through the object factory.  */
+  itkNewMacro(Self)
+  ;
+
+  /** Method to set/get the mask */
+  itkSetInputMacro(MaskImage, MaskImageType);
+  itkGetInputMacro(MaskImage, MaskImageType);
+
+  /** Set the pixel value treated as on in the mask.
+   * Only pixels with this value will be added to the histogram.
+   */
+  itkSetGetDecoratedInputMacro(MaskValue, MaskPixelType);
+
+  void SetNthChannelLight(const int N)
+    {
+    m_MahalanobisFilter->SetNthChannelLight(N);
+    this->Modified();
+    }
+  void SetNthChannelDark(const int N)
+    {
+    m_MahalanobisFilter->SetNthChannelDark(N);
+    this->Modified();
+    }
+  virtual void SetStateImage(const StateImageType * _arg)
+    {
+    if (m_MahalanobisFilter->GetStateImage() != _arg)
+      {
+      m_MahalanobisFilter->SetStateImage(_arg);
+      this->Modified();
+      }
+    }
+  virtual const StateImageType * GetStateImage() const
+    {
+    return m_MahalanobisFilter->GetStateImage();
+    }
+
+  virtual void SetTransform(const TransformType * _arg)
+    {
+    if (m_MahalanobisFilter->GetTransform() != _arg)
+      {
+      m_MahalanobisFilter->SetTransform(_arg);
+      this->Modified();
+      }
+    }
+  virtual const TransformType * GetTransform() const
+    {
+    return m_MahalanobisFilter->GetTransform();
+    }
+
+  virtual void SetNumberOfBins(const unsigned int _arg)
+    {
+    if (m_MeanCovCalculator->GetNumberOfBins() != _arg)
+      {
+      m_MeanCovCalculator->SetNumberOfBins(_arg);
+      this->Modified();
+      }
+    }
+  virtual unsigned int GetNumberOfBins() const
+    {
+    return m_MeanCovCalculator->GetNumberOfBins();
+    }
+
+  virtual void SetPercentile(const double _arg)
+    {
+    if (m_MeanCovCalculator->GetPercentile() != _arg)
+      {
+      m_MeanCovCalculator->SetPercentile(_arg);
+      this->Modified();
+      }
+    }
+  virtual double GetPercentile() const
+    {
+    return m_MeanCovCalculator->GetPercentile();
+    }
+
+  virtual MeanType GetMean() const
+    {
+    return m_MeanCovCalculator->GetMean();
+    }
+
+  virtual CovarianceType GetCovariance() const
+    {
+    return m_MeanCovCalculator->GetCovariance();
+    }
+
+#ifdef ITK_USE_CONCEPT_CHECKING
+  /** Begin concept checking */
+  itkConceptMacro( SameDimensionCheck,
+      ( Concept::SameDimension< TInputImage::ImageDimension, TOutputImage::ImageDimension > ) );
+    itkConceptMacro( DoubleCovertibleToOutput,
+        ( Concept::Convertible< InputInternalPixelType, OutputInternalPixelType> ) );
+    /** End concept checking */
+#endif
+
+  protected:
+    RobustOutlierPipeline();
+
+    virtual ~RobustOutlierPipeline()
+      {
+      }
+
+    void GenerateData();
+
+    void PrintSelf(std::ostream &, Indent) const;
+  private:
+    RobustOutlierPipeline(const Self &); //purposely not implemented
+    void operator=(const Self &);//purposely not implemented
+    unsigned int m_NumberOfBins;
+    double m_Percentile;
+
+    /** Internal filters */
+    typename MahalanobisDistanceImageFilterType::Pointer m_MahalanobisFilter;
+    typename MeanVariancePipelineType::Pointer m_MeanCovCalculator;
+    typename ChiFilterType::Pointer m_ChiFilter;
+    typename CastToOutputType::Pointer m_Castor;
+    };} // end namespace itk
+
+#ifndef ITK_MANUAL_INSTANTIATION
+#include "itkRobustOutlierPipeline.hxx"
+#endif
+
+#endif

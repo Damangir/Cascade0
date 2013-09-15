@@ -1,194 +1,308 @@
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#ifndef __itkWeightedSinglePassMeanCovarianceUpdate_hxx
+#define __itkWeightedSinglePassMeanCovarianceUpdate_hxx
+
+namespace itk
+{
+/*
+ * Weighted covariance calculation.
+ * A single pass algorithm that improves both speed and accuracy compared to
+ * simple two pass algorithm. The implementation allows for merging of subset
+ * statistics which can be useful for parallel calculation.
+ *
+ * Please note that a single instance of the class is not thread-safe. It is
+ * suggested to have an instance per thread and then merge afterward.
+ *
+ * Implementation is based on the paper:
+ * Chan, Tony F.; Golub, Gene H.; LeVeque, Randall J. (1979), “Updating Formulae
+ *  and a Pairwise Algorithm for Computing Sample Variances.”, Technical Report
+ *  STAN-CS-79-773, Department of Computer Science, Stanford University.
+ */
+
+/*
+ * Merge the states of another estimator into this estimator.
+ * Tip: Useful for multi-threading
+ */
+template< class TState, class TMeasurement >
+void WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::Merge(
+    TState & state, const TState & otherState, const double w)
+  {
+  if (StateTrait::GetLength(otherState) == 0 || otherState[0] == 0)
+    {
+    return;
+    }
+
+  if (StateTrait::GetLength(state) == 0 || state[0] == 0)
+    {
+    StateTrait::SetLength(state, StateTrait::GetLength(otherState));
+    for (int i = 0; i < StateTrait::GetLength(otherState); i++)
+      {
+      state[i] = otherState[i] * w;
+      }
+    return;
+    }
+
+  itkAssertOrThrowMacro(
+      StateTrait::GetLength(state) == StateTrait::GetLength(otherState),
+      "Length of two states to be merged should be the same. "
+      "State length is " << StateTrait::GetLength(state) << " which does not "
+                         "match the other state length "
+                         << StateTrait::GetLength(otherState));
+
+  const unsigned int D2 = StateTrait::GetLength(state);
+  const unsigned int D = StateToMeasurementDim(D2);
+
+  // calculate effect of the other estimator
+  const double f = state[0] * (otherState[0] * w)
+      / (state[0] + (otherState[0] * w));
+  MeasurementType dX;
+  MeasurementTrait::SetLength(dX, D);
+  // calculate deviation from current mean
+  for (int i = 0; i < D; i++)
+    {
+    dX[i] = (otherState[i + 1] / otherState[0]) - (state[i + 1] / state[0]);
+    }
+
+  // Update the weight
+  state[0] += otherState[0] * w;
+
+  // Update the mean
+  for (int i = 1; i < D + 1; i++)
+    {
+    state[i] += otherState[i] * w;
+    }
+
+  for (int r = 0, i = D + 1; r < D; r++)
+    for (int c = 0; c <= r; c++, i++)
+      {
+      state[i] += otherState[i] * w + f * dX[r] * dX[c];
+      }
+  }
+
+/*
+ * Add a weighted sample and update the state
+ */
+template< class TState, class TMeasurement >
+void WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::UpdateState(
+    const TMeasurement & r, TState& state, double w)
+  {
+  const unsigned int D = MeasurementTrait::GetLength(r);
+  const unsigned int D2 = MeasurementToStateDim(D);
+
+  if (StateTrait::GetLength(state) == 0 || state[0] == 0)
+    {
+    StateTrait::SetLength(state, D2);
+    state.Fill(0.);
+    }
+  else
+    {
+    itkAssertOrThrowMacro(
+        StateTrait::GetLength(state) == D2,
+        "Input dimension does not follow the expected dimension. "
+        "State dimension is " << StateTrait::GetLength(state) << " however it "
+                              "should be "
+                              << D2 << " according to length of measurement ("
+                              << D << ")");
+    }
+
+  if (state[0] == 0)
+    {
+    state[0] = w;
+    for (int i = 0; i < D; i++)
+      {
+      state[i + 1] = w * r[i];
+      }
+    }
+  else
+    {
+    // calculate current effect of the sample
+    const double f = state[0] * w / (state[0] + w);
+
+    MeasurementType dX;
+    MeasurementTrait::SetLength(dX, D);
+    // calculate deviation from current mean
+    for (int i = 0; i < D; i++)
+      {
+      dX[i] = r[i] - (state[i + 1] / state[0]);
+      }
+
+    // Update the mean
+    for (int i = 1; i < D + 1; i++)
+      {
+      state[i] += w * r[i - 1];
+      }
+
+    for (int r = 0, i = D + 1; r < D; r++)
+      for (int c = 0; c <= r; c++, i++)
+        {
+        state[i] += f * dX[r] * dX[c];
+        }
+    // Update the weight
+    state[0] += w;
+    }
+  }
+
+/**Calculate Mahalanobis distance of the input point using the READY stare */
+template< class TState, class TMeasurement >
+typename WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::ScalarRealType WeightedSinglePassMeanCovarianceUpdate<
+    TState, TMeasurement >::Distance(const StateType& state,
+                                     const MeasurementType & r)
+  {
+  const unsigned int D = MeasurementTrait::GetLength(r);
+  MeasurementType mv;
+  MeasurementTrait::SetLength(mv, D);
+
+  /** Compute ( mv - mean ) */
+  for (int i = 0; i < D; i++)
+    {
+    mv[i] = r[i] - GetMeanElement(state, i);
+    }
+
+  /** Compute md=( mv - mean )^t InverseCovariance ( mv - mean ) */
+  ScalarRealType md = 0;
+  for (int i = 0; i < D; i++)
+    {
+    for (int j = 0; j < D; j++)
+      {
+      md += mv[j] * mv[i] * GetCovElement(state, i, j);
+      }
+    }
+
+  return md;
+  }
+/**Calculate Mahalanobis distance of the input point using the READY stare */
+template< class TState, class TMeasurement >
+int WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::Orientation(
+    const StateType& state, const MeasurementType & r)
+  {
+  const unsigned int D = MeasurementTrait::GetLength(r);
+  int orient=0;
+  for (int i=0;i<D;i++)
+    {
+    if (r[i] > state[i+1])
+      {
+      orient |= 1 << i;
+      }
+    }
+  return orient;
+  }
+/*
+ * Calculate the current estimate of mean vector
+ */
+template< class TState, class TMeasurement >
+typename WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::MeanType WeightedSinglePassMeanCovarianceUpdate<
+    TState, TMeasurement >::GetMean(const TState& state)
+  {
+  const unsigned int D2 = StateTrait::GetLength(state);
+  const unsigned int D = StateToMeasurementDim(D2);
+  MeanType mean;
+  NumericTraits< MeanType >::SetLength(mean, D);
+  for (int i = 0; i < D; i++)
+    {
+    mean[i] = state[i + 1] / state[0];
+    }
+  return mean;
+  }
+
+/*
+ * Calculate the current estimate of covariance matrix
+ */
+template< class TState, class TMeasurement >
+typename WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::CovarianceType WeightedSinglePassMeanCovarianceUpdate<
+    TState, TMeasurement >::GetCovariance(const TState& state)
+  {
+  const unsigned int D2 = StateTrait::GetLength(state);
+  const unsigned int D = StateToMeasurementDim(D2);
+  CovarianceType cov;
+  cov.SetSize(D, D);
+  for (int r = 0, i = D + 1; r < D; r++)
+    for (int c = 0; c <= r; c++, i++)
+      cov(c, r) = cov(r, c) = state[i] / (state[0] - 1.);
+
+  return cov;
+  }
+
+template< class TState, class TMeasurement >
+void WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::MakeReady(
+    StateType& state)
+  {
+  const unsigned int D2 = StateTrait::GetLength(state);
+  if (state[0] < 1)
+    {
+    for (int i = 0; i < D2; i++)
+      {
+      state[i] = 0;
+      }
+    return;
+    }
+
+  const unsigned int D = StateToMeasurementDim(D2);
+
+  double divisor = state[0] - 1.0;
+
+  vnl_matrix< double > cov(D, D);
+  for (int r = 0, i = D + 1; r < D; r++)
+    for (int c = 0; c <= r; c++, i++)
+      cov(c, r) = cov(r, c) = state[i] / (divisor);
+
+  vnl_matrix< double > inv_cov = vnl_matrix_inverse< double >(cov);
+
+  for (int r = 0, i = D + 1; r < D; r++)
+    {
+    state[r + 1] /= divisor;
+    for (int c = 0; c <= r; c++, i++)
+      state[i] = inv_cov(c, r);
+    }
+
+  }
+
+template< class TState, class TMeasurement >
+typename WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::StateType WeightedSinglePassMeanCovarianceUpdate<
+    TState, TMeasurement >::GetState(const MeanType& mean,
+                                     const CovarianceType& cov)
+  {
+  const unsigned int D = NumericTraits< MeanType >::GetLength(mean);
+  const unsigned int D2 = MeasurementToStateDim(D);
+
+  StateType state;
+  StateTrait::SetLength(state, D2);
+  state[0] = 2;
+  for (int r = 0, i = D + 1; r < D; r++)
+    {
+    state[r + 1] = mean[r];
+    for (int c = 0; c <= r; c++, i++)
+      state[i] = cov.GetVnlMatrix()(c, r);
+    }
+  return state;
+  }
+
+template< class TState, class TMeasurement >
+void WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::PrintState(
+    const StateType& state)
+  {
+  const unsigned int D2 = StateTrait::GetLength(state);
+  for (int i = 0; i < D2; i++)
+    {
+    std::cout << state[i] << " ";
+    }
+  std::cout << std::endl;
+  }
+
+} // end namespace itk
+
+#endif

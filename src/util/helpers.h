@@ -1,41 +1,73 @@
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+
+#ifndef HELPERS_H_
+#define HELPERS_H_
+
+#include <string>
+#include <iostream>
+#include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
+
+namespace cascade
+{
+
+namespace util
+{
+
+template<class ImageT>
+typename ImageT::Pointer LoadImage(std::string filename)
+  {
+  typedef itk::ImageFileReader< ImageT > ImageReaderType;
+  typename ImageT::Pointer image;
+  typename ImageReaderType::Pointer reader = ImageReaderType::New();
+  reader->SetFileName(filename);
+  image = reader->GetOutput();
+  image->Update();
+  image->DisconnectPipeline();
+  return image;
+  }
+
+template<class ImageT>
+void WriteImage(std::string filename, const ImageT* image)
+  {
+  typedef itk::ImageFileWriter< ImageT > ImageWriterType;
+  typename ImageWriterType::Pointer writer = ImageWriterType::New();
+  writer->SetFileName(filename);
+  writer->SetInputImage(image);
+  writer->Update();
+  }
+
+bool endsWith(std::string const &fullString, std::string const &ending)
+  {
+  if (fullString.length() >= ending.length())
+    {
+    return (0
+        == fullString.compare(fullString.length() - ending.length(),
+                              ending.length(), ending));
+    }
+  else
+    {
+    return false;
+    }
+  }
+
+}  // namespace util
+
+}  // namespace cascade
+
+#endif /* HELPERS_H_ */

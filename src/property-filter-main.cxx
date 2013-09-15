@@ -1,165 +1,220 @@
-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
-7qETGMXHUS84l3SCxa3OgHQtYAU2AqAh6ojAn445NhdoL3uBgt43cvm92dgqtZkQ
-Ajv7Ppg7YPIjtHb4BC4/z1qO1Gt75h1T8wnXZ1VWWjZaVRfT5sjkquzZqnWDqCHM
-/3TyHucXII3SE41dV45nBc3oax/yiBNkdZSrezEaqxfiUUYtb1QhyOPry4kdZC0x
-JU29/kkpfZRPyTSwJYIRU0mFbbZPtoK6UnDuohPuqZI1d0ap7ojvkMVCDA03Cy5T
-fcdc1dpq9KrrsjU8pTmbVioseIgNJDUw1TwqJI2btLRehNVF/d7rb87T3RhP39mf
-v+fDwlHeqoKGw/N8+XvFhR0y2VZNqWgsaij1KaWisjn9LSp6pfD/kdngcaOVVo6C
-9KTB+e/5suVjvlKJutv6DbtvkxCw5dIkf+O3pjCxzBPvVs6uR+ipT4sAKg+Ial/S
-MXHYLXb52r4dyhGKg+Ny6gdnWtDXzPNCmwaAU2hJOZyuytEXPU41Kz/0Ffkiwet4
-cFh/vcOmq86cpmPW2cXWN38nK1EPBu1bmWkMiJ2mfhf7ZJO1AL96ptgVCSl8PA9d
-yPDTmFCIYz7eV7zqi1R6/sjw05hQiGM+3le86otUev4ULWvahQdROOqoPjqEwZSa
-OSkZf6PDp8kn5QwesoAXijgLOKFbujAxvVy++V79X1WgaKbgiPGFjFeOhzj7VshY
-jADSxtME0USDGWsE974bKOl9w4eNrWwFH83JAAuJL3093cYGLfACQESVoxPPKg07
-yPDTmFCIYz7eV7zqi1R6/sjw05hQiGM+3le86otUev6aKy+ogyg4/eNcrrnZWUqa
-AWFVk1YzefVBJQUWXDpd6edVZBMC24mU9gn3VZZuTlM2See5+ma9qsP/x0JuF+iG
-RHisHztpDWvuedB0pe5myMjw05hQiGM+3le86otUev7taDxeh5yHdsvoSMTrn1cP
-XIPOLK0j25Zais3zCHeUIKmXPkzbKc+A+MieABHdNdvI8NOYUIhjPt5XvOqLVHr+
-yPDTmFCIYz7eV7zqi1R6/hiH3zsXWyKhpuCu5egLjeLWjepLIZijzUkeXuAxRC1N
-6ft7VarP784euxcb9Wn3mSNZqJaX59pKxQV8/n6yhFOde/iumvrXbJwdLv0fKhuW
-usor3dHz0m6LDsUYMq3HBvvNT0pq0sQXBInXUzHY7JSvzd/VOf3M6zDfsFyhWZvs
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#include "buildinfo.h"
+/*
+ * CPP Headers
+ */
+#include <vector>
+#include <string>
+/*
+ * General ITK
+ */
+#include "itkImage.h"
+/*
+ * ITK Filters
+ */
+#include "itkBinaryThresholdImageFilter.h"
+#include "itkBinaryImageToShapeLabelMapFilter.h"
+#include "itkShapeOpeningLabelMapFilter.h"
+#include "itkLabelMapToLabelImageFilter.h"
+
+/*
+ * ITK IO
+ */
+#include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
+
+/*
+ * Others
+ */
+#include "util/helpers.h"
+#include "3rdparty/tclap/CmdLine.h"
+/*
+ * Pixel types
+ */
+typedef unsigned int PixelType;
+typedef unsigned int LabelType;
+/*
+ * Image types
+ */
+typedef itk::Image< PixelType, DIM > ImageType;
+typedef itk::Image< LabelType, DIM > LabelImageType;
+
+typedef itk::BinaryThresholdImageFilter< ImageType, ImageType > BinaryThresholdImageFilterType;
+typedef itk::BinaryImageToShapeLabelMapFilter< ImageType > BinaryImageToShapeLabelMapFilterType;
+typedef BinaryImageToShapeLabelMapFilterType::OutputImageType ShapeLabelMapType;
+typedef itk::ShapeOpeningLabelMapFilter< ShapeLabelMapType > ShapeOpeningLabelMapFilterType;
+typedef itk::LabelMapToLabelImageFilter< ShapeLabelMapType, LabelImageType > LabelMapToLabelImageFilterType;
+
+/*
+ * IO types
+ */
+typedef itk::ImageFileWriter< ImageType > WriterType;
+
+int main(int argc, char *argv[])
+  {
+  TCLAP::CmdLine cmd(
+      "Cascade(v" CASCADE_VERSION ") - Segmentation of White Matter Lesion. Image intensity range controller " BUILDINFO,
+      ' ', CASCADE_VERSION);
+
+  TCLAP::ValueArg< std::string > outfile("o", "out", "Output filename", false,
+                                         "out.nii.gz", "string", cmd);
+
+  TCLAP::SwitchArg reverseSwitch("r", "reverse", "Threshold backwards", cmd,
+                                 false);
+
+  TCLAP::ValueArg< float > threshold("t", "threshold",
+                                     "property to be filtered. ", false, 0.0,
+                                     "Threshold", cmd);
+
+  std::vector< std::string > allowedProperty;
+  allowedProperty.push_back("NumberOfPixels");
+  allowedProperty.push_back("PhysicalSize");
+  allowedProperty.push_back("Perimeter");
+  allowedProperty.push_back("NumberOfPixelsOnBorder");
+  allowedProperty.push_back("PerimeterOnBorder");
+  allowedProperty.push_back("PerimeterOnBorderRatio");
+  allowedProperty.push_back("Elongation");
+  allowedProperty.push_back("Flatness");
+  allowedProperty.push_back("Roundness");
+  allowedProperty.push_back("EquivalentSphericalRadius");
+  allowedProperty.push_back("EquivalentSphericalPerimeter");
+  allowedProperty.push_back("EquivalentEllipsoidDiameter");
+  allowedProperty.push_back("FeretDiameter");
+  TCLAP::ValuesConstraint< std::string > allowedVals(allowedProperty);
+  TCLAP::ValueArg< std::string > property("", "property",
+                                          "Property to be filtered.", false,
+                                          "NumberOfPixels", &allowedVals, cmd);
+
+  TCLAP::ValueArg< std::string > input("i", "input",
+                                       "Input sequences e.g. MPRAGE.nii.gz",
+                                       true, "", "string", cmd);
+
+  /*
+   * Parse the argv array.
+   */
+  try
+    {
+    cmd.parse(argc, argv);
+    }
+  catch (TCLAP::ArgException &e)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "error: " << e.error() << " for arg " << e.argId()
+                 << std::endl;
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  /*
+   * Argument and setting up the pipeline
+   */
+  try
+    {
+    const PixelType thrVal = 0;
+    const PixelType foreground = 1;
+
+    ImageType* inputIMage = cascade::util::LoadImage<ImageType>(input.getValue());
+    BinaryThresholdImageFilterType::Pointer thresholdFilter =
+        BinaryThresholdImageFilterType::New();
+    thresholdFilter->SetInput(inputIMage);
+    thresholdFilter->SetLowerThreshold(thrVal);
+    thresholdFilter->SetInsideValue(foreground);
+    thresholdFilter->SetOutsideValue(thrVal);
+
+    BinaryImageToShapeLabelMapFilterType::Pointer binaryImageToShapeLabelMapFilter =
+        BinaryImageToShapeLabelMapFilterType::New();
+    binaryImageToShapeLabelMapFilter->SetInputForegroundValue(foreground);
+    binaryImageToShapeLabelMapFilter->SetInput(inputIMage);
+    binaryImageToShapeLabelMapFilter->Update();
+
+    /** Statistics on image should be reported */
+    if (outfile.getValue() == "-")
+      {
+      std::cout << "NumberOfPixels" << ", ";
+      std::cout << "PhysicalSize" << ", ";
+      std::cout << "Perimeter" << ", ";
+      std::cout << "Elongation" << ", ";
+      std::cout << "Roundness" << ", ";
+      for (int i=0;i<DIM;i++)
+      std::cout << "Centroid[" << i << "], ";
+
+      std::cout << "EquivalentSphericalRadius" << ", ";
+      std::cout << "EquivalentSphericalPerimeter";
+      std::cout << std::endl;
+
+      ShapeLabelMapType* shapeLabel =
+          binaryImageToShapeLabelMapFilter->GetOutput();
+      ShapeLabelMapType::Iterator shapeIterator(shapeLabel);
+      while (!shapeIterator.IsAtEnd())
+        {
+        ShapeLabelMapType::LabelObjectType* labelObject =
+            shapeIterator.GetLabelObject();
+        std::cout << labelObject->GetNumberOfPixels() << ", ";
+        std::cout << labelObject->GetPhysicalSize() << ", ";
+        std::cout << labelObject->GetPerimeter() << ", ";
+        std::cout << labelObject->GetElongation() << ", ";
+        std::cout << labelObject->GetRoundness() << ", ";
+
+        for (int i=0;i<DIM;i++)
+        std::cout << labelObject->GetCentroid()[i] << ", ";
+
+        std::cout << labelObject->GetEquivalentSphericalRadius() << ", ";
+        std::cout << labelObject->GetEquivalentSphericalPerimeter();
+        std::cout << std::endl;
+        ++shapeIterator;
+        }
+      }
+    else
+      {
+      ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter =
+          ShapeOpeningLabelMapFilterType::New();
+      shapeOpeningLabelMapFilter->SetInput(
+          binaryImageToShapeLabelMapFilter->GetOutput());
+      shapeOpeningLabelMapFilter->SetReverseOrdering(reverseSwitch.getValue());
+      shapeOpeningLabelMapFilter->SetLambda(threshold.getValue());
+      shapeOpeningLabelMapFilter->SetAttribute(property.getValue());
+      shapeOpeningLabelMapFilter->Update();
+
+      LabelMapToLabelImageFilterType::Pointer labelMapToLabelImageFilter =
+          LabelMapToLabelImageFilterType::New();
+      labelMapToLabelImageFilter->SetInput(
+          shapeOpeningLabelMapFilter->GetOutput());
+      labelMapToLabelImageFilter->Update();
+
+      thresholdFilter->SetInput(labelMapToLabelImageFilter->GetOutput());
+      thresholdFilter->SetLowerThreshold(thrVal + 1);
+      thresholdFilter->SetInsideValue(foreground);
+      thresholdFilter->SetOutsideValue(thrVal);
+
+      WriterType::Pointer writer = WriterType::New();
+      writer->SetInput(thresholdFilter->GetOutput());
+      writer->SetFileName(outfile.getValue());
+      writer->Update();
+      }
+
+    }
+  catch (itk::ExceptionObject & err)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "Exception caught!\n" << err << "\n";
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  return EXIT_SUCCESS;
+  }

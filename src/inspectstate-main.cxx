@@ -1,97 +1,132 @@
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#include "buildinfo.h"
+/** CPP Headers */
+#include <sstream>
+#include <string>
+#include <vector>
+/** General ITK  */
+#include "itkImage.h"
+#include "itkVectorImage.h"
+#include "itkImageIOBase.h"
+#include "itkNumericSeriesFileNames.h"
+#include "itkVectorIndexSelectionCastImageFilter.h"
+#include "itkUnaryFunctorImageFilter.h"
+/** ITK IO  */
+#include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
+/** Others */
+#include "3rdparty/tclap/CmdLine.h"
+#include "util/helpers.h"
+
+/** Pixel types, please only change these types */
+typedef float PixelType;
+typedef float StatePixelType;
+
+/** Image and Filter types */
+typedef itk::Image< PixelType, DIM > ImageType;
+typedef itk::VectorImage< PixelType, DIM > StateImageType;
+/** IO types */
+typedef itk::ImageFileReader< StateImageType > StateReaderType;
+typedef itk::ImageFileWriter< ImageType > ImageWriterType;
+
+typedef itk::NumericSeriesFileNames FilenameType;
+typedef itk::VectorIndexSelectionCastImageFilter< StateImageType, ImageType > IndexSelectionType;
+int main(int argc, char *argv[])
+  {
+  TCLAP::CmdLine cmd(
+      "Cascade(v" CASCADE_VERSION ") - Segmentation of White Matter Lesion: Training " BUILDINFO,
+      ' ', CASCADE_VERSION);
+
+  TCLAP::ValueArg< std::string > outfile(
+      "o",
+      "out",
+      "Output prefix. Output series would be OUT000, OUT001 and so on with the same file format as the input.",
+      false, "out_", "OUT", cmd);
+
+  TCLAP::ValueArg< std::string > input(
+      "i", "input", "Normalized input image file e.g. MPRAGE_normalized.nii.gz",
+      true, "Input", "", cmd);
+
+  /** Parse the argv array.   */
+  try
+    {
+    cmd.parse(argc, argv);
+    }
+  catch (TCLAP::ArgException &e)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "error: " << e.error() << " for arg " << e.argId()
+                 << std::endl;
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  /** Argument and setting up the pipeline  */
+  try
+    {
+    /** Load the state */
+    StateReaderType::Pointer stateReader = StateReaderType::New();
+    stateReader->SetFileName(input.getValue());
+    stateReader->Update();
+    StateImageType::Pointer stateImage = stateReader->GetOutput();
+
+    /** Exploit vector space to regular images */
+    std::string stateFileSeriesFormat = "%03d.nii.gz";
+    typedef itk::ImageIOBase::ArrayOfExtensionsType ExtType;
+    typedef ExtType::const_iterator ExtIteratorType;
+    itk::ImageIOBase::ArrayOfExtensionsType extlist =
+        stateReader->GetImageIO()->GetSupportedWriteExtensions();
+    for (ExtIteratorType it = extlist.begin(); it != extlist.end(); ++it)
+      {
+      std::string ext = *it;
+      std::string frmt = input.getValue();
+      if (cascade::util::endsWith(input.getValue(), ext))
+        {
+        frmt = outfile.getValue() + "%03d" + ext;
+        stateFileSeriesFormat = frmt;
+        break;
+        }
+      }
+    const unsigned int comps = stateImage->GetNumberOfComponentsPerPixel();
+    FilenameType::Pointer numericSeriesFileNames = FilenameType::New();
+    numericSeriesFileNames->SetStartIndex(0);
+    numericSeriesFileNames->SetEndIndex(comps);
+    numericSeriesFileNames->SetSeriesFormat(stateFileSeriesFormat);
+
+    ImageWriterType::Pointer sliceWriter = ImageWriterType::New();
+
+    IndexSelectionType::Pointer indexSelector = IndexSelectionType::New();
+    indexSelector->SetInput(stateImage);
+    for (int i = 0; i < comps; i++)
+      {
+      indexSelector->SetIndex(i);
+      sliceWriter->SetInput(indexSelector->GetOutput());
+      sliceWriter->SetFileName(numericSeriesFileNames->GetFileNames()[i]);
+      sliceWriter->Update();
+      }
+    }
+  catch (itk::ExceptionObject & err)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "Exception caught!\n" << err << "\n";
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  return EXIT_SUCCESS;
+  }

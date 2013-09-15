@@ -1,35 +1,69 @@
-U2FsdGVkX18BbrHljv5wAOUHkcp25+aV40DF+amJ2IX9JB+/yYmOapH7hI/VxJsh
-OUElywUM4v6PvQYCoJvZR1k0cRkEtLFB+0Q2EuODE1PfWdMYXo7jVUIlQVra4A1Y
-1AuP0CfOX58M5O32tdMM5Dsv7hS03j3k4z98Nr0tWmdR8CwYRcCb9UAp8OKVEHqw
-HeuzBd4WzgwLN3D0m/cEb5I/Qp7fDnu+MkPdZbWe+yfbR9rq3kHMGWQlpO0QU6FO
-Q1nS0bJej/zk0F8cVAoCFtMzdpnMd51NPDfXaUYT97pTh9ITfYd7LerOUWBotd8l
-vNBF+roAhhFxlRIipHGTvnp90t6crIDpuxwFu/sdwr8CViyyagXn/ddk3CYGXiMC
-KTRx9j7oCgl1N5ZVLMf8FDE3+lnRPXh3kuzbIRZChCxV7BjPfXHQC/zFHDsWUZMg
-HzAsSaQI9maqLBz6JWHNJAe6Ilibg/vSbWzrbBc32MLNbIGkeZO8AZzLRFg/9YFz
-UIIiUyl89Te7e/38caSjK/H8nZ1IWCesbD6fec4RdtbR8rAinMVagiDQ//iD+E03
-+m0lCOHtCpOgNxEdwiLywq7BOAjGPU6fX6bzPm2+1CacbVXEC2NC64mjkCcmT6CX
-qdBfBNEPvhhvNOvrNGwPmv+y7+swNUfIAmS29dx8wpWbFpxk5wyeoBLm/kTIRfhc
-LuqflsLz98LGchbVGcGnRrsMMxLC2gBH1+8ntMJCLCB7R7MCsFfC6Ag1NbtDKk/m
-S2JfIBSEVzOp0ORWleKVPHz/fknslG7tX8GgkC2m/oHTmUQuc0RyCLcJ6ysxZANY
-AxnDEXo7htvZR5QAvZPDUpF27BSkvuJEG1OFZMmG+xAzpIfbCNLsFwk2o/B24K66
-IjI8ieYlmQcRakI59L/RtxNu4XpUe8+OxanPWD0vT02UnyEgAU4kIodNB6uN86oC
-KL5zdqW27KocajIu2SGuWwG5boWrhiEQX+t/2ex51yxDCOK6u0aP/6upHibRqklf
-7cQPj6fRwrtYDt0mlQ5zIk1fT2Yv8OIVFRadhEtTfb4lztnkm8v2jOam1CpIaZa/
-6/DyKzwYq+DWW1099k3xiyjITzqKIyP8BgfZEulf96Hnn2eDUKusCWRfd61mRugY
-0IBiDoSpdgDqSVgvgHhI+QoctM/AjumqsVT0YzzfwR2DcyT2w9jp/4ikEUPCxAsd
-aW+Nnmlzns615CC6mk7DrZxWId1Hz27ekFscTlDMOul9Ywyyg7tk5Jq+WGRWke5A
-EHLarWEL6wOWEFQ51NFERA83Wgl/fkSHcQeROt0+y6omb9dVF71JV0tfih1ewWF8
-6y61B5eLlX+nf+tr9ipzbRa7GSExFLHrEcMPQBW5ScMbe+nYO0nkVKQpHURz6uwY
-5wMVP+czwXe7jffkLikOeYfOfkotfVWGCFkXlrUZV+TVtAANJAfpV+KOcAB0pJBg
-mhs2i09Go9ZUlWEaQC6sklhiVL7E0Ezh0iOdPuZPd99H/UBmG1klSxCVRxmovCiE
-S77Lpyxdi5W0OE2lD1YeXDEl5xAqOUitKpC6zcwG/EuVLjgz1wEg/h32O/htqPbN
-LQdRZujKZL1Q4LIAKCAmNOV+FVGYS2RBr7zRbqWyP14po5RX64B0u1566WFycFEv
-VBUJyPRA3kTOXCJO71PuZ9lRPLCZsOCPeMB4LTylfD2VtKlv0UqxqkQOGW/J3Hw1
-l1/otQ0jI7FUExxPsgYcH8Fi+mIxPqLN1dAfgpLSpWaMRNJ3ATaw89OXa0ofhxiB
-MlVwmmt5TWR0/m0Jgu1PR29L4uimaNqy+Qj3ZhuRZe+LbIp16uOMsSC3A0/8W6i/
-IUc3WNxk/untbXXAEGpuKYqYTp4xvZjlFY8N9NKMZEjxXWwtvTjghYvj8poK3zVy
-riu9gtZGRuONFlnRamEd/jzbSVDc9t0JcEzXpPKS+wToGh4MLsULVy1em7A8SXXv
-YmeijIeVxFebsBSkmOiitOY8hkw2rZ0I4+WzHHUf+hnVdZqIYfZCqyNHm3gcq9eG
-vJ+5961uTeyUR7kkofyUhC9mgfQqXOx8FK3qCOMAY2f4f26lr0C1m24FF3HWqf6l
-NM00L1Q00NVCqPya0AbS65banaSkuaiXlK4V1roc4zew0A7f5b3qYQl1ugrwPVOZ
-7TRe8gh6J4A9C9USVGc8wA==
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#ifndef __itkIntensityAlignFunctor_h
+#define __itkIntensityAlignFunctor_h
+
+namespace itk
+{
+namespace Functor
+{
+template< class TInput1, class TInput2 = TInput1, class TOutput = TInput1 >
+class IntensityAlignFunctor
+{
+public:
+
+  IntensityAlignFunctor()
+    {
+    m_Mean = 0;
+    }
+  virtual ~IntensityAlignFunctor()
+    {
+    }
+  void SetMean(const TInput1 _arg)
+    {
+    this->m_Mean = _arg;
+    }
+
+  bool operator!=(const IntensityAlignFunctor &) const
+    {
+    return false;
+    }
+  bool operator==(const IntensityAlignFunctor & other) const
+    {
+    return !(*this != other);
+    }
+  inline TOutput operator()(const TInput1 & A, const TInput2 & B) const
+    {
+    TInput2 out;
+    if (A - m_Mean > 0)
+      {
+      out = B;
+      }
+    else
+      {
+      out = -B;
+      }
+    out = (out + 1) / 2;
+    return TOutput(out);
+    }
+private:
+  TInput1 m_Mean;
+};
+} // end namespace Functor
+} // end namespace itk
+
+#endif

@@ -1,121 +1,172 @@
-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
-ll6UBDlcJsxAUqVQ4DM7l99fqKKppN2bnIgP71oZATq0Gaj3WIVL00o+BiNkBooH
-d3w3EjATiFr31s7WBsdHn0AgmZctgOu83rXzjDLE55lAIJmXLYDrvN6184wyxOeZ
-QCCZly2A67zetfOMMsTnmUAgmZctgOu83rXzjDLE55nnaIXEndoXFDNrd4+kQeWp
-xyWqSCGqUeG/1gqrjE3WyToK+jELYXcTUaDw87NNI6Hp0ZFSj2eXTpS9dDlADrvO
-pnldkO34bOxVgTWCmS2pK8FCKS+44mkd/6D1UJDHuKc1rivUCWkcRcJRvRofd0iw
-dnUCBwVtoUy4305Arx/aEifbK+/2iMvLQsK78aYQUOgI7KrCDsPnTW7+s+zvyx67
-dbsFmWDKZhI0mBl9I+gWHsjDLx0/OSUP5wnY5RWcEJIkNho8MnpU8PiUgBg6MOZG
-fpqU9hetw38QNCGXfJWJ6OqeqCZK8ignoLfa1orsVJH7VgqZ5DBhYDyqFb3Zt8h0
-v81RFLVwj11sX7P4j9Rufd4cuiyxkZAAFSGoFUoqWnsI9ruJi79q1ItrC8b6b2zY
-iitdjBGfVEtPnXfF281z6HxtkYqofxTkPNMFFxkdspz2AEFnlqkVvYqUTIBq7VLm
-ZnH0F/75yRA9llYqpx3ELLk7bsTy4CDEeu3KQ1P2Q13CviwCXO0HA6ieofSQLj4r
-nQ/amM7DfR/cTEKPeOjMeJUZF9A8ui1sbl7k/+kXYTVJ3D1u3t61ZrGNx3WaWuIa
-D8T2Bbezry5QHukQBpOEWKeSYpF0IeYPURlI7plc4km76coIlysYkVotNU7HeJDM
-3DGwYrhaOIA35PTTksJLfLNbAGNWlkbUMdlK09r0IZaV0nFq68Frp+6hI7PoWN+5
-6N4xPXodN4ZY2FBuZkXLJkH1rJ4qWnlak/IF3DPZ0ZypG4MN5eXv8Bbe201PZsLY
-LodKxhJQc9TTfiMl/36KReeGMGSoRMlKlK38Z7w0bTM44EeaXBOEs08ZU2liI45Z
-04pJEpb53RH7+gY7S86PEvzap6nYrfOvEd0tHtim9mpuyOd7fZPc1Rmf+vzL/aUx
-LdMazFp+VecRWMQpJx8iypy1V0vcLG0cbJnhyK6+JoxZ1aJavMJusCcTZ//hCZMU
-fF5B5qQCdYQgaEKm8b6WFGPGxvXgttRQNMK3sxS6mvUkZAWJiCFXStRWUHUz9TvN
-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
+/*=========================================================================
+ *
+ *  Copyright Insight Software Consortium
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0.txt
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ *=========================================================================*/
+#ifndef __itkMahalanobisDistanceImageFilter_hxx
+#define __itkMahalanobisDistanceImageFilter_hxx
+
+#include "itkMahalanobisDistanceImageFilter.h"
+#include "itkImageRegionIterator.h"
+#include "itkIdentityTransform.h"
+#include "itkContinuousIndex.h"
+#include "itkImageDuplicator.h"
+
+namespace itk
+{
+//----------------------------------------------------------------------------
+template< class TInputImage, class TOutputImage >
+MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::MahalanobisDistanceImageFilter()
+  {
+  this->SetNumberOfRequiredInputs(1);
+  this->m_Transform = IdentityTransform< ScalarRealType, Dimension >::New();
+  this->m_StateInterpolator = StateInterpolateType::New();
+  this->SetMaskValue(NumericTraits< MaskPixelType >::max());
+  m_HasStateImage = false;
+  m_HasGlobalState = false;
+  m_HasMask = false;
+  m_OutsideValue = NumericTraits< OutputPixelType >::ZeroValue();
+  /** Binary not of zero. All bits set. */
+  m_PositiveOrientation = ~(0);
+
+  }
+template< class TInputImage, class TOutputImage >
+void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::BeforeThreadedGenerateData()
+  {
+  InputImageType *inputImage =
+      static_cast< InputImageType * >(this->ProcessObject::GetInput(0));
+  itkAssertOrThrowMacro(inputImage, "Input image should be set.");
+
+  m_HasMask = this->GetMaskImage() != 0;
+  m_HasGlobalState = NumericTraits< StateType >::GetLength(m_GlobalState) != 0;
+  m_HasStateImage = m_StateImage.IsNotNull();
+
+  if (!m_StateImage)
+    {
+    itkAssertOrThrowMacro(
+        m_HasGlobalState,
+        "Either global status or status image should be set.");
+    }
+  else
+    {
+    itkAssertOrThrowMacro(m_Transform.IsNotNull(),
+                          "Transformation function should be set.");
+    m_StateInterpolator->SetInputImage(m_StateImage);
+    if (!m_HasGlobalState)
+      {
+      m_GlobalState.Fill(0.);
+      }
+    }
+  int orientMask = (1 << inputImage->GetNumberOfComponentsPerPixel()) - 1;
+  m_PositiveOrientation &= orientMask;
+  }
+//----------------------------------------------------------------------------
+template< class TInputImage, class TOutputImage >
+void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::ThreadedGenerateData(
+    const OutputImageRegionType & outputRegionForThread, ThreadIdType threadId)
+  {
+
+  InputImageType *inputImage =
+      static_cast< InputImageType * >(this->ProcessObject::GetInput(0));
+
+  OutputImageType* outputImage =
+      static_cast< OutputImageType * >(this->ProcessObject::GetOutput(0));
+
+  StateType state = m_GlobalState;
+  if (!m_HasStateImage) StateFunc::MakeReady(state);
+
+  InputIteratorType iit(inputImage, outputRegionForThread);
+  OutputIteratorType oit(outputImage, outputRegionForThread);
+
+  MaskIteratorType mit;
+  MaskPixelType  maskValue;
+  if (m_HasMask)
+    {
+    mit = MaskIteratorType(GetMaskImage(), outputRegionForThread);
+    maskValue = this->GetMaskValue();
+    }
+
+  while (!iit.IsAtEnd())
+    {
+    if (m_HasMask && mit.Get() != maskValue)
+      {
+      oit.Set(m_OutsideValue);
+      }
+    else
+      {
+      if (m_HasStateImage)
+        {
+        InputPointType iPoint;
+        inputImage->TransformIndexToPhysicalPoint(iit.GetIndex(), iPoint);
+        StatePointType sPoint = m_Transform->TransformPoint(iPoint);
+        if (m_StateInterpolator->IsInsideBuffer(sPoint))
+          {
+          state = m_StateInterpolator->Evaluate(sPoint);
+          }
+        else
+          {
+          state = m_GlobalState;
+          }
+        StateFunc::MakeReady(state);
+        }
+
+      if (StateFunc::IsValid(state))
+        {
+        MeasurementVectorType mv;
+        NumericTraits< InputPixelType >::AssignToArray(iit.Get(), mv);
+        OutputPixelType out = StateFunc::Distance(state, mv);
+        if (m_HasStateImage)
+          {
+          /*
+           * State image implies no orientation.
+           * In the current implementation orientation with respect to
+           * calculated state image is not accurate so orientation is discarded.
+           *
+           * This implies that this filter will capture abnormalities in the
+           * image and does not care about its location. I.e. a dark point in
+           * a brain can be atrophy but this filter capture it as a lesion.
+           * This behavior should be seen in interpreting the output likelihood.
+           */
+          oit.Set(out);
+          }
+        else
+          {
+          if (StateFunc::Orientation(state, mv) == m_PositiveOrientation)
+            oit.Set(out);
+          else
+            oit.Set(-out);
+          }
+        }
+      else
+        {
+        oit.Set(m_OutsideValue);
+        }
+      }
+    ++iit;
+    ++oit;
+    if (m_HasMask) ++mit;
+    }
+  }
+
+template< class TInputImage, class TOutputImage >
+void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::PrintSelf(
+    std::ostream & os, Indent indent) const
+  {
+  Superclass::PrintSelf(os, indent);
+  os << indent << "Transform: " << m_Transform << std::endl;
+  }
+} // end namespace itk
+
+#endif

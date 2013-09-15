@@ -1,139 +1,187 @@
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#include "3rdparty/stacktrace.h"
+#include "buildinfo.h"
+/** CPP Headers */
+#include <sstream>
+#include <string>
+#include <vector>
+/** General ITK  */
+#include "itkImage.h"
+/** ITK Filters */
+#include "itkBinaryThresholdImageFilter.h"
+#if ITK_VERSION_MAJOR >= 4
+#include "itkComposeImageFilter.h"
+#else
+#include "itkImageToVectorImageFilter.h"
+#endif
+/** ITK IO  */
+#include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
+#include "itkTransformFileReader.h"
+/** Others */
+#include "pipeline/itkRobustOutlierPipeline.h"
+#include "3rdparty/tclap/CmdLine.h"
+#include "util/helpers.h"
+
+/** Pixel types, please only change these types */
+typedef float PixelType;
+typedef float StatePixelType;
+
+/** Image and Filter types */
+typedef itk::Image< PixelType, DIM > ImageType;
+#if ITK_VERSION_MAJOR >= 4
+typedef itk::ComposeImageFilter< ImageType > CollectorType;
+#else
+typedef itk::ImageToVectorImageFilter< ImageType > CollectorType;
+#endif
+typedef CollectorType::OutputImageType CollectedImageType;
+
+typedef itk::RobustOutlierPipeline< CollectedImageType > OutlierPipelineType;
+typedef OutlierPipelineType::StateImageType StateImageType;
+typedef OutlierPipelineType::TransformType TransformType;
+typedef OutlierPipelineType::MaskImageType MaskImageType;
+typedef itk::BinaryThresholdImageFilter< MaskImageType, MaskImageType > BinaryThresholdImageFilterType;
+
+/** IO types */
+typedef itk::ImageFileReader< ImageType > ImageReaderType;
+typedef itk::ImageFileReader< StateImageType > StateReaderType;
+typedef itk::ImageFileWriter< ImageType > ImageWriterType;
+
+#if (ITK_VERSION_MAJOR == 4 && ITK_VERSION_MINOR >= 5) || ITK_VERSION_MAJOR > 4
+typedef itk::TransformFileReaderTemplate<float> TransformReaderType;
+#else
+typedef itk::TransformFileReader TransformReaderType;
+#endif
+
+int main(int argc, char *argv[])
+  {
+  TCLAP::CmdLine cmd(
+      "Cascade(v" CASCADE_VERSION ") - Segmentation of White Matter Lesion: Training " BUILDINFO,
+      ' ', CASCADE_VERSION);
+
+  TCLAP::ValueArg< std::string > outfile("o", "out", "Output state file.",
+                                         false, "out.nii.gz", "Output", cmd);
+
+  TCLAP::ValueArg< std::string > trainedState(
+      "s",
+      "state",
+      "Initial state file. A vector image with specific dimension (3,6,10,15,...). Typically the output of this program.",
+      false, "", "Output", cmd);
+
+  TCLAP::ValueArg< std::string > mask(
+      "m",
+      "mask",
+      "Mask the input image. Process only from the points with non zero value. Should be the same size as Input.",
+      false, "", "Output", cmd);
+
+  TCLAP::ValueArg< std::string > transform(
+      "t", "transform",
+      "Transform from input space to standard (MNI) space. e.g. trans.tfm",
+      true, "", "Transform", cmd);
+
+  TCLAP::MultiArg< std::string > inputLight(
+      "l", "light", "Normalized light image file e.g. FLAIR_normalized.nii.gz",
+      false, "Light Input", cmd);
+
+  TCLAP::MultiArg< std::string > inputDark(
+      "d", "dark", "Normalized dark image file e.g. MPRAGE_normalized.nii.gz",
+      false, "Dark Input", cmd);
+
+  /** Parse the argv array.   */
+  try
+    {
+    cmd.parse(argc, argv);
+    }
+  catch (TCLAP::ArgException &e)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "error: " << e.error() << " for arg " << e.argId()
+                 << std::endl;
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  /** Argument and setting up the pipeline  */
+  try
+    {
+    /** Reading all the inputs. */
+    CollectorType::Pointer collector = CollectorType::New();
+    OutlierPipelineType::Pointer likelihood = OutlierPipelineType::New();
+
+    int n(0);
+    for (TCLAP::MultiArg< std::string >::const_iterator seqNameIt =
+        inputLight.begin(); seqNameIt != inputLight.end(); ++seqNameIt)
+      {
+      collector->PushBackInput(
+          cascade::util::LoadImage< ImageType >(*seqNameIt));
+      likelihood->SetNthChannelLight(n++);
+      }
+    for (TCLAP::MultiArg< std::string >::const_iterator seqNameIt =
+        inputDark.begin(); seqNameIt != inputDark.end(); ++seqNameIt)
+      {
+      collector->PushBackInput(
+          cascade::util::LoadImage< ImageType >(*seqNameIt));
+      likelihood->SetNthChannelDark(n++);
+      }
+
+    itkAssertOrThrowMacro(n!=0,
+                          "You should specify at least one input sequence.");
+    collector->Update();
+    likelihood->SetInput(collector->GetOutput());
+
+    TransformReaderType::Pointer transformReader = TransformReaderType::New();
+    transformReader->SetFileName(transform.getValue());
+    transformReader->Update();
+
+    likelihood->SetTransform(
+        static_cast< TransformType* >(transformReader->GetTransformList()->front().GetPointer()));
+
+    BinaryThresholdImageFilterType::Pointer thresholdFilter =
+        BinaryThresholdImageFilterType::New();
+    /** Set mask if any */
+    if (mask.isSet())
+      {
+      thresholdFilter->SetInput(
+          cascade::util::LoadImage< MaskImageType >(mask.getValue()));
+      thresholdFilter->SetLowerThreshold(itk::NumericTraits<MaskImageType::PixelType>::epsilon());
+      likelihood->SetMaskImage(thresholdFilter->GetOutput());
+      likelihood->SetMaskValue(thresholdFilter->GetInsideValue());
+      }
+
+    StateReaderType::Pointer stateReader = StateReaderType::New();
+    stateReader->SetFileName(trainedState.getValue());
+    stateReader->Update();
+    likelihood->SetStateImage(stateReader->GetOutput());
+
+    likelihood->Update();
+
+    ImageWriterType::Pointer stateWriter = ImageWriterType::New();
+    stateWriter->SetFileName(outfile.getValue());
+    stateWriter->SetInput(likelihood->GetOutput());
+    stateWriter->Update();
+    }
+  catch (itk::ExceptionObject & err)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "Exception caught!\n" << err << "\n";
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    print_stacktrace();
+    return EXIT_FAILURE;
+    }
+  return EXIT_SUCCESS;
+  }

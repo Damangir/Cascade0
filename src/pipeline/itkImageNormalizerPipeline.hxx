@@ -1,176 +1,247 @@
-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
-GMOarMpU0ZmFetbbeXNLPw==
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#ifndef __itkImageNormalizerPipeline_hxx
+#define __itkImageNormalizerPipeline_hxx
+#include "itkImageNormalizerPipeline.h"
+
+#include <vector>
+#include <algorithm>
+#include <numeric>
+#include <cmath>
+
+#include "itkIntTypes.h"
+#include "itkNumericTraits.h"
+#include "itkUnaryFunctorImageFilter.h"
+#include "itkDiscreteGaussianImageFilter.h"
+#include "itkMaskImageFilter.h"
+#include "itkMaskedImageToHistogramFilter.h"
+#include "itkBinaryThresholdImageFilter.h"
+
+#include "util/itkLinearTransformFunctor.h"
+#include "3rdparty/gnuplot-cpp/gnuplot_i.hpp"
+
+namespace itk
+{
+template< class TInputImage, class TOutputImage >
+ImageNormalizerPipeline< TInputImage, TOutputImage >::ImageNormalizerPipeline()
+  {
+  m_TargetMin = -1;
+  m_TargetPeak = -1;
+  m_TargetMax = -1;
+
+  m_MinValue = 0;
+  m_Peak = 0;
+  m_MaxValue = 0;
+
+  m_Percentile = 0.05;
+  m_NumberOfBins = 100;
+  }
+
+template< class TInputImage, class TOutputImage >
+void ImageNormalizerPipeline< TInputImage, TOutputImage >::PrintSelf(
+    std::ostream & os, Indent indent) const
+  {
+  Superclass::PrintSelf(os, indent);
+  os << indent << "Peak target intensity " << m_TargetPeak << std::endl;
+  os << indent << "Max target intensity " << m_MaxValue << std::endl;
+  os << indent << "Number of bins " << m_NumberOfBins << std::endl;
+  os << indent << "Percentile " << m_Percentile << std::endl;
+
+  os << indent << "Estimated peak intensity " << m_Peak << std::endl;
+  }
+
+template< class TInputImage, class TOutputImage >
+void ImageNormalizerPipeline< TInputImage, TOutputImage >::GenerateData()
+  {
+  unsigned int m_NumOfComponents = 1;
+  if (m_Percentile > 1 || m_Percentile < 0)
+    {
+    itkExceptionMacro("Histogram percentile should be lie in range (0, 1)");
+    }
+  if (m_Percentile > 0.5)
+    {
+    itkWarningMacro("Histogram percentile adjusted to range (0, 0.5)");
+    m_Percentile = 1 - m_Percentile;
+    }
+
+  typedef InputImageType MaskImageType;
+  typedef BinaryThresholdImageFilter< InputImageType, MaskImageType > BinaryThresholdImageFilterType;
+
+  typedef Statistics::MaskedImageToHistogramFilter< InputImageType,
+      MaskImageType > HistogramGeneratorType;
+  typedef typename HistogramGeneratorType::HistogramType HistogramType;
+
+  typedef DiscreteGaussianImageFilter< InputImageType, InputImageType > GaussianFilterType;
+
+  typedef UnaryFunctorImageFilter< InputImageType, OutputImageType,
+      IntensityLinearTransform< InputImagePixelType, OutputImagePixelType > > LinearTransform;
+
+  /** First create a mask of non-zero regions of the input image zero/max */
+  typename BinaryThresholdImageFilterType::Pointer thresholdFilter =
+      BinaryThresholdImageFilterType::New();
+  thresholdFilter->SetInput(this->GetInput());
+  thresholdFilter->SetLowerThreshold(
+      NumericTraits< typename MaskImageType::PixelType >::epsilon());
+  thresholdFilter->SetInsideValue(1);
+  thresholdFilter->Update();
+
+  /** Then blur the image to reduce noise  */
+  typename GaussianFilterType::Pointer gaussianFilter =
+      GaussianFilterType::New();
+  gaussianFilter->SetInput(this->GetInput());
+  gaussianFilter->SetVariance(1);
+
+  /** Generate histogram for area non zero area */
+  typename HistogramGeneratorType::Pointer histogramGenerator =
+      HistogramGeneratorType::New();
+  typename HistogramGeneratorType::HistogramType::SizeType size(
+      m_NumOfComponents);
+  size.Fill(m_NumberOfBins);
+
+  histogramGenerator->SetInput(gaussianFilter->GetOutput());
+  histogramGenerator->SetMaskImage(thresholdFilter->GetOutput());
+  histogramGenerator->SetMaskValue(thresholdFilter->GetInsideValue());
+
+  histogramGenerator->SetHistogramSize(size);
+  histogramGenerator->SetAutoMinimumMaximum(true);
+  histogramGenerator->Update();
+
+  /** Get top and bottom percentile as new bound */
+  typename HistogramType::MeasurementVectorType lowerBound(m_NumOfComponents);
+  typename HistogramType::MeasurementVectorType upperBound(m_NumOfComponents);
+  for (unsigned int i = 0; i < m_NumOfComponents; i++)
+    {
+    lowerBound[i] = histogramGenerator->GetOutput()->Quantile(i, m_Percentile);
+    upperBound[i] = histogramGenerator->GetOutput()->Quantile(i,
+                                                              1 - m_Percentile);
+    }
+  /** save the extreme landmark by the way */
+  m_MaxValue = upperBound[0];
+  m_MinValue = lowerBound[0];
+
+  /** Regenerate histogram using new bound */
+  histogramGenerator->SetAutoMinimumMaximum(false);
+  histogramGenerator->SetHistogramBinMinimum(lowerBound);
+  histogramGenerator->SetHistogramBinMaximum(upperBound);
+  histogramGenerator->Update();
+
+  /* Filter the output histogram to avoid unstable peaks */
+  HistogramType * histogram =
+      const_cast< HistogramType * >(histogramGenerator->GetOutput());
+  const int histogramSize = histogram->Size();
+
+  std::vector< double > freqs;
+  std::vector< double > measurements;
+  freqs.assign(histogramSize, 0.0);
+  measurements.assign(histogramSize, 0.0);
+
+  double gausian[] =
+    {
+    0.25, 0.50, 0.25
+    };
+  const int g_size = 1;
+  const int median_size = 2;
+  int bin = 0;
+  /** Putting to vector  */
+  for (bin = 0; bin < histogramSize; bin++)
+    {
+    measurements[bin] = histogram->GetMeasurementVector(bin)[0];
+    }
+
+  /** Median filter on histogram to avoid salt-pepper noise  */
+  for (bin = 0; bin < histogramSize; bin++)
+    {
+    std::vector< double > neighbor;
+    unsigned int from_bin = std::max(0, bin - g_size);
+    unsigned int to_bin = std::min(histogramSize, bin + g_size);
+    for (int i = from_bin; i < to_bin; i++)
+      {
+      neighbor.push_back(histogram->GetFrequency(i));
+      }
+    std::sort(neighbor.begin(), neighbor.end());
+    freqs[bin] = *(neighbor.begin() + int(g_size / 2));
+    }
+  /** Gaussian Filter to avoid high frequencies*/
+  for (bin = 0; bin < histogramSize; bin++)
+    {
+    double val = 0;
+    double coef = 0;
+    unsigned int from_bin = std::max(0, bin - g_size);
+    unsigned int to_bin = std::min(histogramSize, bin + g_size);
+    for (int i = from_bin; i < to_bin; i++)
+      {
+      val += freqs[i] * gausian[bin - i];
+      coef += gausian[bin - i];
+      }
+    freqs[bin] = val / coef;
+    histogram->SetFrequency(bin, freqs[bin]);
+    }
+
+  /** Calculate the stable peak (mode) of the histogram */
+  unsigned int peakBin = 0;
+
+  double peak_begin = histogram->Quantile(0, 0.10);
+  double peak_end = histogram->Quantile(0, 0.90);
+
+  for (int i = 0; i < histogramSize; i++)
+    {
+    double intensity = histogram->GetMeasurementVector(i)[0];
+    if (intensity > peak_begin && intensity < peak_end
+        && (freqs[i] > freqs[peakBin] || peakBin == 0))
+      {
+      peakBin = i;
+      }
+    }
+
+  m_Peak = histogram->GetMeasurementVector(peakBin)[0];
+
+  if (false)
+    {
+    std::vector<double> x_intensity, y_freq;
+    for (int i = 0; i < histogramSize; i++)
+      {
+      double intensity = histogram->GetMeasurementVector(i)[0];
+      x_intensity.push_back(intensity);
+      y_freq.push_back(freqs[i]);
+      }
+    Gnuplot(x_intensity, y_freq, "Histogram", "lines", "Intensity", "Frequency");
+    }
+  /* Linearly map peak and extreme landmarks to desired valuse */
+  typename LinearTransform::Pointer linearTransform = LinearTransform::New();
+  linearTransform->SetInput(this->GetInput());
+  linearTransform->GetFunctor().AddFixedPoint(0, 0);
+
+  if (m_TargetPeak > 0)
+    {
+    linearTransform->GetFunctor().AddFixedPoint(m_Peak, m_TargetPeak);
+    }
+  if (m_TargetMin > 0)
+    {
+    linearTransform->GetFunctor().AddFixedPoint(lowerBound[0], m_TargetMin);
+    }
+  if (m_TargetMax > 0)
+    {
+    linearTransform->GetFunctor().AddFixedPoint(upperBound[0], m_TargetMax);
+    }
+
+  linearTransform->Update();
+
+  this->GraftOutput(linearTransform->GetOutput());
+  }
+} // end namespace itk
+
+#endif

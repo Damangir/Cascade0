@@ -1,54 +1,93 @@
-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
+// stacktrace.h (c) 2008, Timo Bingmann from http://idlebox.net/
+// published under the WTFPL v2.0
+
+#ifndef _STACKTRACE_H_
+#define _STACKTRACE_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <execinfo.h>
+#include <cxxabi.h>
+
+/** Print a demangled stack backtrace of the caller function to FILE* out. */
+static inline void print_stacktrace(FILE *out = stderr, unsigned int max_frames = 63)
+{
+    fprintf(out, "stack trace:\n");
+
+    // storage array for stack trace address data
+    void* addrlist[max_frames+1];
+
+    // retrieve current stack addresses
+    int addrlen = backtrace(addrlist, sizeof(addrlist) / sizeof(void*));
+
+    if (addrlen == 0) {
+	fprintf(out, "  <empty, possibly corrupt>\n");
+	return;
+    }
+
+    // resolve addresses into strings containing "filename(function+address)",
+    // this array must be free()-ed
+    char** symbollist = backtrace_symbols(addrlist, addrlen);
+
+    // allocate string which will be filled with the demangled function name
+    size_t funcnamesize = 256;
+    char* funcname = (char*)malloc(funcnamesize);
+
+    // iterate over the returned symbol lines. skip the first, it is the
+    // address of this function.
+    for (int i = 1; i < addrlen; i++)
+    {
+	char *begin_name = 0, *begin_offset = 0, *end_offset = 0;
+
+	// find parentheses and +address offset surrounding the mangled name:
+	// ./module(function+0x15c) [0x8048a6d]
+	for (char *p = symbollist[i]; *p; ++p)
+	{
+	    if (*p == '(')
+		begin_name = p;
+	    else if (*p == '+')
+		begin_offset = p;
+	    else if (*p == ')' && begin_offset) {
+		end_offset = p;
+		break;
+	    }
+	}
+
+	if (begin_name && begin_offset && end_offset
+	    && begin_name < begin_offset)
+	{
+	    *begin_name++ = '\0';
+	    *begin_offset++ = '\0';
+	    *end_offset = '\0';
+
+	    // mangled name is now in [begin_name, begin_offset) and caller
+	    // offset in [begin_offset, end_offset). now apply
+	    // __cxa_demangle():
+
+	    int status;
+	    char* ret = abi::__cxa_demangle(begin_name,
+					    funcname, &funcnamesize, &status);
+	    if (status == 0) {
+		funcname = ret; // use possibly realloc()-ed string
+		fprintf(out, "  %s : %s+%s\n",
+			symbollist[i], funcname, begin_offset);
+	    }
+	    else {
+		// demangling failed. Output function name as a C function with
+		// no arguments.
+		fprintf(out, "  %s : %s()+%s\n",
+			symbollist[i], begin_name, begin_offset);
+	    }
+	}
+	else
+	{
+	    // couldn't parse the line? print the whole line.
+	    fprintf(out, "  %s\n", symbollist[i]);
+	}
+    }
+
+    free(funcname);
+    free(symbollist);
+}
+
+#endif // _STACKTRACE_H_

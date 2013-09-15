@@ -1,61 +1,88 @@
-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
-CzIogRpb6EmR9YbP2m/EDQ==
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#ifndef __itkRobustOutlierPipeline_hxx
+#define __itkRobustOutlierPipeline_hxx
+#include "itkRobustOutlierPipeline.h"
+
+namespace itk
+{
+
+template< class TInputImage, class TOutputImage >
+RobustOutlierPipeline< TInputImage, TOutputImage >::RobustOutlierPipeline()
+  {
+  m_NumberOfBins = 50;
+  m_Percentile = 0.01;
+  this->SetMaskValue(NumericTraits< MaskPixelType >::max());
+  m_MahalanobisFilter = MahalanobisDistanceImageFilterType::New();
+  m_MeanCovCalculator = MeanVariancePipelineType::New();
+  m_ChiFilter = ChiFilterType::New();
+  m_Castor = CastToOutputType::New();
+  }
+
+template< class TInputImage, class TOutputImage >
+void RobustOutlierPipeline< TInputImage, TOutputImage >::PrintSelf(
+    std::ostream & os, Indent indent) const
+  {
+  Superclass::PrintSelf(os, indent);
+  os << indent << "Number of histogram bins: " << m_NumberOfBins << std::endl;
+  os << indent << "Histogram cut percentile: " << m_Percentile << std::endl;
+  }
+
+template< class TInputImage, class TOutputImage >
+void RobustOutlierPipeline< TInputImage, TOutputImage >::GenerateData()
+  {
+  InputImageType *inputImage =
+      static_cast< InputImageType * >(this->ProcessObject::GetInput(0));
+
+  itkAssertOrThrowMacro(inputImage, "Input image should be set.");
+
+  m_MahalanobisFilter->SetInput(inputImage);
+
+  if (m_MahalanobisFilter->GetStateImage())
+    {
+    if (GetMaskImage())
+      {
+      m_MahalanobisFilter->SetMaskImage(this->GetMaskImage());
+      m_MahalanobisFilter->SetMaskValue(this->GetMaskValue());
+      }
+    }
+  else
+    {
+    if (GetMaskImage())
+      {
+      m_MeanCovCalculator->SetMaskImage(this->GetMaskImage());
+      m_MeanCovCalculator->SetMaskValue(this->GetMaskValue());
+      }
+
+    m_MeanCovCalculator->SetInput(inputImage);
+    m_MeanCovCalculator->Update();
+    m_MahalanobisFilter->SetGlobalState(
+        StateFunc::GetState(GetMean(), GetCovariance()));
+    }
+
+  m_ChiFilter->GetFunctor().SetDOF(inputImage->GetNumberOfComponentsPerPixel());
+  m_ChiFilter->SetInput(m_MahalanobisFilter->GetOutput());
+
+  m_Castor->SetInput(m_ChiFilter->GetOutput());
+
+  m_Castor->Update();
+  this->GraftOutput(m_Castor->GetOutput());
+  }
+
+} // end namespace itk
+
+#endif

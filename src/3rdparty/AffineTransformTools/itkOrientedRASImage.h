@@ -1,205 +1,271 @@
-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
-DduhZfl2FRqfLaLwU7j+wHgECYed4AjZrZHSWExNbyUbGKArt7J1Tf1X3H1RoXWt
-Is3IFMSw81SRt19VR+k7be9ZIxOJhjbltH1cowbDJqG9abI0QVHQR1mFz7UMSy8G
-tS+8fCWjjzKP1M/m5awtwavGT+JPrPTlp8W5jYyxQhK7r7UDcE66vH3O0rCkRY/Y
-vGOE9F3YqLdCpLRs1DZEdM49oHzhc6kzFF98GDsNDmP3mZoR3gstvHcSJ+W0yt3o
-fJefwrnA+Lx6d8TfQRkFCWaYwUc8kuP876AdcDxhg1f/QpI8c5k1Q4VMdhwPLYRe
-4rk8XU97bDmvrBavVUp77AqzRgAgpy4nQNq8BJTdqNIGetHPZHG+FpQNMdP4TlLq
-Q/XdQf3WYVyCwV29X+0q603g7/GDsCT+Wzx02elavDMHm1EQ1bRSdMrCeQQ35nbm
-asfLZOG9gjT4NCMKC+f7K2S8i1I9rFC2YGtveGD8HBP0FdeyFU6g2svQGdbtPkYz
-VxC+jJz+HNkhuCt5CFUozvglHMYb5DcIqm7kaKBYBHJX7cptbg1LMGcNWAhrMUUS
-GGDN4OpAJsN2Xl54ZcavK+3jKwau2AndommIGJMtR2s2gZ83TPv2NTvu7ZcBWuUB
-HOAj49IvbQ69r4ZEhKebFxVdXzRiXoHaUx6qg2NVmCFO9c4Rl/ra60eGMN0wjdiM
-PtqgA9MJmP/Kael4dJA/r6evF4LxkDj87NTzNhO3CwRj/rFD9s7RIvj2PFV3U/ZK
-vmdP+g10tAmrhRMeswsfdbo4xCr94pIo0ctouyvLvfirxk/iT6z05afFuY2MsUIS
-z4rmd5DQMoAFd5UoZG2k9Q6uLg6eMG0bcRRIQw/TJSKfEs8mP065plJe4TKcH0ju
-p9FGCPHzFUD755DdoAWSStgI7a2Iq+R8x9nBON6IitSxxVFeBt/8neH83bQ2n6v1
-JdAzbyrRbFZ11m0uLts5BTWfkHp4fpWMSZhpJdpalctPcx2nAWyswd7eCpd/gn8m
-44yOZs86r1jbrcGSqeTJx0D1VOMnn8fhMJebttFEmdrNj5fkf2s05XXzMXGL+qym
-AAV5fP80G+3MerOJOJqre44Y13lIumr9OraScChic4tI0P1n9iAZVsn45bsZZ06F
-Sghh5eET6YnicXxaJuORb1Lho3cZ5ckqoFWmVGqpI9iLv00OVqrfJQl9JL5yb9/A
-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
-CzIogRpb6EmR9YbP2m/EDQ==
+#ifndef __itkOrientedRASImage_h_
+#define __itkOrientedRASImage_h_
+
+#include "itkImage.h"
+
+namespace itk {
+
+/** 
+ * Oriented image with RAS physical coordinates (as opposed to LPS)
+ */
+template <class TPixel, unsigned int VImageDimension>
+class ITK_EXPORT OrientedRASImage : public Image<TPixel, VImageDimension>
+{
+public:
+  /** Standard class typedefs */
+  typedef OrientedRASImage               Self;
+  typedef Image<TPixel, VImageDimension>  Superclass;
+  typedef SmartPointer<Self>  Pointer;
+  typedef SmartPointer<const Self>  ConstPointer;
+  typedef WeakPointer<const Self>  ConstWeakPointer;
+  typedef Matrix<double, VImageDimension+1, VImageDimension+1> TransformMatrixType;
+
+  /** Method for creation through the object factory. */
+  itkNewMacro(Self);
+
+  /** Run-time type information (and related methods). */
+  itkTypeMacro(OrientedRASImage, Image);
+
+  /** Index typedef support. An index is used to access pixel values. */
+  typedef typename Superclass::IndexType  IndexType;
+
+  /** Direction typedef support. The direction cosines of the image. */
+  typedef typename Superclass::DirectionType  DirectionType;
+
+  /** Spacing typedef support.  Spacing holds the size of a pixel.  The
+   * spacing is the geometric distance between image samples. */
+  typedef typename Superclass::SpacingType SpacingType;
+
+  typedef typename Superclass::AccessorType        AccessorType;
+  typedef typename Superclass::AccessorFunctorType AccessorFunctorType;
+  typedef typename Superclass::IOPixelType         IOPixelType;
+
+  /** Tyepdef for the functor used to access a neighborhood of pixel pointers.*/
+  typedef NeighborhoodAccessorFunctor< Self > 
+                                            NeighborhoodAccessorFunctorType;
+
+  /** Return the NeighborhoodAccessor functor. This method is called by the 
+   * neighborhood iterators. */
+  NeighborhoodAccessorFunctorType GetNeighborhoodAccessor() 
+    { return NeighborhoodAccessorFunctorType(); }
+  
+  /** Return the NeighborhoodAccessor functor. This method is called by the 
+   * neighborhood iterators. */
+  const NeighborhoodAccessorFunctorType GetNeighborhoodAccessor() const
+    { return NeighborhoodAccessorFunctorType(); }
+  
+
+  /** \brief Get the continuous index from a physical point
+   *
+   * Returns true if the resulting index is within the image, false otherwise.
+   * \sa Transform */
+  template<class TCoordRep>
+  bool TransformRASPhysicalPointToContinuousIndex(
+              const Point<TCoordRep, VImageDimension>& point,
+              ContinuousIndex<TCoordRep, VImageDimension>& index   ) const
+    {
+    Point<TCoordRep, VImageDimension> p_lps = point;
+    p_lps[0] = -point[0]; p_lps[1] = -point[1];
+    return Superclass::TransformPhysicalPointToContinuousIndex(p_lps, index);
+    }
+
+  /** Get the index (discrete) from a physical point.
+   * Floating point index results are truncated to integers.
+   * Returns true if the resulting index is within the image, false otherwise
+   * \sa Transform */
+  template<class TCoordRep>
+  bool TransformRASPhysicalPointToIndex(
+            const Point<TCoordRep, VImageDimension>& point,
+            IndexType & index                                ) const
+    {
+    Point<TCoordRep, VImageDimension> p_lps = point;
+    p_lps[0] = -point[0]; p_lps[1] = -point[1];
+    return Superclass::TransformPhysicalPointToIndex(p_lps, index);
+    }
+
+  /** Get a physical point (in the space which
+   * the origin and spacing infomation comes from)
+   * from a continuous index (in the index space)
+   * \sa Transform */
+  template<class TCoordRep>
+  void TransformContinuousIndexToRASPhysicalPoint(
+            const ContinuousIndex<TCoordRep, VImageDimension>& index,
+            Point<TCoordRep, VImageDimension>& point        ) const
+    {
+    Superclass::TransformContinuousIndexToPhysicalPoint(index, point);
+    point[0] = -point[0];
+    point[1] = -point[1];
+    }
+
+  /** Get a physical point (in the space which
+   * the origin and spacing infomation comes from)
+   * from a discrete index (in the index space)
+   *
+   * \sa Transform */
+  template<class TCoordRep>
+  void TransformIndexToRASPhysicalPoint(
+                      const IndexType & index,
+                      Point<TCoordRep, VImageDimension>& point ) const
+    {
+    Superclass::TransformIndexToPhysicalPoint(index, point);
+    point[0] = -point[0];
+    point[1] = -point[1];
+    }
+
+  /** Take a vector or covariant vector that has been computed in the
+   * coordinate system parallel to the image grid and rotate it by the
+   * direction cosines in order to get it in terms of the coordinate system of
+   * the image acquisition device.  This implementation in the Image
+   * multiply the array (vector or covariant vector) by the matrix of Direction
+   * Cosines. The arguments of the method are of type FixedArray to make
+   * possible to use this method with both Vector and CovariantVector.
+   * The Method is implemented differently in the itk::Image.
+   *
+   * \sa Image
+   */ 
+  template<class TCoordRep>
+  void TransformLocalVectorToRASPhysicalVector(
+    const FixedArray<TCoordRep, VImageDimension> & inputGradient,
+          FixedArray<TCoordRep, VImageDimension> & outputGradient ) const
+    {
+    Superclass::TransformLocalVectorToPhysicalVector(inputGradient, outputGradient);
+    outputGradient[0] = -outputGradient[0];
+    outputGradient[1] = -outputGradient[1];
+    }
+
+  /** 
+   * Get a matrix that maps points voxel coordinates to RAS coordinates
+   */
+  TransformMatrixType GetVoxelSpaceToRASPhysicalSpaceMatrix()
+    {
+    // Generate intermediate terms
+    vnl_matrix<double> m_dir, m_ras_matrix;
+    vnl_diag_matrix<double> m_scale, m_lps_to_ras;
+    vnl_vector<double> v_origin, v_ras_offset;
+
+    // Compute the matrix
+    m_dir = this->GetDirection().GetVnlMatrix();
+    m_scale.set(this->GetSpacing().GetVnlVector());
+    m_lps_to_ras.set(vnl_vector<double>(VImageDimension, 1.0));
+    m_lps_to_ras[0] = -1;
+    m_lps_to_ras[1] = -1;
+    m_ras_matrix = m_lps_to_ras * m_dir * m_scale;
+
+    // Compute the vector
+    v_origin = this->GetOrigin().GetVnlVector();
+    v_ras_offset = m_lps_to_ras * v_origin;
+
+    // Create the larger matrix
+    TransformMatrixType mat;
+    vnl_vector<double> vcol(VImageDimension+1, 1.0);
+    vcol.update(v_ras_offset);
+    mat.SetIdentity();
+    mat.GetVnlMatrix().update(m_ras_matrix);
+    mat.GetVnlMatrix().set_column(VImageDimension, vcol);
+
+    return mat;
+    };
+
+  /** 
+   * Set a matrix that maps points voxel coordinates to RAS coordinates
+   */
+  void SetVoxelSpaceToRASPhysicalSpaceMatrix(vnl_matrix<double> mat)
+    {
+    // Generate intermediate terms
+    vnl_matrix<double> m_dir, m_ras_matrix, m_dist;
+    vnl_diag_matrix<double> m_ras_to_lps, m_scale;
+    vnl_vector<double> v_origin ;
+    vnl_vector<double> m_spacing(VImageDimension, 0.0);
+
+    // Get the dim x dim submatrix from mat
+    vnl_matrix<double> smat(VImageDimension,VImageDimension,0.0);
+    for (size_t i=0; i< VImageDimension; i++)
+      for (size_t j=0; j< VImageDimension; j++)
+        smat[i][j] = mat[i][j];
+    //smat = mat.get_n_rows(0, VImageDimension).get_n_columns(0, VImageDimension);
+    // Get the origin
+    m_ras_to_lps.set(vnl_vector<double>(VImageDimension, 1.0));
+    m_ras_to_lps[0] = -1;
+    m_ras_to_lps[1] = -1;
+    vnl_vector<double> v_ras_offset(VImageDimension,0.0);
+    v_ras_offset.fill(0.0);
+    for (size_t i=0; i< VImageDimension; i++)
+      v_ras_offset[i] = mat[i][VImageDimension];
+    v_origin = m_ras_to_lps * v_ras_offset;
+
+    // Get the Spacing
+    // First, create a matrix of the form [1 0 0; 0 1 0; 0 0 1; 0 0 0] to get distances between consecutive voxels
+    // along each axis. When RAS mat will be applied to this matrix, we'll have 3 distance vectors
+    vnl_diag_matrix<double> offsetmat(VImageDimension+1, VImageDimension);
+    offsetmat.fill(0.0);
+    for (size_t i=0; i < VImageDimension+1; i++)
+      offsetmat[i]=1.0;
+    m_dist = mat * offsetmat;
+    // Then compute magnitude of the distance vectors, that's our spacing
+    for (size_t i=0; i< VImageDimension; i++)
+    {
+      vnl_vector<double> distcol(m_dist.get_column(i));
+      m_spacing[i] = distcol.magnitude();
+    }
+    m_scale.set(m_spacing);
+    
+    // Get the direction
+    m_scale.invert_in_place();
+    m_dir = m_ras_to_lps * smat * m_scale;
+    
+    // Set everything
+    itk::Matrix<double, VImageDimension, VImageDimension> dir;
+    dir.SetIdentity();
+    for (size_t i=0; i< VImageDimension; i++)
+      for (size_t j=0; j< VImageDimension; j++)
+        dir[i][j] = m_dir[i][j];
+    this->SetDirection(dir);
+    double origin[VImageDimension];
+    for (size_t i=0; i< VImageDimension; i++)
+      origin[i] = v_origin[i];
+    this->SetOrigin(origin);
+    double spacing[VImageDimension];
+    for (size_t i=0; i< VImageDimension; i++)
+      spacing[i] = m_spacing[i];
+    this->SetSpacing(spacing);
+     
+    };
+
+  /** 
+   * Get a matrix that maps points in the x * spacing + origin space to
+   * the RAS space
+   */
+  TransformMatrixType GetSpacingOriginPhysicalSpaceToRASPhysicalSpaceMatrix()
+    {
+    TransformMatrixType mat;
+    mat.SetIdentity();
+
+    for(size_t i = 0; i < VImageDimension; i++)
+      {
+      double ras_flip = (i < 2) ? -1 : 1;
+      mat[i][VImageDimension] = ras_flip * this->GetOrigin()[i];
+      for(size_t j = 0; j < VImageDimension; j++)
+        {
+        mat[i][j] = ras_flip * this->GetDirection()(i,j) * this->GetSpacing()[i];
+        mat[i][VImageDimension] -= ras_flip * this->GetDirection()(i,j) * this->GetOrigin()[i];
+        }      
+      }
+
+    return mat;
+    }
+
+
+
+protected:
+  OrientedRASImage() {};
+  virtual ~OrientedRASImage() {};
+
+private:
+  OrientedRASImage(const Self&); //purposely not implemented
+  void operator=(const Self&); //purposely not implemented
+};
+
+} //namespace itk
+
+#endif
+

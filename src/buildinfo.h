@@ -1,27 +1,46 @@
-U2FsdGVkX18BbrHljv5wAOUHkcp25+aV40DF+amJ2IX9JB+/yYmOapH7hI/VxJsh
-OUElywUM4v6PvQYCoJvZR1k0cRkEtLFB+0Q2EuODE1PfWdMYXo7jVUIlQVra4A1Y
-1AuP0CfOX58M5O32tdMM5Dsv7hS03j3k4z98Nr0tWmdR8CwYRcCb9UAp8OKVEHqw
-HeuzBd4WzgwLN3D0m/cEb5I/Qp7fDnu+MkPdZbWe+yfbR9rq3kHMGWQlpO0QU6FO
-Q1nS0bJej/zk0F8cVAoCFtMzdpnMd51NPDfXaUYT97pTh9ITfYd7LerOUWBotd8l
-vNBF+roAhhFxlRIipHGTvnp90t6crIDpuxwFu/sdwr8CViyyagXn/ddk3CYGXiMC
-KTRx9j7oCgl1N5ZVLMf8FDE3+lnRPXh3kuzbIRZChCxV7BjPfXHQC/zFHDsWUZMg
-HzAsSaQI9maqLBz6JWHNJAe6Ilibg/vSbWzrbBc32MLNbIGkeZO8AZzLRFg/9YFz
-UIIiUyl89Te7e/38caSjK/H8nZ1IWCesbD6fec4RdtbR8rAinMVagiDQ//iD+E03
-+m0lCOHtCpOgNxEdwiLywq7BOAjGPU6fX6bzPm2+1CacbVXEC2NC64mjkCcmT6CX
-qdBfBNEPvhhvNOvrNGwPmv+y7+swNUfIAmS29dx8wpWbFpxk5wyeoBLm/kTIRfhc
-LuqflsLz98LGchbVGcGnRrsMMxLC2gBH1+8ntMJCLCB7R7MCsFfC6Ag1NbtDKk/m
-S2JfIBSEVzOp0ORWleKVPHz/fknslG7tX8GgkC2m/oHTmUQuc0RyCLcJ6ysxZANY
-AxnDEXo7htvZR5QAvZPDUpF27BSkvuJEG1OFZMmG+xAzpIfbCNLsFwk2o/B24K66
-IjI8ieYlmQcRakI59L/RtxNu4XpUe8+OxanPWD0vT03I+7v6LpDdMADFWDP9vXTP
-PD+A3dnn6oxeNE0AdTA48jzY8+b2squGaBYFFuE9x7Fsd1o9pFEuPmKjqZMgGerz
-JtOOXQ6Ll6VUVSq/AbsxFVBdXFHUAKs4ul9ETIlRXr4qwbV85W4fygEdntA71nmV
-9Qmn0PpnfxzlacE9kAUhLHSAZdBIhtybESQ5AGOYDxtGVLtT1UmuLMNNSS9Mt9G/
-kqXxCnQ/Ubb3MpKWG+CoYhgz4kAQa7BPtxug8K/POVVJUXUlHbTKH/bsWKy77lG6
-YKibv9ZBvA+Pxdb/JoSI2zwXatW7XxdCbqV1sHFgFrg9c7zOFkOLkYGiFkm2msl+
-fqni5QHw9zo08CpTbcSTb43xn71+QVOkWoWQxcn20FZIvFxpaOCBFBGK6UxcMWMx
-910+auDgUluRRqyT+tYsbJUHSnI9efL5Sh1YCIuqmMxTsAG90+4LLU6eRMFfj8iF
-nDItY2BcLW2trs/ha8bWHz7/+3D3Q2toQEXtHJFyYU5La12GuyjqkRY1YSsjn5mi
-XRDrpwnQh3ZKp0Qof+fYkLqXiRiZtx2a1D209bTZ8J43oFPZ8f63fehl13sPo6Oc
-/mv1qfnbdn7vV4v18/ahxwJnadgO9U3JMJDPXjWI7gDFCNcc9DbbiPqMPQ0VST+w
-cBUHdu0qEcT+sjpFx2rZWUfPtPcFbyEsiMIJ+AZFsG/II+O57CiUsCm6aGz7q/e/
-NHsddfikHStOFoOH2xKQkRCPRwjijA/EI2lXDuTU09F14l2SeTIzH+sQk3voyWEU
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+
+/* RN:
+ * Robust masked outlier
+ * default mean and covariance
+ */
+#define CASCADE_VERSION "0.3"
+
+/* RN:
+ * init mask to WM or WM+GM
+ * Outlier layer
+ */
+// #define CASCADE_VERSION "0.2"
+
+/* RN:
+ * Basic implementation:
+ * Filters
+ * Outlier
+ * Masked-statistics
+ */
+// #define CASCADE_VERSION "0.1"
+
+#ifndef DIM
+#define DIM 3
+#endif
+#define SLICEDIM (DIM-1)
+#define STR_HELPER(x) #x
+#define STR(x) STR_HELPER(x)
+#define DIMSTR STR(DIM)
+#define BUILDINFO "(built at " __DATE__ " " __TIME__ " for " DIMSTR " dimensional input image)"
+#pragma message ("Build info:" BUILDINFO)

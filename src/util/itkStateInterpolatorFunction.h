@@ -1,65 +1,84 @@
-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
+#ifndef STATEINTERPOLATORFUNCTION_H_
+#define STATEINTERPOLATORFUNCTION_H_
+
+#include "itkImageFunction.h"
+#include "itkWeightedSinglePassMeanCovarianceUpdate.h"
+
+#include <vector>
+#include <utility>
+
+namespace itk
+{
+template< class TStateImage, class TCoordRep = double >
+class StateInterpolatorFunction: public ImageFunction< TStateImage,
+    typename TStateImage::PixelType, TCoordRep >
+{
+public:
+  /** Dimension underlying input image. */
+  itkStaticConstMacro(ImageDimension, unsigned int, TStateImage::ImageDimension);
+
+    /** Standard class typedefs. */
+    typedef StateInterpolatorFunction Self;
+    typedef ImageFunction<TStateImage, typename TStateImage::PixelType, TCoordRep> Superclass;
+
+    typedef SmartPointer< Self > Pointer;
+    typedef SmartPointer< const Self > ConstPointer;
+
+    /** Method for creation through the object factory. */
+    itkNewMacro(Self);
+    /** Run-time type information (and related methods). */
+    itkTypeMacro(StateInterpolatorFunction, ImageFunction);
+
+    /** InputImageType typedef support. */
+    typedef typename Superclass::InputImageType InputImageType;
+    typedef typename InputImageType::PixelType PixelType;
+    typedef typename PixelType::ValueType ValueType;
+    typedef typename NumericTraits< ValueType >::RealType RealType;
+    typedef typename NumericTraits< PixelType >::ScalarRealType ScalarRealType;
+
+    /** Point typedef support. */
+    typedef typename Superclass::PointType PointType;
+
+    /** Index typedef support. */
+    typedef typename Superclass::IndexType IndexType;
+
+    /** ContinuousIndex typedef support. */
+    typedef typename Superclass::ContinuousIndexType ContinuousIndexType;
+
+    /** Output type is RealType of TStateImage::PixelType. */
+    typedef typename Superclass::OutputType OutputType;
+
+    /** CoordRep typedef support. */
+    typedef TCoordRep CoordRepType;
+
+    typedef std::pair<IndexType, ScalarRealType> NeighborType;
+    typedef std::vector<NeighborType> NeighborListType;
+
+    /** Trait for the State. */
+    typedef typename TStateImage::PixelType StateType;
+    typedef NumericTraits<StateType> StateTraitType;
+    typedef WeightedSinglePassMeanCovarianceUpdate<StateType> StateUpdater;
+    /** No bounds checking is done. */
+    virtual OutputType Evaluate(const PointType & point) const;
+
+    /** No bounds checking is done. */
+    virtual OutputType EvaluateAtIndex(const IndexType & index) const;
+
+    /** No bounds checking is done. */
+    virtual OutputType EvaluateAtContinuousIndex(const ContinuousIndexType & index) const;
+
+    NeighborListType GetWeightsForContinuousIndex(const ContinuousIndexType & index) const;
+
+  protected:
+    StateInterpolatorFunction();
+    void PrintSelf(std::ostream & os, Indent indent) const;
+  private:
+    StateInterpolatorFunction(const Self &); //purposely not implemented
+    void operator=(const Self &);//purposely not implemented
+    const unsigned int m_Neighbors;
+    };} // end namespace itk
+
+#ifndef ITK_MANUAL_INSTANTIATION
+#include "itkStateInterpolatorFunction.hxx"
+#endif
+#endif /* STATEINTERPOLATORFUNCTION_H_ */

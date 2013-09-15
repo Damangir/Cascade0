@@ -1,43 +1,81 @@
-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
-OKpoDEuVCeoXVGB5+gPHNQ==
+// -*- Mode: c++; c-basic-offset: 4; tab-width: 4; -*-
+
+/****************************************************************************** 
+ * 
+ *  file:  VersionVisitor.h
+ * 
+ *  Copyright (c) 2003, Michael E. Smoot .
+ *  All rights reverved.
+ * 
+ *  See the file COPYING in the top directory of this distribution for
+ *  more information.
+ *  
+ *  THE SOFTWARE IS PROVIDED _AS IS_, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+ *  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+ *  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  DEALINGS IN THE SOFTWARE.  
+ *  
+ *****************************************************************************/ 
+
+
+#ifndef TCLAP_VERSION_VISITOR_H
+#define TCLAP_VERSION_VISITOR_H
+
+#include "CmdLineInterface.h"
+#include "CmdLineOutput.h"
+#include "Visitor.h"
+
+namespace TCLAP {
+
+/**
+ * A Vistor that will call the version method of the given CmdLineOutput
+ * for the specified CmdLine object and then exit.
+ */
+class VersionVisitor: public Visitor
+{
+	private:
+		/**
+		 * Prevent accidental copying
+		 */
+		VersionVisitor(const VersionVisitor& rhs);
+		VersionVisitor& operator=(const VersionVisitor& rhs);
+
+	protected:
+
+		/**
+		 * The CmdLine of interest.
+		 */
+		CmdLineInterface* _cmd;
+
+		/**
+		 * The output object. 
+		 */
+		CmdLineOutput** _out;
+
+	public:
+
+		/**
+		 * Constructor.
+		 * \param cmd - The CmdLine the output is generated for. 
+		 * \param out - The type of output. 
+		 */
+		VersionVisitor( CmdLineInterface* cmd, CmdLineOutput** out ) 
+				: Visitor(), _cmd( cmd ), _out( out ) { }
+
+		/**
+		 * Calls the version method of the output object using the
+		 * specified CmdLine.
+		 */
+		void visit() { 
+		    (*_out)->version(*_cmd); 
+		    throw ExitException(0); 
+		}
+
+};
+
+}
+
+#endif

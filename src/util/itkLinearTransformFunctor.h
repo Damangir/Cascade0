@@ -1,110 +1,161 @@
-U2FsdGVkX18BbrHljv5wAOUHkcp25+aV40DF+amJ2IX9JB+/yYmOapH7hI/VxJsh
-OUElywUM4v6PvQYCoJvZR1k0cRkEtLFB+0Q2EuODE1PfWdMYXo7jVUIlQVra4A1Y
-1AuP0CfOX58M5O32tdMM5Dsv7hS03j3k4z98Nr0tWmdR8CwYRcCb9UAp8OKVEHqw
-HeuzBd4WzgwLN3D0m/cEb5I/Qp7fDnu+MkPdZbWe+yfbR9rq3kHMGWQlpO0QU6FO
-Q1nS0bJej/zk0F8cVAoCFtMzdpnMd51NPDfXaUYT97pTh9ITfYd7LerOUWBotd8l
-vNBF+roAhhFxlRIipHGTvnp90t6crIDpuxwFu/sdwr8CViyyagXn/ddk3CYGXiMC
-KTRx9j7oCgl1N5ZVLMf8FDE3+lnRPXh3kuzbIRZChCxV7BjPfXHQC/zFHDsWUZMg
-HzAsSaQI9maqLBz6JWHNJAe6Ilibg/vSbWzrbBc32MLNbIGkeZO8AZzLRFg/9YFz
-UIIiUyl89Te7e/38caSjK/H8nZ1IWCesbD6fec4RdtbR8rAinMVagiDQ//iD+E03
-+m0lCOHtCpOgNxEdwiLywq7BOAjGPU6fX6bzPm2+1CacbVXEC2NC64mjkCcmT6CX
-qdBfBNEPvhhvNOvrNGwPmv+y7+swNUfIAmS29dx8wpWbFpxk5wyeoBLm/kTIRfhc
-LuqflsLz98LGchbVGcGnRrsMMxLC2gBH1+8ntMJCLCB7R7MCsFfC6Ag1NbtDKk/m
-S2JfIBSEVzOp0ORWleKVPHz/fknslG7tX8GgkC2m/oHTmUQuc0RyCLcJ6ysxZANY
-AxnDEXo7htvZR5QAvZPDUpF27BSkvuJEG1OFZMmG+xAzpIfbCNLsFwk2o/B24K66
-IjI8ieYlmQcRakI59L/RtxNu4XpUe8+OxanPWD0vT02UnyEgAU4kIodNB6uN86oC
-2CnxHvy+jugfuAtgCktWY+ZxmNSSdSfvd1VzHjC12c3kFpeWET1z1ET8dJ6Idg6X
-xh9bOvcAVKTdoOh2XT8JVFQmMSfDw1a+1m8E5U/2d7B8eOdFyFgjtqofHWhAuIoy
-kieFE2oDXVFKZ20AepFFH27gBCa7+Zzcvlr7y9ppLsMNwzelZNjZo5ozpc+MywNi
-C8GTJO5EmIuNzFL4ev2CgQWl72KvCG2f5QRjkLlKEBt9X4yCmzf5bdMyxpgMDGiY
-icrCCGMXYisGo5jucU2rngAD6vkeVfa/LiR5fCfAoi5NLjDKmBEwR0ypsIX8/nRj
-2oA3uf1uBc24kxkFBZlGvyLAAYNapDZgqqOaJAuCET6WGk8CTY+R4PnxXihfvMH9
-zwwKVilhfKq6822rFkvRF7QFV0gOsRG3mS/3Mje/v8ZWie8pYZGS2/NJLMSK5a4+
-iT24qB6MfeqqH1sp1+eZBTfHU35R+2VXinzj+KhMGMSSSChQOBWwL2oaS0pXN/wh
-r032XHw5bTvKTU+4BkJVe4L7RzzseqI1KTEEc82BTeY03nMD6he5C0kj491WNjFP
-O+mk6KNKPwODX63fRCKal+53lZp3JGerrIYEd/Y2Y6ZqyKlU1EV6rtQSO1atYUN6
-O95HizwYaW+K/WUvgvt4+FaJ7ylhkZLb80ksxIrlrj6uESX9YrYJEgkzJsnjYGjS
-bruVVUfv0v/dszoemCitwlPbmKKve8dLlJONFq/LMUmgNBy26X5KbfZHv2EuS0gh
-H/wDjY0baNT3QvUjUcZodSqwdzNnieQs/8w6oTRivRqh/azmaleegaMA7SYmDVpY
-hswOIH5gFag9k2psybh+XYHNhR/RAKlyeGW6A2JI4xQdJWCZmrj3OK8kOY+Bw+Z/
-a9n3VdDkP8di0k5mpVDRxJTUyp1waSUjcw1q9zM26+ByB9ttq3rE2MgBuMk6kQti
-nfsaUD1JIMrqcpvruBGpkL+OpQhUk5bxwL8uFtvx1S9AiWjxJwZR70s9bX02XhOs
-xXx3CvhpmfJKvRWJwBltvTcdZTsIJsHkWIInUCqUs+qso9b/SzP4IcvJbMpZ9pWj
-tnNgBoscl6601x/IFqbOPggNfiQuMd40zXEEpleVtqTnexXzEsYHNAoTxNMLAp71
-CZJdivoLSjGkV6uRYu2uSAkOkNtwwxzWyMaYKIjsJ8qqRVkULqS254xE3oPqsnGw
-3XfuDr69n8z8JwoMmz6NfjS4tj3rzzh6LTR1Dd3s94MHkHhvNy6fNqDq8YWqC1o4
-chGqpdOXOYnw1VEbrHvDpJ6+UKEQfXY3lhAWzKBfGSYnrJzrgJYJEMBK8D7GnYt4
-6CsNDqYyg2rRvauZIP5zGhn+22AhLojUiFv1CltjKYkG43OHPOiRbPUwPPFbP/dy
-pYChRCCKrclkly79QaCMPpUBVFjij63TloA2LBNXPDpjDACpJynO024bfipHLpkK
-POlcCijnJTyDlMgI0Us8dyDd8Nqkt7N441CNGhe9wpwldgxbb+sN3YnsmwTn73mW
-fgZSSombxvGlOR+Vo5aOynHCKgC8zkvLGjdNJIIaXBhLLaLXpDVMUiGh3CbR13rW
-D1LTcqpnX6ZNlPotEJ4M0U3Eq8GbNwSYI80ES+0+T32TXzvIx6Mq5O9YUKiBPJPs
-5r6loBdYlrrtoayDNp1D44uyNE3Ssedj39i8Z/iJWjg8jQb0HVEQBze+sXwwk7To
-nehwphLfRr6U4sWDnukpPTpvXtaupH7i9E+zbNbyBVh/RqVS8O9mkOzSJSjRLn8J
-FdCwoeVsTAi32b97ZfWNMYk9uKgejH3qqh9bKdfnmQWivNhH8svWu0DYj+wEyyAS
-so4zdxvrIdnI4bwJ+FRB4EckFGpVe3909bjhF4+1KyedQ8W599SXnvkRTGw8Aji6
-LtQ411Jou8pFpzGZhirKDHOnTPwirACKEoRcw17NnaDI8NOYUIhjPt5XvOqLVHr+
-yPDTmFCIYz7eV7zqi1R6/sjw05hQiGM+3le86otUev6nDaSbMpYMLpHoLK6R3adt
-YqWqBdeJMmbECNNIClV0v8jw05hQiGM+3le86otUev7I8NOYUIhjPt5XvOqLVHr+
-yPDTmFCIYz7eV7zqi1R6/vZaP4QB5ytpsTppz65qQYBMEg8TE+QvaZv/lk93d4uU
-3ILQTf1vsZAhEqaAgZLdJCsXjYOKTZMSKEoYDQsE65DTJo/ENoY+dj4gztBOqhwT
-RaXCs8ZXwwGQmaxtIfGUTNenpT+bJjCp2+MDzjySmIIzaqRTaJYJ1XzJxFEOCC2q
-F3C5QTEt2TmbXoEhLaMXYczi+h/m17ww2X7DV7GmvNx8bY25ujzC3A5NdOydP95e
-3YHvXnFm6Z8sHY6beHPhTmtXTIgV/pmQHAgG/A7gireUa9bh0JF/ZR09sWcHe/Yi
-99bk/l+iSSZIvZhWqMMoAb6jTcMFsm9CKtaquZdhk4yaLz1+Oyok321Qbjvg6mZv
-E+t1hw/h+r4ERMuULnstc6VMktS8s5H/cKbJLBY3WIH8IOez3UL3h3GzpMam7ps9
-Z/ee0JqLG5FDr6FbBAZfx6cVt+xLEOsMHABnRUESWb6PLohd2ST03s1qbgrIZdcX
-HEUMZjlYMFuqNZauVrarM6xVH+HXpYeBPlWbY7viJkI692Im+FrVxQC9m7+GxH8t
-zg7zm1pQQPTJkPyJMOiiJmE6sH+f43QNTOfc17DazgQBsDP7DyOfUcp3etqnOdTO
-Nixv1xaH644a8BYdDVUPK5B8d3piiNaRNdcaCsUMICQWKDruA4ExTM4IZUWSgRp/
-Myl0Ghu3Kvj2BOwD8Ti5jQ/1Z5aKV+OoqI0xfy3Cxog+OTIzV1l+JQsQlO5I2ueT
-0pLRkMqcKrvimBgzipDWzIJiv0ndKngGoRwDskLrvcB0QyREgVUv0N6rt2se584U
-3LK0vr2dC7qzClkprCfYUCDs0XrM9tBdzUXxXi9QOHP0ETRfMH+NzUGcXTNlt/Dh
-r2Ja1oVfBrHFBUihKxxVcqcVt+xLEOsMHABnRUESWb6PLohd2ST03s1qbgrIZdcX
-IyxzQVGyFMSltKlljtcfTDHySbXLxrkkIQm/dwbyMurj4E+gpgVxASgfWxlZiC39
-rnV7Cz+ntb9i0ApwaWJ0ZgvvmenALq75vJYST/9Z7lHdge9ecWbpnywdjpt4c+FO
-ANMhyZegqxPon65AmMRxHaYW4brz6RyTtcA1lt9NQbGqZWqlIoggaKUxqk6X1w/j
-xh9bOvcAVKTdoOh2XT8JVDrXsvthozRAA00gDgvwFVUrEhZ6mLb+IRngxiNnVMdS
-sHfgoHqXXYvsD0RlB+05IY9SvsEUtRSlUJy9jTEWpLoLaR1kNkra5IZdh1f/mcco
-E3rTdkRuM9nKAHiktjscysfdsWDHvt5kQAJoU0Jlw2ksZqffUa8mfTBvNEHSvjrj
-MHlGzgjT/c3NDVeJfIVo10I+kSDbBtmzGboa5MVsP5RqDTotoT5kQprtZuwlgfi+
-KrrKgiqbQv1zytWT5wCwUQFVZMyi46VlPNLL/g6CQ/1UQHkMe9uNbZM5bKFFNkMO
-jcrkun7PW5LAEPaaTVNUwJ37GlA9SSDK6nKb67gRqZArh7qXG9MLWLg2p5ZIejfw
-bO45sdexbtdpC8aBWd0Ox3vhb3AyQoGJYT89yLDD/VZzfeyPhLy0Rj1tYmzupNie
-yLwE8UgW8GmUs+LvH/nJKRGzRH9tyEmrXD+sIK7zB7ppaZDazaBfxE4rZuyYnjlQ
-FqZPj95fZsOKawONM+LQ56e5NXi2i/rdReeAJ++0CCxXvefo26JY5GimK+spPQ3d
-kTMvs7q/ycvQAvCrOAX5D2yWBj4QGLpM1xB/201yJSAtn86YeVxPtJrNxrZc6feG
-UJRaYZqPpxPu7FkTtpn94wJnjS2FxQE0GGYlFgrn66MJUW+Nd57OtueLuOShjC7R
-7neVmnckZ6ushgR39jZjpulDEcJhIvf7o0lnplJW95ynQxMmIh0alDpwGmIkmURb
-zpLEV1cpK8jKM//8aT02rQycoqQ6XdTrZOadLDT714SsN48/yqf2sQs7fOTl21q8
-aIar3ZOeJT5O2KIQU1A5eOt3LXX7jEuMz8pnVxcfVloz3WCmCCxasQG6nFGr8IpF
-p+aDNFU5gYD6Mt828yQy0VBtxleVhbsqRE2X8eiV3lhq7bNOzF3VsVD8OQiyX6/S
-K27HlEpCAQl+KML9wfPjQOgZRmWp4MeBv7oIpG0yv6WoA6oxLog9IirSc2WgspH6
-SZYV/xTmuoqOqATUDKKy0wawWzc1H9Lujbvs4VlFdOAalrG8zgSQ3Slh0o/G3Msr
-FqzTkTCu1kYzPuWSIDsBd5KMzQ6Gh6C6RWTtWCux9CmwjqKxdt73el17H6Pb8a74
-AjezTY64ld0r8I5VTPA+PGiY15mLsJ13rmtav5458vNq5s3Qude/Kr0vQE2VYuwU
-jo9V26C9OzPktaDrlmjG4sYfWzr3AFSk3aDodl0/CVQJEBSutAyEmPo0wBm9hsKI
-GYx5U0jHbNeUQ5Ppl9jwWslNOMKw8XseJkRoMTJp805MP6Tq2bglb74ZAStX70pr
-jSOIUMtV9j2B4H8GACkqiR0lYJmauPc4ryQ5j4HD5n+hsMBZT0EOk/gOPly1URcf
-34C9Qd0BZu6Aiqg++4AUvMskFbdESkhDPsZPwuKFzab7J/7eML2u1SlP6AddiRAB
-ioQ6uZQMOzTyNI62c15bh7eoUKKF9JzQjg1KeFQCo/Zdb0mlDn0LeMY0iK1u8fG2
-3hLEwSub53RtGFH/RC0xrPxLSkrNwJ+nRNFeDue9QB+xxAstmiGeYTMfXljO+no3
-xh9bOvcAVKTdoOh2XT8JVNddOGymE94R6F6rjGhITqH/BIBiOMNcvtwehg6WP/RT
-U56iCOpfmWyIM+/oaFe1vVy8KJQQTwn5fV//LGUFmGaSEakvPGezESC71FtgJD3W
-452/gyWo1fa5ZhJ/slQ+ia1hMxj++qD2/hc100sjegeeSWSNmEZlxoAHY4l4Gatx
-xtsaKgDoooocUWFAVpU4jKdfk6wt/Il3TrfnSlKxb0NQb2cUfw4wIRfgeYm+1i8r
-xtsaKgDoooocUWFAVpU4jB13TC0fJvXjcBusdjBrpNLiWybNTHXUOpFrIyCYbTwk
-l94+kzar7xIKEuHEL15UtL+Tsrz67JXIVJQ0Zzfcq16DWWaXgAC+JQap1KRt1F5w
-LUnDs5lMZ6Mzr1nrb/QxR+Skgp7zuuPtHaogQJFBKVvEHXw0VTbvovctOsr4FEUR
-4BGYB0R5hPdyZbxtiZAhJa9P7L6EA71V1wvtLX06QFUVsNLhyJ+ygf6obPCKukm4
-Wv0NPDGfahqyL+85NybUT5JTltfrCQeNE7bBFbcLfvYH+iRXpR88tZFOE+yuCuHj
-ayhbgrg/RJDKiPOwY0MoweSyd9Itg/1VuocFyzVjX6U/aPc1QlSzUhorhOss9/Fr
-zXOM8Zq+unfnoz+rdfmyMf/vH2SoKZROAmYtb+GVNiUdZ/MPQtlqCs1EO7XhZZql
-I6efuyOhunYhxdZx8GIBY+RgXGcQ3b7dN9Grt1JuoVHI8NOYUIhjPt5XvOqLVHr+
-3f44pnMFJjtKVDEhM070JdGwHm8jkIT3jbZer7TEY4G23Z+PX8lOm0xNBHYSRbQQ
-N2mARXSJJReo1oLXi6vv/swGSpfEtoQ2goTnVSC8NA8b0GN2AyaI9syAaocgOgyM
-y+8Sqy/t5VoiGEhLPnf194PFHmy9DtMrgRY0+MMNtv6wnFrFpEsXLK2NHrwijNr/
-xi7AL1CrfktrLDA8igiacTuSle6MIql8kY0edrHOLUDNNLCWaF2eK/DuXtJ93Ih5
-0yDDoJcsWMu1BrPQHfsgEMurCR9yW0A3P4JDVaDjI0/X8PDRyPpUZuxvPUpb8o3j
-xUgrry0bA98mMGCQfQINxGaFJIXAH0UN4zld6nbVofi9PNl44TdnXb2imyBe/7BY
-Bl5cmTjBcZdc5KlTF0Y4Wh6fpJFgovpfAB91GWtTG2E=
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+#ifndef __itkIntensityLinearTransform_h
+#define __itkIntensityLinearTransform_h
+
+#include <utility>
+#include <iterator>
+#include <vector>
+#include <algorithm>
+
+
+namespace itk
+{
+
+template< typename TInput, typename TOutput >
+class IntensityLinearTransform
+{
+public:
+  typedef typename NumericTraits< TInput >::RealType RealType;
+  typedef std::pair< TInput, TOutput > FixedPointType;
+  typedef std::vector< FixedPointType > FixedPointVectorType;
+  typedef std::pair< RealType, RealType > LineSegmentType;
+  typedef std::vector< LineSegmentType > LineSegmentVectorType;
+
+  typedef typename FixedPointVectorType::iterator FixedPointIteratorType;
+  typedef typename LineSegmentVectorType::iterator LineSegmentsIteratorType;
+
+  IntensityLinearTransform()
+    {
+    this->m_FixedPoints.push_back(
+        std::make_pair< TInput, TOutput >(
+            NumericTraits< TInput >::NonpositiveMin(),
+            NumericTraits< TOutput >::NonpositiveMin()));
+
+    this->m_LineSegments.push_back(std::make_pair< RealType, RealType >(1, 0));
+    this->m_NumSegments = 1;
+    }
+  ~IntensityLinearTransform()
+    {
+    }
+  void AddFixedPoint(const TInput & x, const TOutput & y)
+    {
+    if (this->m_FixedPoints.size() < 2)
+      {
+      this->m_LineSegments.clear();
+      }
+    /*
+     * Find the proper location to insert new set
+     */
+    FixedPointType new_point = std::make_pair< TInput, TOutput >(x, y);
+    FixedPointIteratorType point = std::lower_bound(this->m_FixedPoints.begin(),
+                                                    this->m_FixedPoints.end(),
+                                                    new_point);
+    point = this->m_FixedPoints.insert(point, new_point);
+
+    /*
+     * Calculate the next line to insert
+     */
+    point--;
+    LineSegmentsIteratorType line = this->m_LineSegments.begin();
+    std::advance(line, std::distance(this->m_FixedPoints.begin(), point));
+    LineSegmentType lineSeg;
+    lineSeg.first = (y - point->second) / (x - point->first);
+    lineSeg.second = y - lineSeg.first * x;
+    line = this->m_LineSegments.insert(line, lineSeg);
+
+    if (std::distance(line, this->m_LineSegments.end()) > 1)
+      {
+      /*
+       * Return one step back to change the slopes
+       */
+      point += 2;
+      line += 1;
+      line->first = (y - point->second) / (x - point->first);
+      line->second = y - line->first * x;
+      }
+    this->m_NumSegments = this->m_LineSegments.size();
+    }
+  bool operator!=(const IntensityLinearTransform & other) const
+    {
+    if (std::equal(this->m_FixedPoints.begin(), this->m_FixedPoints.end(),
+                   other.m_FixedPoints.begin()))
+      {
+      return true;
+      }
+    return false;
+    }
+
+  bool operator==(const IntensityLinearTransform & other) const
+    {
+    return !(*this != other);
+    }
+
+  inline TOutput operator()(const TInput & x) const
+    {
+    for (unsigned int i = 1; i < this->m_NumSegments; i++)
+      {
+      if (this->m_FixedPoints[i].first > x)
+        {
+        const std::pair< RealType, RealType >& lineSeg =
+            this->m_LineSegments.at(i - 1);
+        return lineSeg.first * x + lineSeg.second;
+        }
+      }
+
+    const std::pair< RealType, RealType >& lineSeg =
+        this->m_LineSegments.back();
+    return lineSeg.first * x + lineSeg.second;
+
+    }
+  template< typename T1, typename T2 > friend std::ostream& operator<<(
+      std::ostream &out, IntensityLinearTransform< T1, T2 > &transform);
+private:
+  FixedPointVectorType m_FixedPoints;
+  LineSegmentVectorType m_LineSegments;
+  unsigned int m_NumSegments;
+};
+
+template< typename TInput, typename TOutput >
+std::ostream& operator<<(
+    std::ostream &os,
+    itk::IntensityLinearTransform< TInput, TOutput > &transform)
+  {
+  os << "IntensityLinearTransform: " << std::endl;
+  for (unsigned int i = 1; i < transform.m_FixedPoints.size(); i++){
+    os << transform.m_FixedPoints[i].first << "->" << transform.m_FixedPoints[i].second;
+    os << std::endl;
+  }
+return os;
+  for (unsigned int i = 1; i < transform.m_NumSegments - 1; i++)
+    {
+    os << "(" << transform.m_FixedPoints[i].first << " ,"
+              << transform.m_FixedPoints[i + 1].first << "]";
+    os << " : " << transform.m_LineSegments[i].first << " * x + "
+                << transform.m_LineSegments[i].second;
+    os << std::endl;
+    }
+  os << "(" << (transform.m_FixedPoints.rbegin() + 1)->first << " ," << " Inf)";
+  os << " : " << transform.m_LineSegments.back().first << " * x + "
+              << transform.m_LineSegments.back().second;
+  os << std::endl;
+
+  return os;
+  }
+}
+
+#endif

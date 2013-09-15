@@ -1,171 +1,237 @@
-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
+/*
+ * Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+ * You may use and distribute, but not modify this code under the terms of the
+ * Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
+ * under the following conditions:
+ *
+ * Attribution — You must attribute the work in the manner specified by the
+ * author or licensor (but not in any way that suggests that they endorse you
+ * or your use of the work).
+ * Noncommercial — You may not use this work for commercial purposes.
+ * No Derivative Works — You may not alter, transform, or build upon this
+ * work
+ *
+ * To view a copy of the license, visit
+ * http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+
+#include "buildinfo.h"
+/*
+ * CPP Headers
+ */
+#include <string>
+/*
+ * General ITK
+ */
+#include "itkImage.h"
+#include "itkNumericSeriesFileNames.h"
+/*
+ * ITK Filters
+ */
+#include "itkFlipImageFilter.h"
+#include "itkRescaleIntensityImageFilter.h"
+#include "itkImageRegionIterator.h"
+#include "itkSliceBySliceImageFilter.h"
+#include "itkBinaryContourImageFilter.h"
+#include "itkLabelOverlayImageFilter.h"
+#include "itkRGBPixel.h"
+/*
+ * ITK IO
+ */
+#include "itkImageFileReader.h"
+#include "itkImageFileWriter.h"
+
+/*
+ * Others
+ */
+#include "pipeline/itkImageNormalizerPipeline.h"
+#include "pipeline/itkN4Pipeline.h"
+#include "pipeline/itkRobustOutlierPipeline.h"
+#include "util/itkIntensityAlignFunctor.h"
+#include "3rdparty/tclap/CmdLine.h"
+#include "util/helpers.h"
+/*
+ * Pixel types
+ */
+typedef unsigned int PixelType;
+typedef itk::RGBPixel< unsigned short > RGBPixelType;
+/*
+ * Image types
+ */
+typedef itk::Image< PixelType, DIM > ImageType;
+typedef itk::Image< RGBPixelType, DIM > RGBImageType;
+typedef itk::Image< PixelType, SLICEDIM > SliceType;
+typedef itk::Image< RGBPixelType, SLICEDIM > RGBSliceType;
+
+typedef itk::BinaryContourImageFilter< SliceType, SliceType > binaryContourImageFilterType;
+typedef itk::RescaleIntensityImageFilter< ImageType, ImageType > RescaleFilterType;
+typedef itk::LabelOverlayImageFilter< ImageType, ImageType, RGBImageType > LabelOverlayImageFilterType;
+
+typedef itk::SliceBySliceImageFilter< ImageType, ImageType > SlicerType;
+
+typedef itk::FlipImageFilter< RGBImageType > FlipImageFilterType;
+
+typedef itk::ImageRegionIterator< RGBImageType > RGBImageIteratorType;
+typedef itk::ImageRegionIterator< RGBSliceType > RGBSliceIteratorType;
+/*
+ * IO types
+ */
+typedef itk::ImageFileWriter< RGBImageType > OutputWriterType;
+typedef itk::ImageFileWriter< RGBSliceType > ImageWriterType;
+
+int main(int argc, char *argv[])
+  {
+  TCLAP::CmdLine cmd(
+      "Cascade(v" CASCADE_VERSION ") - Segmentation of White Matter Lesion. Image intensity range controller " BUILDINFO,
+      ' ', CASCADE_VERSION);
+
+  TCLAP::ValueArg< std::string > outfile("o", "out", "Output filename", false,
+                                         "overlay", "string", cmd);
+
+  TCLAP::ValueArg< std::string > mask("m", "mask", "Image mask", true, "",
+                                      "string", cmd);
+
+  TCLAP::ValueArg< std::string > input("i", "input",
+                                       "Input sequences e.g. MPRAGE.nii.gz",
+                                       true, "", "string", cmd);
+
+  /*
+   * Parse the argv array.
+   */
+  try
+    {
+    cmd.parse(argc, argv);
+    }
+  catch (TCLAP::ArgException &e)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "error: " << e.error() << " for arg " << e.argId()
+                 << std::endl;
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  unsigned int dimension_fold = DIM - 1;
+  /*
+   * Argument and setting up the pipeline
+   */
+  try
+    {
+    ImageType* inputImage = cascade::util::LoadImage< ImageType >(
+        input.getValue());
+
+    binaryContourImageFilterType::Pointer binaryContourFilter =
+        binaryContourImageFilterType::New();
+    binaryContourFilter->SetForegroundValue(1);
+    binaryContourFilter->FullyConnectedOff();
+
+    SlicerType::Pointer slicer = SlicerType::New();
+    slicer->SetDimension(dimension_fold);
+    slicer->SetFilter(binaryContourFilter);
+    slicer->SetInput(cascade::util::LoadImage< ImageType >(mask.getValue()));
+
+    RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
+    rescaleFilter->SetInput(inputImage);
+    rescaleFilter->SetOutputMinimum(0);
+    rescaleFilter->SetOutputMaximum(
+        itk::NumericTraits< RGBPixelType::ComponentType >::max());
+
+    LabelOverlayImageFilterType::Pointer labelOverlayImageFilter =
+        LabelOverlayImageFilterType::New();
+    labelOverlayImageFilter->SetInput(rescaleFilter->GetOutput());
+    labelOverlayImageFilter->SetLabelImage(slicer->GetOutput());
+    labelOverlayImageFilter->SetOpacity(1);
+    labelOverlayImageFilter->Update();
+
+    RGBImageType::Pointer rgbImage = RGBImageType::New();
+    rgbImage = labelOverlayImageFilter->GetOutput();
+
+    OutputWriterType::Pointer outputWriter = OutputWriterType::New();
+    outputWriter->SetFileName(outfile.getValue() + ".nii.gz");
+    outputWriter->SetInput(rgbImage);
+    outputWriter->Update();
+
+    /*
+     * Niftii vertical dimension is bottom-up but it regular images its top-down.
+     * Flip the image before writing it as image
+     */
+    itk::FixedArray< bool, DIM > flipAxes;
+    flipAxes.Fill(0);
+    flipAxes[1] = 1;
+    FlipImageFilterType::Pointer flipFilter = FlipImageFilterType::New();
+    flipFilter->SetInput(rgbImage);
+    flipFilter->SetFlipAxes(flipAxes);
+    flipFilter->Update();
+    rgbImage = flipFilter->GetOutput();
+    /*
+     * Create slice by slice png
+     */
+    const RGBImageType::RegionType requestedRegion =
+        rgbImage->GetLargestPossibleRegion();
+    const RGBImageType::IndexType requestedIndex = requestedRegion.GetIndex();
+    const RGBImageType::SizeType requestedSize = requestedRegion.GetSize();
+    typename RGBSliceType::RegionType internalRegion;
+    unsigned int internal_i = 0;
+    for (unsigned int i = 0; internal_i < SLICEDIM; ++i, ++internal_i)
+      {
+      if (i == dimension_fold)
+        {
+        ++i;
+        }
+      internalRegion.SetSize(internal_i, requestedSize[i]);
+      internalRegion.SetIndex(internal_i, requestedIndex[i]);
+      }
+    const itk::IndexValueType sliceRangeMax =
+        static_cast< itk::IndexValueType >(requestedSize[dimension_fold]
+            + requestedIndex[dimension_fold]);
+
+    itk::NumericSeriesFileNames::Pointer numericSeriesFileNames =
+        itk::NumericSeriesFileNames::New();
+    numericSeriesFileNames->SetStartIndex(0);
+    numericSeriesFileNames->SetEndIndex(sliceRangeMax);
+    numericSeriesFileNames->SetSeriesFormat(outfile.getValue() + "_%03d.png");
+
+    for (itk::IndexValueType slice_n = requestedIndex[dimension_fold];
+        slice_n < sliceRangeMax; ++slice_n)
+      {
+      RGBImageType::RegionType currentRegion = requestedRegion;
+      currentRegion.SetIndex(slicer->GetDimension(), slice_n);
+      currentRegion.SetSize(slicer->GetDimension(), 1);
+
+      itkAssertOrThrowMacro(
+          currentRegion.GetNumberOfPixels() == internalRegion.GetNumberOfPixels(),
+          "Number of pixels in slice and image regions does not match");
+
+      RGBSliceType::Pointer slice = RGBSliceType::New();
+      slice->SetRegions(internalRegion);
+      slice->Allocate();
+
+      RGBImageIteratorType imgIt(rgbImage, currentRegion);
+      RGBSliceIteratorType sliceIt(slice, internalRegion);
+      itk::ImageRegionIterator< ImageType > orgIt(inputImage, currentRegion);
+      orgIt.GoToBegin();
+      imgIt.GoToBegin();
+      sliceIt.GoToBegin();
+      while (!imgIt.IsAtEnd())
+        {
+        sliceIt.Set(imgIt.Get());
+        ++imgIt;
+        ++sliceIt;
+        ++orgIt;
+        }
+      ImageWriterType::Pointer sliceWriter = ImageWriterType::New();
+      sliceWriter->SetInput(slice);
+      sliceWriter->SetFileName(numericSeriesFileNames->GetFileNames()[slice_n]);
+      sliceWriter->Update();
+      }
+    }
+  catch (itk::ExceptionObject & err)
+    {
+    std::ostringstream errorMessage;
+    errorMessage << "Exception caught!\n" << err << "\n";
+    itk::OutputWindowDisplayErrorText(errorMessage.str().c_str());
+    return EXIT_FAILURE;
+    }
+
+  return EXIT_SUCCESS;
+  }
