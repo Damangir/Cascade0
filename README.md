@@ -49,7 +49,7 @@ sudo make install
 You can assert the installation
 
 ```bash
-cascade --version
+cascade -v
 ```
 
 Manual
@@ -59,38 +59,60 @@ Manual
 Before running the **cascade** you should perform the following preprocessing steps to your subject:
 
  * Co-register all available sequences together
- * Extract brain
+ * Skull stripping (Brain extraction)
+ * Partial Volume Estimation
+ * Intensity normalization
 
-These steps are not required but they are strongly recommended:
-
- * Inhomogeneity correction
- * Brain tissue segmentation
-
-This step is optional but can help to increase the accuracy of the results:
-
- * Nonlinearly register T1-weighted image to MNI152 and save the transformation matrix and deformation field 
+There is a helper script to do these steps called `cascade_pre.sh`. Type `cascade_pre.sh -h` for more help and options.
 
 ### WML segmentation
-Once you have done the preprocessing on the subject.
-depending on different preprocessing you can use **cascade** as follows.
+You should be provided with a state file series alongside your **cascade** installation. There is a two step procedure before you can have your final report"
 
-#### Only registered, brain extracted images are available
-You should input the sequences in which the white matter lesions appear hyper-intense (e.g. FLAIR) with flag `-l` and those with hypo-intense white matter lesions (e.g. T1-wighted) with flag `-d`. You can use as much sequence as you want, the only requirement is that you should have at least one hyper-intense sequence.
+ * Likelihood calculation
+ * False positive removal and post processing
+
+There is a helper script to do these steps called `cascade_main.sh`. Type `cascade_main.sh -h` for more help and options.
+
+There is also a reporting part which will provide a comma-separated values (CSV) file containing WML volume, WML volume per lobe, brain tissue fractions (WM, GM and CSF). The reporting system will also create overlays on all input sequences on NIFTI (for 3d viewing) and PNG (for use in publication).
+
+
+### Sample usage
+Suppose that for your subject you have T1-weighted and FLAIR sequence. Select a folder name where you want your result to be. For this example I'll use `/home/soheil/Project_1/Subject_1`
 
 ```bash
-cascade -l FLAIR.nii.gz -d T1.nii.gz
+cascade-pre.sh -t T1.nii.gz -f FLAIR.nii.gz -b T1_BRAIN_MASK.nii.gz -r /home/soheil/Project_1/Subject_1
 ```
 
-#### Registered image with brain tissue segmentation
-Once you have brain tissue segmentation **cascade** can benefit from its information and increase its accuracy as much as 20%. **cascade** expects the brain tissue segmentation as a label image with white matter as highest and grey matter the scone highest (e.g. CSF: 1 GM: 2 WM: 3). You should specify the labeled image with flag `-m` and set the value for grey matter with flag `-t`
+This will create a directory structure and put all needed files in place. You should have a directory structure similar to:
+
+```
+/home/soheil/Project_1/Subject_1
+├── cache
+├── images
+└── transformations
+```
+
+Once the preprocessing completed you should run the main script:
 
 ```bash
-cascade -l FLAIR.nii.gz -d T1.nii.gz -m pveseg.nii.gz -t 2
+cascade-main.sh -r /home/soheil/Project_1/Subject_1 -s ${CASCADEDIR}/states/FLAIR_T1
 ```
 
-#### Registration to standard template is available
-If you have the registration information to the standard space, you can perform additional post-processing to the output result. The post-processor is not part of the cascade distribution however you are welcome to contact us and we will provide you with the post-processor software.
+where `${CASCADEDIR}/states/FLAIR_T1` is the location of state images. You can use the pre-trained state image shipped alongside the **cascade** installation or use your own trained state image.
 
+After running the main script your directory structure would be:
+
+```
+/home/soheil/Project_1/Subject_1
+├── cache
+├── images
+├── ranges
+├── report
+│   └── overlays
+└── transformations
+```
+
+The actual output of the **cascade** lies in the report folder alongside with the overlays.
 
 Citation
 -------

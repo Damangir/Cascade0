@@ -3,6 +3,12 @@ bin/
 obj/
 build/
 
+# Old files directory
+history/
+
+# Data file directory
+data/
+
 #User Specific Files
 *.user
 *.suo
