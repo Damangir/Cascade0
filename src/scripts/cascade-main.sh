@@ -26,9 +26,6 @@ ${bold}OPTIONS$normal:
 General:
    -r      Image root directory
    -s      State image
-Measurement mode:
-   -c      Chi-squared cutoff
-   -p      Minimum physical size
 Training mode:   
    -m      WML mask
    -n      Updated state image
@@ -43,13 +40,11 @@ EOF
 source $(dirname $0)/cascade-setup.sh
 source $(dirname $0)/cascade-util.sh
 
-MIN_PHYS=20
-CHI_CUTOFF=0.875
 IMAGEROOT=.
 VERBOSE=
 FOURCERUN=1
 MODE="MEASURE"
-while getopts “hr:p:c:s:m:n:vfl” OPTION
+while getopts “hr:s:m:n:vfl” OPTION
 do
   case $OPTION in
 		h)
@@ -69,12 +64,6 @@ do
       ;;
     s)
       STATEIMAGE=`readlink -f $OPTARG`
-      ;;
-    c)
-      CHI_CUTOFF=$OPTARG
-      ;;
-    p)
-      MIN_PHYS=$OPTARG
       ;;
     f)
       FOURCERUN=
@@ -124,39 +113,34 @@ check_cascade
 set_filenames
 get_allimages
 
-runname "Checking input directory"
 if [ ! -s $FSL_STD_TRANSFORM ]
 then
- rundone 1
  echo_fatal "Transform matrix to standard is required but missing.\nThe file should be created in the Cascade pre-processing script. Did you run the Cascade pre-processing script?"
 fi
 if [ ! ALL_IMAGES ]
 then
- rundone 1
  echo_fatal "There is no brain image in the image directory.\nThe file should be created in the Cascade pre-processing script. Did you run the Cascade pre-processing script?"
 fi
-rundone 0
 
 (
 set -- $ALL_IMAGES
 $CASCADEDIR/c3d_affine_tool -ref $STDIMAGE -src $1 $FSL_STD_TRANSFORM -fsl2ras -oitk $ITK_STD_TRANSFORM 
 )
 
-echo "${bold}Running the Cascade pipeline${normal}"
-
 if [ $MODE == "TRAIN" ]
 then
-  runname "Training"
-  (
-  set -e
   INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
 	for img in $ALL_IMAGES
 	do
 	  INPUT_ARGS="$INPUT_ARGS --input $(range_image $img)"
 	done
 
+
   for CLASS_INDEX in {1..3}
   do
+    runname "Training class ${CLASS_INDEX}"
+    (
+    set -e
     CLASS_MASK=$IMAGEROOT/${temp_dir}/class_traing_${CLASS_INDEX}_mask.nii.gz
     CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
     NEW_CLASS_STATE=${NEWSTATEIMAGE}_${CLASS_INDEX}.nii.gz
@@ -172,24 +156,19 @@ then
 	    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $STDIMAGE --size 40
 	    train_result=$?
 	  fi
+    )
+    if [ $? -eq 0 ]
+    then
+      rundone 0
+    else
+      rundone 1
+      rm ${NEWSTATEIMAGE}_*.nii.gz
+      echo_fatal "Unable to calculate the new state. NOTE: None of the new state for any class is not usable anymore."
+    fi
   done
-  )
 
-  if [ $? ]
-  then
-	  rundone 0
-    echo "Training completed and the updated state was written to:"
-    echo "$STATEIMAGE"
-  else
-    rundone 1
-    echo "Training failed."
-  fi
-  
 else
   
-  runname "Calculating likelihood"
-  (
-  set -e
   INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
   for img in $ALL_IMAGES
   do
@@ -198,6 +177,9 @@ else
   fslmaths ${BRAIN_WMGM} -mul 0 ${LIKELIHOOD}
   for CLASS_INDEX in {2..3}
   do
+	  runname "Calculating likelihood for class ${CLASS_INDEX}"
+	  (
+    set -e
     CLASS_MASK=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_mask.nii.gz
     CLASS_LIKELIHOOD=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_likelihood.nii.gz
     CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
@@ -205,47 +187,16 @@ else
     
     $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
     fslmaths ${LIKELIHOOD} -add ${CLASS_LIKELIHOOD} ${LIKELIHOOD}
+    )
+	  if [ $? -eq 0 ]
+	  then
+	    rundone 0
+	  else
+	    rundone 1
+	    rm ${LIKELIHOOD}
+	    rm $IMAGEROOT/${temp_dir}/class*_likelihood.nii.gz
+	    echo_fatal "Unable to calculate likelihood."
+	  fi
   done
-  )
-  if [ $? -eq 0 ]
-  then
-    rundone 0
-  else
-    rundone 1
-    echo_fatal "Unable to calculate likelihood."
-  fi
-
-  ####### POSTPROCESSING
-  echo "${bold}Post-processing${normal}"
-  runname "Processing likelihood"
-  # Threshold likelihood
-  fslmaths $LIKELIHOOD -abs $ABS_LIKELIHOOD
-  # fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
-  echo
-  echo $CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize -- threshold $MIN_PHYS
-  
-  rundone $?
-  
-  ####### REPORTING  
-  echo "${bold}Reporting${normal}"
-  mkdir -p $IMAGEROOT/${report_dir}/overlays
-  if [ -f $OUTMASK ]
-  then
-	  echo "\"ID\",\"CSF VOL\",\"GM VOL\",\"WM VOL\",\"WML VOL\"">${REPORTCSV}
-	  echo -n "\"$SUBJECTID\",">>${REPORTCSV}
-	  fslstats $IMAGEROOT/${temp_dir}/brain_pve_0.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV} 
-	  fslstats $IMAGEROOT/${temp_dir}/brain_pve_1.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-	  fslstats $IMAGEROOT/${temp_dir}/brain_pve_2.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-	  fslstats $IMAGEROOT/${report_dir}/wm.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-	  
-		for img in $ALL_IMAGES
-		do
-		  echo
-		  image_type=$(basename $img|sed "s/brain_//g"|sed "s/\..*//g")
-		  echo $CASCADEDIR/cascade-report --input $img --mask $IMAGEROOT/${report_dir}/wm.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
-		  #montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png 
-		done
-  fi  
-fi 
-
+fi
 echo

@@ -64,9 +64,14 @@ void IntensityNormalizerPipeline< TInputImage, TOutputImage >::GenerateData()
   histogramGenerator->Update();
 
   LookupFunctorType lookupFunctor;
-  for (int i = 0; i <= m_NumberOfLevels; i++)
+  /*
+   * We want to normalize the normal part (i.e. the middle part of the histogram
+   * for that the abnormalities usually lies in the rest)
+   */
+  for (int i = 5; i <= 95 ; i++)
     {
-    const double ratio = 1. * i / m_NumberOfLevels;
+    const double ratio = i * 0.01;
+
     InputImagePixelType levelIntensity =
         histogramGenerator->GetOutput()->Quantile(0, ratio);
     lookupFunctor.AddLookupRow(levelIntensity, ratio);

@@ -91,9 +91,9 @@ then
   echo_fatal "T1 image not found."
 fi
 
+IMAGEROOT=$(readlink -f $IMAGEROOT)     
 echo "Preprocessing subject at: ${IMAGEROOT}"
 mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
-IMAGEROOT=$(readlink -f $IMAGEROOT)     
 
 check_fsl
 check_cascade
@@ -175,7 +175,6 @@ do
   fi
 done
 )
-rundone 0
+rundone $?
 
 echo "Preprocessing done successfully for subject at: ${IMAGEROOT}"
-echo

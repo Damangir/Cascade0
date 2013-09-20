@@ -17,6 +17,7 @@
 copyright()
 {
 cat << EOF
+
 The Cascade pipeline. github.com/Damangir/Cascade
 Copyright (C) 2013 Soheil Damangir - All Rights Reserved
 
@@ -64,45 +65,37 @@ fi
 
 check_cascade()
 {
-runname "Checking Cascade Installation"
 for ce in {cascade-{range,train,likelihood,report,inspect,property-filter},c3d_affine_tool}
 do
   if [ ! -x $CASCADEDIR/$ce ]
   then
-    rundone 1
     echo_fatal "Cascade executable ${underline}${ce}${normal} is not available. Please check your Cascade installation."
   fi
 done
 STDMIDDLEBRAIN=$CASCADEDATA/middle_brain.nii.gz
-rundone 0
 }
 
 check_fsl()
 {
-runname "Checking FSL installation"
 if [ ! $FSLDIR ]
 then
-  rundone 1
   echo_fatal "Can not find FSL installation."
 else
   for ce in {fslmaths,flirt,fast}
   do
     if [ ! -x $FSLDIR/bin/$ce ]
     then
-      rundone 1
       echo_fatal "$ce executable is not available. Please check your FSL installation."
     fi
   done
   STDIMAGE=$FSLDIR/data/standard/MNI152_T1_1mm_brain.nii.gz
   if [ ! -f $STDIMAGE ]
   then
-      rundone 1
       echo_fatal "Can not find the standard image at $STDIMAGE. Please check your FSL installation."
   fi
   STDATLAS=$FSLDIR/data/atlases/MNI/MNI-maxprob-thr25-1mm.nii.gz
   if [ ! -f $STDATLAS ]
   then
-      rundone 1
       echo_fatal "Can not find the atlas image at $STDATLAS. Please check your FSL installation."
   fi
     
@@ -115,7 +108,6 @@ else
   
   FLAIR_OPTIONS_FOR_ATLAS="-interp nearestneighbour"
 fi
-rundone 0
 }
 
 echo_warning()
