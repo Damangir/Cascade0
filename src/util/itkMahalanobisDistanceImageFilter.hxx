@@ -30,6 +30,11 @@ template< class TInputImage, class TOutputImage >
 MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::MahalanobisDistanceImageFilter()
   {
   this->SetNumberOfRequiredInputs(1);
+
+  this->SetNumberOfRequiredOutputs(2);
+  this->SetNthOutput(0, this->MakeOutput(0));
+  this->SetNthOutput(1, this->MakeOutput(1));
+
   this->m_Transform = IdentityTransform< ScalarRealType, Dimension >::New();
   this->m_StateInterpolator = StateInterpolateType::New();
   this->SetMaskValue(NumericTraits< MaskPixelType >::max());
@@ -77,38 +82,36 @@ void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::ThreadedGenera
     const OutputImageRegionType & outputRegionForThread, ThreadIdType threadId)
   {
 
-  InputImageType *inputImage =
-      static_cast< InputImageType * >(this->ProcessObject::GetInput(0));
-
-  OutputImageType* outputImage =
-      static_cast< OutputImageType * >(this->ProcessObject::GetOutput(0));
+  const InputImageType* inputImage = this->GetInput();
 
   StateType state = m_GlobalState;
   if (!m_HasStateImage) StateFunc::MakeReady(state);
 
-  InputIteratorType iit(inputImage, outputRegionForThread);
-  OutputIteratorType oit(outputImage, outputRegionForThread);
+  InputIteratorType iImageIt(inputImage, outputRegionForThread);
+  OutputIteratorType oImageIt(GetDistanceImage(), outputRegionForThread);
+  OutputIteratorType oOrientIt(GetOrientImage(), outputRegionForThread);
 
   MaskIteratorType mit;
-  MaskPixelType  maskValue;
+  MaskPixelType maskValue;
   if (m_HasMask)
     {
     mit = MaskIteratorType(GetMaskImage(), outputRegionForThread);
     maskValue = this->GetMaskValue();
     }
 
-  while (!iit.IsAtEnd())
+  while (!iImageIt.IsAtEnd())
     {
-    if (m_HasMask && mit.Get() != maskValue)
+    if (m_HasMask && (mit.Get() != maskValue))
       {
-      oit.Set(m_OutsideValue);
+      oImageIt.Set(m_OutsideValue);
+      oOrientIt.Set(0);
       }
     else
       {
       if (m_HasStateImage)
         {
         InputPointType iPoint;
-        inputImage->TransformIndexToPhysicalPoint(iit.GetIndex(), iPoint);
+        inputImage->TransformIndexToPhysicalPoint(iImageIt.GetIndex(), iPoint);
         StatePointType sPoint = m_Transform->TransformPoint(iPoint);
         if (m_StateInterpolator->IsInsideBuffer(sPoint))
           {
@@ -124,39 +127,59 @@ void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::ThreadedGenera
       if (StateFunc::IsValid(state))
         {
         MeasurementVectorType mv;
-        NumericTraits< InputPixelType >::AssignToArray(iit.Get(), mv);
-        OutputPixelType out = StateFunc::Distance(state, mv);
-        if (m_HasStateImage)
-          {
-          /*
-           * State image implies no orientation.
-           * In the current implementation orientation with respect to
-           * calculated state image is not accurate so orientation is discarded.
-           *
-           * This implies that this filter will capture abnormalities in the
-           * image and does not care about its location. I.e. a dark point in
-           * a brain can be atrophy but this filter capture it as a lesion.
-           * This behavior should be seen in interpreting the output likelihood.
-           */
-          oit.Set(out);
-          }
+        NumericTraits< InputPixelType >::AssignToArray(iImageIt.Get(), mv);
+        oImageIt.Set(StateFunc::Distance(state, mv));
+
+        if (StateFunc::Orientation(state, mv) == m_PositiveOrientation)
+          oOrientIt.Set(1);
         else
-          {
-          if (StateFunc::Orientation(state, mv) == m_PositiveOrientation)
-            oit.Set(out);
-          else
-            oit.Set(-out);
-          }
+          oOrientIt.Set(-1);
         }
       else
         {
-        oit.Set(m_OutsideValue);
+        oImageIt.Set(m_OutsideValue);
+        oOrientIt.Set(0);
         }
       }
-    ++iit;
-    ++oit;
+    ++iImageIt;
+    ++oImageIt;
+    ++oOrientIt;
     if (m_HasMask) ++mit;
     }
+  }
+
+template< class TInputImage, class TOutputImage >
+DataObject::Pointer MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::MakeOutput(
+    unsigned int idx)
+  {
+  DataObject::Pointer output;
+
+  switch (idx)
+    {
+  case 0:
+    output = (TOutputImage::New()).GetPointer();
+    break;
+  case 1:
+    output = (TOutputImage::New()).GetPointer();
+    break;
+  default:
+    std::cerr << "No output " << idx << std::endl;
+    output = NULL;
+    break;
+    }
+  return output.GetPointer();
+  }
+
+template< class TInputImage, class TOutputImage >
+TOutputImage* MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::GetDistanceImage()
+  {
+  return static_cast< OutputImageType * >(this->ProcessObject::GetOutput(0));
+  }
+
+template< class TInputImage, class TOutputImage >
+TOutputImage* MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::GetOrientImage()
+  {
+  return static_cast< OutputImageType * >(this->ProcessObject::GetOutput(1));
   }
 
 template< class TInputImage, class TOutputImage >

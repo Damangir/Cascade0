@@ -131,8 +131,6 @@ then
   inverse_transform PROC STDIMAGE
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STDATLAS FLAIR - $(fsl_trans_name STDIMAGE PROC ) $PROC_ATLAS
-	FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-	register STDMIDDLEBRAIN FLAIR - $(fsl_trans_name STDIMAGE PROC ) $PROC_MIDDLE_BRAIN
 fi
 )
 rundone $?
@@ -173,62 +171,11 @@ do
   ranged_img=$(range_image $img)
   if [ ! -s $ranged_img ]
   then
-	  $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img}
+    $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img}
   fi
 done
 )
 rundone 0
-
-runname "Calculating mask with hypothesis"
-(
-# Hypothetical impossible locations
-set -e
-if [ ! -s ${HYPO_MASK} ]
-then
-# Content of hyp_*.nii.gz is all possible location according to that hypothesis.
-# All hyp_*.nii.gz will be ANDed together. I.e. all hypothesis should support 
-# each detection.
-  
-  rm -f ${IMAGEROOT}/${temp_dir}/hyp_*.nii.gz
-    
-# All detections in Cerebellum is invalid (can be processed separately)
-fslmaths ${PROC_ATLAS}  -thr 2 -uthr 2 -bin -mul -1 -add 1 ${IMAGEROOT}/${temp_dir}/hyp_cerebellum.nii.gz
-	
-# All detections should have FLAIR intensity value more than FLAIR mean
-	FLAIR_LOWER=$(fslstats $IMAGEROOT/$ranges_dir/brain_flair.nii.gz -k ${BRAIN_WMGM} -p 60)
-  fslmaths $IMAGEROOT/$ranges_dir/brain_flair.nii.gz -add 1 -thr $( echo "$FLAIR_LOWER+1"|bc) -bin ${IMAGEROOT}/${temp_dir}/hyp_flair.nii.gz
-	
-# All detections should have T1 intensity value less than top 10% of intensity
-	#	T1_UPPER=$(fslstats $IMAGEROOT/$ranges_dir/brain_t1.nii.gz -k ${BRAIN_WMGM} -p 90)
-  # fslmaths $IMAGEROOT/$ranges_dir/brain_t1.nii.gz -add 1 -uthr $( echo "$T1_UPPER+1"|bc) -bin ${IMAGEROOT}/${temp_dir}/hyp_t1.nii.gz
-
-# The very outer part of the cortex is not usually a WML though it can be bright
-# on FLAIR because of imperfection in brain extraction.
-  fslmaths ${BRAIN_PVE} -thr 3 -uthr 3 -bin -kernel sphere 3 -dilM -mas ${BRAIN_WMGM} ${IMAGEROOT}/${temp_dir}/hyp_outhecortex.nii.gz
-
-#fslmaths ${FLAIR} -kernel -vbox 11x11x1 -fmedian -sub ${FLAIR} -thr 2 -bin -mul -1 -add 1 ${IMAGEROOT}/${temp_dir}/hyp_localmax.nii.gz
-  
-# Distance from cortex
-	fslmaths ${PROC_MIDDLE_BRAIN} -thr 2 -bin  ${IMAGEROOT}/${temp_dir}/hyp_distance.nii.gz
-			
-  fslmaths ${BRAIN_WMGM} -mul 0 -add 1 ${HYPO_MASK}
-	for hypothesis in ${IMAGEROOT}/${temp_dir}/hyp_*.nii.gz
-	do
-    fslmaths ${HYPO_MASK} -mas ${hypothesis} ${HYPO_MASK}
-  done
-	
-	DETECTION_DROP_THRESH=200
-	  HOLE_FILLING_THRESH=200
-	  
-	$CASCADEDIR/cascade-property-filter --input ${HYPO_MASK} --property PhysicalSize --threshold ${DETECTION_DROP_THRESH} --out ${HYPO_MASK}
-	
-	fslmaths ${HYPO_MASK} -bin -mul -1 -add 1 ${IMAGEROOT}/${temp_dir}/invert_hyp.nii.gz
-	$CASCADEDIR/cascade-property-filter --input ${IMAGEROOT}/${temp_dir}/invert_hyp.nii.gz --property PhysicalSize --threshold ${HOLE_FILLING_THRESH} -r --out ${IMAGEROOT}/${temp_dir}/invert_hyp.nii.gz
-	fslmaths ${HYPO_MASK} -add ${IMAGEROOT}/${temp_dir}/invert_hyp.nii.gz -bin ${HYPO_MASK}
-  
-fi
-)
-rundone $?
 
 echo "Preprocessing done successfully for subject at: ${IMAGEROOT}"
 echo

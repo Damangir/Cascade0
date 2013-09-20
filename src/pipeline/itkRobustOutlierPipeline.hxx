@@ -18,6 +18,9 @@
 #define __itkRobustOutlierPipeline_hxx
 #include "itkRobustOutlierPipeline.h"
 
+#include "itkMultiplyImageFilter.h"
+#include "util/itkOrientationEnhanceFilter.h"
+#include "util/helpers.h"
 namespace itk
 {
 
@@ -51,16 +54,13 @@ void RobustOutlierPipeline< TInputImage, TOutputImage >::GenerateData()
   itkAssertOrThrowMacro(inputImage, "Input image should be set.");
 
   m_MahalanobisFilter->SetInput(inputImage);
-
-  if (m_MahalanobisFilter->GetStateImage())
+  if (GetMaskImage())
     {
-    if (GetMaskImage())
-      {
-      m_MahalanobisFilter->SetMaskImage(this->GetMaskImage());
-      m_MahalanobisFilter->SetMaskValue(this->GetMaskValue());
-      }
+    m_MahalanobisFilter->SetMaskImage(this->GetMaskImage());
+    m_MahalanobisFilter->SetMaskValue(this->GetMaskValue());
     }
-  else
+
+  if (!m_MahalanobisFilter->GetStateImage())
     {
     if (GetMaskImage())
       {
@@ -75,12 +75,28 @@ void RobustOutlierPipeline< TInputImage, TOutputImage >::GenerateData()
     }
 
   m_ChiFilter->GetFunctor().SetDOF(inputImage->GetNumberOfComponentsPerPixel());
-  m_ChiFilter->SetInput(m_MahalanobisFilter->GetOutput());
+  m_ChiFilter->SetInput(m_MahalanobisFilter->GetDistanceImage());
 
-  m_Castor->SetInput(m_ChiFilter->GetOutput());
+  typedef MultiplyImageFilter< ScalarImageType, ScalarImageType > MultiplyImageFilterType;
+  typename MultiplyImageFilterType::Pointer multiplyFilter =
+      MultiplyImageFilterType::New();
+  typedef OrientationEnhanceFilter< ScalarImageType > OrientEnhanceType;
+  typename OrientEnhanceType::Pointer orientEnhance = OrientEnhanceType::New();
+
+  multiplyFilter->SetInput1(m_ChiFilter->GetOutput());
+  multiplyFilter->SetInput2(m_MahalanobisFilter->GetOrientImage());
+
+  orientEnhance->SetInput(multiplyFilter->GetOutput());
+
+  m_Castor->SetInput(orientEnhance->GetOutput());
 
   m_Castor->Update();
   this->GraftOutput(m_Castor->GetOutput());
+
+  ::cascade::util::WriteImage< ScalarImageType >(
+      "orient_before.nii.gz", orientEnhance->GetInput());
+  ::cascade::util::WriteImage< ScalarImageType >("orient_after.nii.gz",
+                                                 orientEnhance->GetOutput());
   }
 
 } // end namespace itk

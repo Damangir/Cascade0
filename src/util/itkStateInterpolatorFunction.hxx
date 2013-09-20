@@ -18,7 +18,6 @@
 #define STATEINTERPOLATORFUNCTION_HXX_
 
 #include "vnl/vnl_math.h"
-#include "vnl/vnl_matlab_filewrite.h"
 namespace itk
 {
 

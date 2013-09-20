@@ -44,10 +44,6 @@
 /*
  * Others
  */
-#include "pipeline/itkImageNormalizerPipeline.h"
-#include "pipeline/itkN4Pipeline.h"
-#include "pipeline/itkRobustOutlierPipeline.h"
-#include "util/itkIntensityAlignFunctor.h"
 #include "3rdparty/tclap/CmdLine.h"
 #include "util/helpers.h"
 /*

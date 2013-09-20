@@ -18,7 +18,6 @@
 #define __itkChiSquaredFunctor_h
 
 #include "vnl/algo/vnl_chi_squared.h"
-#include  "itkLabelMap.hxx"
 
 namespace itk
 {

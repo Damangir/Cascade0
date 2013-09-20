@@ -193,7 +193,8 @@ FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
 ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name PROC STDIMAGE )
 
        LIKELIHOOD=${IMAGEROOT}/${ranges_dir}/likelihood.nii.gz
-       
+   ABS_LIKELIHOOD=${IMAGEROOT}/${ranges_dir}/likelihood_abs.nii.gz
+   
           OUTMASK=${IMAGEROOT}/${report_dir}/wm.nii.gz
         REPORTCSV=${IMAGEROOT}/${report_dir}/report.csv
           LOGFILE=${IMAGEROOT}/${report_dir}/error.log

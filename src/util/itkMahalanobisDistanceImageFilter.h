@@ -101,8 +101,13 @@ public:
     itkSetMacro(OutsideValue, OutputPixelType);
     itkGetConstReferenceMacro(OutsideValue, OutputPixelType);
 
+    TOutputImage* GetDistanceImage();
+    TOutputImage* GetOrientImage();
+
   protected:
     MahalanobisDistanceImageFilter();
+    DataObject::Pointer MakeOutput(unsigned int idx);
+
     void PrintSelf(std::ostream & os, Indent indent) const;
 
     void BeforeThreadedGenerateData();

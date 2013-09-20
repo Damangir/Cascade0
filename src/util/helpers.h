@@ -32,7 +32,7 @@ namespace util
 template<class ImageT>
 typename ImageT::Pointer LoadImage(std::string filename)
   {
-  typedef itk::ImageFileReader< ImageT > ImageReaderType;
+  typedef ::itk::ImageFileReader< ImageT > ImageReaderType;
   typename ImageT::Pointer image;
   typename ImageReaderType::Pointer reader = ImageReaderType::New();
   reader->SetFileName(filename);
@@ -45,10 +45,10 @@ typename ImageT::Pointer LoadImage(std::string filename)
 template<class ImageT>
 void WriteImage(std::string filename, const ImageT* image)
   {
-  typedef itk::ImageFileWriter< ImageT > ImageWriterType;
+  typedef ::itk::ImageFileWriter< ImageT > ImageWriterType;
   typename ImageWriterType::Pointer writer = ImageWriterType::New();
   writer->SetFileName(filename);
-  writer->SetInputImage(image);
+  writer->SetInput(image);
   writer->Update();
   }
 

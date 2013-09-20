@@ -196,7 +196,7 @@ else
     INPUT_ARGS="$INPUT_ARGS --$(sequence_type $img) $(range_image $img)"
   done
   fslmaths ${BRAIN_WMGM} -mul 0 ${LIKELIHOOD}
-  for CLASS_INDEX in {1..3}
+  for CLASS_INDEX in {2..3}
   do
     CLASS_MASK=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_mask.nii.gz
     CLASS_LIKELIHOOD=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_likelihood.nii.gz
@@ -219,10 +219,11 @@ else
   echo "${bold}Post-processing${normal}"
   runname "Processing likelihood"
   # Threshold likelihood
-  fslmaths $LIKELIHOOD -thr 0.5 $LIKELIHOOD 
-  fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
-    
-  $CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize -- threshold $MIN_PHYS 
+  fslmaths $LIKELIHOOD -abs $ABS_LIKELIHOOD
+  # fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
+  echo
+  echo $CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize -- threshold $MIN_PHYS
+  
   rundone $?
   
   ####### REPORTING  
@@ -239,9 +240,10 @@ else
 	  
 		for img in $ALL_IMAGES
 		do
+		  echo
 		  image_type=$(basename $img|sed "s/brain_//g"|sed "s/\..*//g")
-		  $CASCADEDIR/cascade-report --input $img --mask $IMAGEROOT/${report_dir}/wm.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
-		  montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png 
+		  echo $CASCADEDIR/cascade-report --input $img --mask $IMAGEROOT/${report_dir}/wm.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
+		  #montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png 
 		done
   fi  
 fi 

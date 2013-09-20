@@ -32,7 +32,6 @@ target_link_libraries(inspect ${ITK_LIBRARIES})
 add_executable(property-filter property-filter-main.cxx)
 target_link_libraries(property-filter ${ITK_LIBRARIES})
 
-
 message("Installation root is ${CMAKE_INSTALL_PREFIX}")
 foreach(targ train likelihood range report inspect property-filter)
  message("Install rule: ${targ} as ${TARGET_PREFIX}${targ}")

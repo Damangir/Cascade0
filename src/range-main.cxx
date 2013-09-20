@@ -14,7 +14,6 @@
  * To view a copy of the license, visit
  * http://creativecommons.org/licenses/by-nc-nd/3.0/
  */
-
 #include "buildinfo.h"
 /*
  * CPP Headers
@@ -27,31 +26,18 @@
 /*
  * ITK Filters
  */
-#include "itkSliceBySliceImageFilter.h"
 #include "itkCastImageFilter.h"
-#include "itkCurvatureFlowImageFilter.h"
 #include "itkBilateralImageFilter.h"
 #include "itkMaskImageFilter.h"
-#include "itkBinaryFunctorImageFilter.h"
 #include "itkBinaryThresholdImageFilter.h"
-
-#if ITK_VERSION_MAJOR >= 4
-#include "itkComposeImageFilter.h"
-#else
-#include "itkImageToVectorImageFilter.h"
-#endif
-/*
- * ITK IO
- */
-#include "itkImageFileReader.h"
-#include "itkImageFileWriter.h"
 /*
  * Others
  */
-#include "pipeline/itkImageNormalizerPipeline.h"
+#include "pipeline/itkSliceNormalizerPipeline.h"
 #include "pipeline/itkN4Pipeline.h"
 #include "pipeline/itkRobustOutlierPipeline.h"
-#include "util/itkIntensityAlignFunctor.h"
+#include "pipeline/itkIntensityNormalizerPipeline.h"
+
 #include "util/helpers.h"
 #include "3rdparty/tclap/CmdLine.h"
 
@@ -73,71 +59,13 @@ typedef itk::Image< InterimPixelType, SLICEDIM > InterimSliceType;
 typedef itk::CastImageFilter< InputImageType, InterimImageType > CastToInterimType;
 typedef itk::CastImageFilter< InterimImageType, OutputImageType > CastToOutputType;
 
-typedef itk::ImageNormalizerPipeline< InterimImageType, InterimImageType > Normalizer3dType;
-typedef itk::ImageNormalizerPipeline< InterimSliceType, InterimSliceType > NormalizerType;
-typedef itk::SliceBySliceImageFilter< InterimImageType, InterimImageType > SlicedFilterType;
-typedef itk::N4Pipeline< InterimImageType, InterimImageType > N4PipelineType;
+typedef itk::SliceNormalizerPipeline<InterimImageType> SliceNormalizerType;
 
-typedef itk::CurvatureFlowImageFilter< InterimImageType, InterimImageType > CurvatureFlowImageFilterType;
-typedef itk::BilateralImageFilter< InterimImageType, InterimImageType > BilateralImageFilterType;
-typedef itk::MaskImageFilter< InterimImageType, InterimImageType > MaskFilterType;
-
-#if ITK_VERSION_MAJOR >= 4
-typedef itk::ComposeImageFilter< InterimImageType > CollectorType;
-#else
-typedef itk::ImageToVectorImageFilter< InterimImageType > CollectorType;
-#endif
-
-typedef CollectorType::OutputImageType CollectedImageType;
-typedef itk::RobustOutlierPipeline< CollectedImageType, InterimImageType > RobustOutlierPipelineType;
-typedef RobustOutlierPipelineType::MaskImageType MaskImageType;
+typedef itk::IntensityNormalizerPipeline< InterimImageType, InterimImageType > IntensityNormalizerType;
+typedef IntensityNormalizerType::MaskImageType MaskImageType;
 typedef itk::BinaryThresholdImageFilter< MaskImageType, MaskImageType > BinaryThresholdImageFilterType;
-
-typedef itk::RobustMeanVariancePipeline< InterimImageType > StatCalculatorType;
-/*
- * IO types
- */
-typedef itk::ImageFileReader< InputImageType > InputReaderType;
-typedef itk::ImageFileWriter< OutputImageType > OutputWriterType;
-
-InterimImageType::Pointer PreprocessImage(InputImageType* inImage)
-  {
-  InterimImageType::Pointer image;
-
-  CastToInterimType::Pointer castor = CastToInterimType::New();
-  SlicedFilterType::Pointer slicer = SlicedFilterType::New();
-  N4PipelineType::Pointer n4Corrector = N4PipelineType::New();
-  Normalizer3dType::Pointer normalizer3D = Normalizer3dType::New();
-  NormalizerType::Pointer normalizer = NormalizerType::New();
-  BilateralImageFilterType::Pointer smoothing = BilateralImageFilterType::New();
-  MaskFilterType::Pointer maskFilter = MaskFilterType::New();
-
-  castor->SetInput(inImage);
-
-  normalizer3D->SetInput(castor->GetOutput());
-  normalizer3D->Update();
-
-  normalizer->SetTargetMax(normalizer3D->GetMaxValue());
-  normalizer->SetTargetMin(normalizer3D->GetMinValue());
-  slicer->SetInput(castor->GetOutput());
-  slicer->SetFilter(normalizer);
-  n4Corrector->SetInput(slicer->GetOutput());
-
-  smoothing->AutomaticKernelSizeOn();
-  smoothing->SetInput(n4Corrector->GetOutput());
-  smoothing->SetDomainSigma(2);
-  smoothing->SetRangeSigma(
-      (normalizer3D->GetMaxValue() - normalizer3D->GetMinValue()) / 25.0);
-
-  maskFilter->SetInput(smoothing->GetOutput());
-  maskFilter->SetMaskImage(castor->GetOutput());
-
-  image = maskFilter->GetOutput();
-  image->Update();
-  image->DisconnectPipeline();
-
-  return image;
-  }
+typedef itk::N4Pipeline< InterimImageType, InterimImageType > N4PipelineType;
+typedef itk::MaskImageFilter< InterimImageType, InterimImageType > MaskFilterType;
 
 int main(int argc, char *argv[])
   {
@@ -150,9 +78,6 @@ int main(int argc, char *argv[])
 
   TCLAP::ValueArg< unsigned int > bins("b", "bins", "", false, 20, "Integer",
                                        cmd);
-
-  TCLAP::ValueArg< float > percentile("p", "percentile", "", false, 0.05,
-                                      "Real", cmd);
 
   TCLAP::ValueArg< std::string > mask("m", "mask",
                                       "Mask sequences e.g. mask.nii.gz", false,
@@ -183,12 +108,6 @@ int main(int argc, char *argv[])
    */
   try
     {
-    CollectorType::Pointer collector = CollectorType::New();
-    collector->PushBackInput(
-        PreprocessImage(
-            cascade::util::LoadImage< InputImageType >(input.getValue())));
-    RobustOutlierPipelineType::Pointer outlierDetector =
-        RobustOutlierPipelineType::New();
     BinaryThresholdImageFilterType::Pointer thresholdFilter =
         BinaryThresholdImageFilterType::New();
 
@@ -202,22 +121,39 @@ int main(int argc, char *argv[])
       thresholdFilter->SetInput(
           cascade::util::LoadImage< MaskImageType >(input.getValue()));
       }
+
     thresholdFilter->SetLowerThreshold(
         itk::NumericTraits< MaskImageType::PixelType >::epsilon());
-    outlierDetector->SetMaskImage(thresholdFilter->GetOutput());
-    outlierDetector->SetMaskValue(thresholdFilter->GetInsideValue());
-    outlierDetector->SetPercentile(percentile.getValue());
-    outlierDetector->SetNumberOfBins(bins.getValue());
-    outlierDetector->SetInput(collector->GetOutput());
-    outlierDetector->Update();
-    CastToOutputType::Pointer castor = CastToOutputType::New();
 
-    castor->SetInput(outlierDetector->GetOutput());
+    CastToInterimType::Pointer castToInterim = CastToInterimType::New();
+    castToInterim->SetInput(
+        cascade::util::LoadImage< InputImageType >(input.getValue()));
 
-    OutputWriterType::Pointer outputWriter = OutputWriterType::New();
-    outputWriter->SetInput(castor->GetOutput());
-    outputWriter->SetFileName(outfile.getValue());
-    outputWriter->Update();
+    SliceNormalizerType::Pointer sliceNormalizer = SliceNormalizerType::New();
+    sliceNormalizer->SetInput(castToInterim->GetOutput());
+    sliceNormalizer->SetMaskImage(thresholdFilter->GetOutput());
+    sliceNormalizer->SetMaskValue(thresholdFilter->GetInsideValue());
+    sliceNormalizer->SetNumberOfLevels(bins.getValue());
+
+    N4PipelineType::Pointer n4Corrector = N4PipelineType::New();
+    n4Corrector->SetInput(sliceNormalizer->GetOutput());
+
+    IntensityNormalizerType::Pointer intensityNormalizer =
+        IntensityNormalizerType::New();
+    intensityNormalizer->SetInput(n4Corrector->GetOutput());
+    intensityNormalizer->SetMaskImage(thresholdFilter->GetOutput());
+    intensityNormalizer->SetMaskValue(thresholdFilter->GetInsideValue());
+    intensityNormalizer->SetNumberOfLevels(bins.getValue());
+
+    MaskFilterType::Pointer maskFilter = MaskFilterType::New();
+    maskFilter->SetInput(intensityNormalizer->GetOutput());
+    maskFilter->SetMaskImage(castToInterim->GetOutput());
+
+    CastToOutputType::Pointer castToOutput = CastToOutputType::New();
+    castToOutput->SetInput(maskFilter->GetOutput());
+    castToOutput->Update();
+
+    cascade::util::WriteImage(outfile.getValue(), castToOutput->GetOutput());
     }
   catch (itk::ExceptionObject & err)
     {
