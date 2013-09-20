@@ -25,6 +25,7 @@
  */
 #include "itkImage.h"
 #include "itkNumericSeriesFileNames.h"
+#include "itkImageAlgorithm.h"
 /*
  * ITK Filters
  */
@@ -35,12 +36,6 @@
 #include "itkBinaryContourImageFilter.h"
 #include "itkLabelOverlayImageFilter.h"
 #include "itkRGBPixel.h"
-/*
- * ITK IO
- */
-#include "itkImageFileReader.h"
-#include "itkImageFileWriter.h"
-
 /*
  * Others
  */
@@ -67,19 +62,14 @@ typedef itk::SliceBySliceImageFilter< ImageType, ImageType > SlicerType;
 
 typedef itk::FlipImageFilter< RGBImageType > FlipImageFilterType;
 
-typedef itk::ImageRegionIterator< RGBImageType > RGBImageIteratorType;
-typedef itk::ImageRegionIterator< RGBSliceType > RGBSliceIteratorType;
-/*
- * IO types
- */
-typedef itk::ImageFileWriter< RGBImageType > OutputWriterType;
-typedef itk::ImageFileWriter< RGBSliceType > ImageWriterType;
-
 int main(int argc, char *argv[])
   {
   TCLAP::CmdLine cmd(
       "Cascade(v" CASCADE_VERSION ") - Segmentation of White Matter Lesion. Image intensity range controller " BUILDINFO,
       ' ', CASCADE_VERSION);
+
+  TCLAP::ValueArg< unsigned int > dim2fold("d", "dim", "Dimension to fold",
+                                           false, DIM - 1, "Integer", cmd);
 
   TCLAP::ValueArg< std::string > outfile("o", "out", "Output filename", false,
                                          "overlay", "string", cmd);
@@ -107,7 +97,6 @@ int main(int argc, char *argv[])
     return EXIT_FAILURE;
     }
 
-  unsigned int dimension_fold = DIM - 1;
   /*
    * Argument and setting up the pipeline
    */
@@ -122,7 +111,7 @@ int main(int argc, char *argv[])
     binaryContourFilter->FullyConnectedOff();
 
     SlicerType::Pointer slicer = SlicerType::New();
-    slicer->SetDimension(dimension_fold);
+    slicer->SetDimension(dim2fold.getValue());
     slicer->SetFilter(binaryContourFilter);
     slicer->SetInput(cascade::util::LoadImage< ImageType >(mask.getValue()));
 
@@ -139,13 +128,9 @@ int main(int argc, char *argv[])
     labelOverlayImageFilter->SetOpacity(1);
     labelOverlayImageFilter->Update();
 
-    RGBImageType::Pointer rgbImage = RGBImageType::New();
-    rgbImage = labelOverlayImageFilter->GetOutput();
+    RGBImageType* rgbImage = labelOverlayImageFilter->GetOutput();
 
-    OutputWriterType::Pointer outputWriter = OutputWriterType::New();
-    outputWriter->SetFileName(outfile.getValue() + ".nii.gz");
-    outputWriter->SetInput(rgbImage);
-    outputWriter->Update();
+    cascade::util::WriteImage(outfile.getValue() + ".nii.gz", rgbImage);
 
     /*
      * Niftii vertical dimension is bottom-up but it regular images its top-down.
@@ -159,27 +144,27 @@ int main(int argc, char *argv[])
     flipFilter->SetFlipAxes(flipAxes);
     flipFilter->Update();
     rgbImage = flipFilter->GetOutput();
+
     /*
      * Create slice by slice png
      */
-    const RGBImageType::RegionType requestedRegion =
+    const RGBImageType::RegionType imageRegion =
         rgbImage->GetLargestPossibleRegion();
-    const RGBImageType::IndexType requestedIndex = requestedRegion.GetIndex();
-    const RGBImageType::SizeType requestedSize = requestedRegion.GetSize();
-    typename RGBSliceType::RegionType internalRegion;
-    unsigned int internal_i = 0;
-    for (unsigned int i = 0; internal_i < SLICEDIM; ++i, ++internal_i)
+    const RGBImageType::IndexType requestedIndex = imageRegion.GetIndex();
+    const RGBImageType::SizeType requestedSize = imageRegion.GetSize();
+    typename RGBSliceType::RegionType sliceRegion;
+
+    for (unsigned int i = 0, internal_i = 0; internal_i < DIM - 1;
+        ++i, ++internal_i)
       {
-      if (i == dimension_fold)
-        {
-        ++i;
-        }
-      internalRegion.SetSize(internal_i, requestedSize[i]);
-      internalRegion.SetIndex(internal_i, requestedIndex[i]);
+      if (i == dim2fold.getValue()) ++i;
+      sliceRegion.SetSize(internal_i, requestedSize[i]);
+      sliceRegion.SetIndex(internal_i, requestedIndex[i]);
       }
+
     const itk::IndexValueType sliceRangeMax =
-        static_cast< itk::IndexValueType >(requestedSize[dimension_fold]
-            + requestedIndex[dimension_fold]);
+        static_cast< itk::IndexValueType >(requestedSize[dim2fold.getValue()]
+            + requestedIndex[dim2fold.getValue()]);
 
     itk::NumericSeriesFileNames::Pointer numericSeriesFileNames =
         itk::NumericSeriesFileNames::New();
@@ -187,38 +172,26 @@ int main(int argc, char *argv[])
     numericSeriesFileNames->SetEndIndex(sliceRangeMax);
     numericSeriesFileNames->SetSeriesFormat(outfile.getValue() + "_%03d.png");
 
-    for (itk::IndexValueType slice_n = requestedIndex[dimension_fold];
+    for (itk::IndexValueType slice_n = requestedIndex[dim2fold.getValue()];
         slice_n < sliceRangeMax; ++slice_n)
       {
-      RGBImageType::RegionType currentRegion = requestedRegion;
-      currentRegion.SetIndex(slicer->GetDimension(), slice_n);
-      currentRegion.SetSize(slicer->GetDimension(), 1);
+      RGBImageType::RegionType regionForThisSlice = imageRegion;
+      regionForThisSlice.SetIndex(dim2fold.getValue(), slice_n);
+      regionForThisSlice.SetSize(dim2fold.getValue(), 1);
 
       itkAssertOrThrowMacro(
-          currentRegion.GetNumberOfPixels() == internalRegion.GetNumberOfPixels(),
+          regionForThisSlice.GetNumberOfPixels() == sliceRegion.GetNumberOfPixels(),
           "Number of pixels in slice and image regions does not match");
 
       RGBSliceType::Pointer slice = RGBSliceType::New();
-      slice->SetRegions(internalRegion);
+      slice->SetRegions(sliceRegion);
       slice->Allocate();
 
-      RGBImageIteratorType imgIt(rgbImage, currentRegion);
-      RGBSliceIteratorType sliceIt(slice, internalRegion);
-      itk::ImageRegionIterator< ImageType > orgIt(inputImage, currentRegion);
-      orgIt.GoToBegin();
-      imgIt.GoToBegin();
-      sliceIt.GoToBegin();
-      while (!imgIt.IsAtEnd())
-        {
-        sliceIt.Set(imgIt.Get());
-        ++imgIt;
-        ++sliceIt;
-        ++orgIt;
-        }
-      ImageWriterType::Pointer sliceWriter = ImageWriterType::New();
-      sliceWriter->SetInput(slice);
-      sliceWriter->SetFileName(numericSeriesFileNames->GetFileNames()[slice_n]);
-      sliceWriter->Update();
+      itk::ImageAlgorithm::Copy(rgbImage, slice.GetPointer(),
+                                regionForThisSlice, sliceRegion);
+
+      cascade::util::WriteImage(numericSeriesFileNames->GetFileNames()[slice_n],
+                                slice.GetPointer());
       }
     }
   catch (itk::ExceptionObject & err)
