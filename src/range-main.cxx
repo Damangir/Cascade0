@@ -47,11 +47,13 @@
 typedef unsigned int InputPixelType;
 typedef float OutputPixelType;
 typedef float InterimPixelType;
+typedef char MaskPixelType;
 /*
  * Image types
  */
 typedef itk::Image< InputPixelType, DIM > InputImageType;
 typedef itk::Image< OutputPixelType, DIM > OutputImageType;
+typedef itk::Image< MaskPixelType, DIM > MaskImageType;
 
 typedef itk::Image< InterimPixelType, DIM > InterimImageType;
 typedef itk::Image< InterimPixelType, SLICEDIM > InterimSliceType;
@@ -59,10 +61,9 @@ typedef itk::Image< InterimPixelType, SLICEDIM > InterimSliceType;
 typedef itk::CastImageFilter< InputImageType, InterimImageType > CastToInterimType;
 typedef itk::CastImageFilter< InterimImageType, OutputImageType > CastToOutputType;
 
-typedef itk::SliceNormalizerPipeline<InterimImageType> SliceNormalizerType;
+typedef itk::SliceNormalizerPipeline< InterimImageType, InterimImageType, MaskImageType > SliceNormalizerType;
+typedef itk::IntensityNormalizerPipeline< InterimImageType, InterimImageType, MaskImageType > IntensityNormalizerType;
 
-typedef itk::IntensityNormalizerPipeline< InterimImageType, InterimImageType > IntensityNormalizerType;
-typedef IntensityNormalizerType::MaskImageType MaskImageType;
 typedef itk::BinaryThresholdImageFilter< MaskImageType, MaskImageType > BinaryThresholdImageFilterType;
 typedef itk::N4Pipeline< InterimImageType, InterimImageType > N4PipelineType;
 typedef itk::MaskImageFilter< InterimImageType, InterimImageType > MaskFilterType;
@@ -122,8 +123,7 @@ int main(int argc, char *argv[])
           cascade::util::LoadImage< MaskImageType >(input.getValue()));
       }
 
-    thresholdFilter->SetLowerThreshold(
-        itk::NumericTraits< MaskImageType::PixelType >::epsilon());
+    thresholdFilter->SetLowerThreshold(1);
 
     CastToInterimType::Pointer castToInterim = CastToInterimType::New();
     castToInterim->SetInput(
@@ -137,6 +137,7 @@ int main(int argc, char *argv[])
 
     N4PipelineType::Pointer n4Corrector = N4PipelineType::New();
     n4Corrector->SetInput(sliceNormalizer->GetOutput());
+    n4Corrector->Update();
 
     IntensityNormalizerType::Pointer intensityNormalizer =
         IntensityNormalizerType::New();

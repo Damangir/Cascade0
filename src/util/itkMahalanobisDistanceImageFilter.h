@@ -70,6 +70,16 @@ public:
     typedef StateInterpolatorFunction<StateImageType, double> StateInterpolateType;
 
 
+    void ConsiderNthChannel(const int N)
+      {
+      m_ConsiderOrientation |= 1 << N;
+      this->Modified();
+      }
+    void IgnoreNthChannel(const int N)
+      {
+      m_ConsiderOrientation &= ~(1 << N);
+      this->Modified();
+      }
     void SetNthChannelLight(const int N)
       {
       m_PositiveOrientation |= 1 << N;
@@ -138,6 +148,7 @@ public:
     bool m_HasStateImage;
 
     int m_PositiveOrientation;
+    int m_ConsiderOrientation;
     };}
 
 #ifndef ITK_MANUAL_INSTANTIATION

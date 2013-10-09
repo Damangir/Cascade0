@@ -20,23 +20,23 @@
 
 namespace itk
 {
-template< class TInputImage, class TOutputImage >
-IntensityNormalizerPipeline< TInputImage, TOutputImage >::IntensityNormalizerPipeline()
+template< class TInputImage, class TOutputImage, class TMaskImage >
+IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::IntensityNormalizerPipeline()
   {
   m_NumberOfLevels = 100;
   this->SetMaskValue(NumericTraits< MaskPixelType >::max());
   }
 
-template< class TInputImage, class TOutputImage >
-void IntensityNormalizerPipeline< TInputImage, TOutputImage >::PrintSelf(
+template< class TInputImage, class TOutputImage, class TMaskImage >
+void IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::PrintSelf(
     std::ostream & os, Indent indent) const
   {
   Superclass::PrintSelf(os, indent);
   os << indent << "Number of levels " << m_NumberOfLevels << std::endl;
   }
 
-template< class TInputImage, class TOutputImage >
-void IntensityNormalizerPipeline< TInputImage, TOutputImage >::GenerateData()
+template< class TInputImage, class TOutputImage, class TMaskImage >
+void IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::GenerateData()
   {
   const unsigned int numElems =
       this->GetInput()->GetNumberOfComponentsPerPixel();

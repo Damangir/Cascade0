@@ -147,25 +147,57 @@ fi
 )
 rundone $?
 
-runname "Brain partial volume estimation"
+runname "Segmenting brain tissues"
 (
 set -e
-if [ ! -s ${BRAIN_PVE} ]
+if [ ! -s ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz ]
 then
   fast -t 1 -o ${IMAGEROOT}/${temp_dir}/brain -n 3 ${T1_BRAIN}
-  cp ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz $BRAIN_PVE
 fi
-if [ ! -s ${BRAIN_WMGM} ]
+
+if [ ! -s ${BRAIN_CSF} ]
 then
-  fslmaths ${BRAIN_PVE} -thr 2 -bin ${BRAIN_WMGM}
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -nan -thr 0.5 -bin ${IMAGEROOT}/${temp_dir}/brain_puregm.nii.gz
+  $CASCADEDIR/cascade-property-filter -i ${IMAGEROOT}/${temp_dir}/brain_puregm.nii.gz -o ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz --property PhysicalSize --threshold 1000 -r     
+  
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -kernel 3D -dilM ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -bin -mul ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -add ${IMAGEROOT}/${temp_dir}/brain_pve_2.nii.gz ${IMAGEROOT}/${temp_dir}/brain_pve_mod_2.nii.gz   
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -sub ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -thr 0 ${IMAGEROOT}/${temp_dir}/brain_pve_mod_1.nii.gz   
+    
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_mod_2.nii.gz -thr 0.5 -bin ${BRAIN_WM}
+  fslmaths ${BRAIN_WM} -mul -1 -add 1 ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz 
+  $CASCADEDIR/cascade-property-filter -i ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz -o ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz --property PhysicalSize --threshold 300 --reverse
+  
+  fslmaths ${BRAIN_WM} -add ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz ${BRAIN_WM} 
+  
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_mod_1.nii.gz -thr 0.5 -bin ${BRAIN_GM}
+  fslmaths ${BRAIN_WM} -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}
+  
+  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz -thr 1 -uthr 1 ${BRAIN_CSF}
 fi
+
+if [ ! -s ${BRAIN_PVE} ]
+then
+  fslmaths ${BRAIN_CSF} -bin -mul 1 ${BRAIN_CSF}
+  fslmaths ${BRAIN_GM} -bin -mul 2 ${BRAIN_GM}
+  fslmaths ${BRAIN_WM} -bin -mul 3 ${BRAIN_WM}
+  fslmaths ${BRAIN_CSF} -add ${BRAIN_GM} -add ${BRAIN_WM} ${BRAIN_PVE}
+fi
+
+if [ ! -s ${BRAIN_THIN_GM} ]
+then
+  fslmaths ${BRAIN_WM} -add ${BRAIN_GM} -bin ${BRAIN_WMGM}
+fslmaths ${BRAIN_WMGM} -bin -mul -1 -add 1 -kernel sphere 2 -dilM -dilM -mas ${BRAIN_GM} ${BRAIN_THIN_GM}
+fi 
+
 )
 rundone $?
 
 runname "Normalizing input images"
 (
 set -e
-get_allimages
+
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_*.nii.gz | grep -v pve| grep -v mixel )
 for img in $ALL_IMAGES
 do
   ranged_img=$(range_image $img)

@@ -27,8 +27,6 @@ namespace itk
 template< class TInputImage, class TOutputImage >
 RobustOutlierPipeline< TInputImage, TOutputImage >::RobustOutlierPipeline()
   {
-  m_NumberOfBins = 50;
-  m_Percentile = 0.01;
   this->SetMaskValue(NumericTraits< MaskPixelType >::max());
   m_MahalanobisFilter = MahalanobisDistanceImageFilterType::New();
   m_MeanCovCalculator = MeanVariancePipelineType::New();
@@ -41,8 +39,6 @@ void RobustOutlierPipeline< TInputImage, TOutputImage >::PrintSelf(
     std::ostream & os, Indent indent) const
   {
   Superclass::PrintSelf(os, indent);
-  os << indent << "Number of histogram bins: " << m_NumberOfBins << std::endl;
-  os << indent << "Histogram cut percentile: " << m_Percentile << std::endl;
   }
 
 template< class TInputImage, class TOutputImage >
@@ -93,10 +89,6 @@ void RobustOutlierPipeline< TInputImage, TOutputImage >::GenerateData()
   m_Castor->Update();
   this->GraftOutput(m_Castor->GetOutput());
 
-  ::cascade::util::WriteImage< ScalarImageType >(
-      "orient_before.nii.gz", orientEnhance->GetInput());
-  ::cascade::util::WriteImage< ScalarImageType >("orient_after.nii.gz",
-                                                 orientEnhance->GetOutput());
   }
 
 } // end namespace itk

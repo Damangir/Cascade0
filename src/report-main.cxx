@@ -102,8 +102,18 @@ int main(int argc, char *argv[])
    */
   try
     {
-    ImageType* inputImage = cascade::util::LoadImage< ImageType >(
+
+    ImageType::Pointer inputImage = cascade::util::LoadImage< ImageType >(
         input.getValue());
+    ImageType::Pointer inputMask = cascade::util::LoadImage< ImageType >(
+        mask.getValue());
+
+
+    ImageType::RegionType nonzeroregion = cascade::util::ImageLargestNonZeroRegion(inputImage.GetPointer());
+
+    inputImage = cascade::util::CropImage(inputImage.GetPointer(), nonzeroregion);
+    inputMask = cascade::util::CropImage(inputMask.GetPointer(), nonzeroregion);
+
 
     binaryContourImageFilterType::Pointer binaryContourFilter =
         binaryContourImageFilterType::New();
@@ -113,7 +123,7 @@ int main(int argc, char *argv[])
     SlicerType::Pointer slicer = SlicerType::New();
     slicer->SetDimension(dim2fold.getValue());
     slicer->SetFilter(binaryContourFilter);
-    slicer->SetInput(cascade::util::LoadImage< ImageType >(mask.getValue()));
+    slicer->SetInput(inputMask);
 
     RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
     rescaleFilter->SetInput(inputImage);
@@ -128,9 +138,10 @@ int main(int argc, char *argv[])
     labelOverlayImageFilter->SetOpacity(1);
     labelOverlayImageFilter->Update();
 
-    RGBImageType* rgbImage = labelOverlayImageFilter->GetOutput();
+    RGBImageType::Pointer rgbImage = labelOverlayImageFilter->GetOutput();
 
-    cascade::util::WriteImage(outfile.getValue() + ".nii.gz", rgbImage);
+    cascade::util::WriteImage(outfile.getValue() + ".nii.gz",
+                              rgbImage.GetPointer());
 
     /*
      * Niftii vertical dimension is bottom-up but it regular images its top-down.
@@ -187,7 +198,7 @@ int main(int argc, char *argv[])
       slice->SetRegions(sliceRegion);
       slice->Allocate();
 
-      itk::ImageAlgorithm::Copy(rgbImage, slice.GetPointer(),
+      itk::ImageAlgorithm::Copy(rgbImage.GetPointer(), slice.GetPointer(),
                                 regionForThisSlice, sliceRegion);
 
       cascade::util::WriteImage(numericSeriesFileNames->GetFileNames()[slice_n],

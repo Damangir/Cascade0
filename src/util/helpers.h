@@ -22,6 +22,13 @@
 #include <iostream>
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+#include "itkBinaryThresholdImageFilter.h"
+#include "itkImageMaskSpatialObject.h"
+#include <itkExtractImageFilter.h>
+#include "itkMinimumMaximumImageCalculator.h"
+
+#define ReportFilterMacro(FILTER) ::cascade::util::WriteImage( #FILTER ".nii.gz" , FILTER->GetOutput())
+
 
 namespace cascade
 {
@@ -29,7 +36,68 @@ namespace cascade
 namespace util
 {
 
-template<class ImageT>
+template< class ImageT >
+typename ImageT::RegionType ImageLargestNonZeroRegion(const ImageT* image);
+
+template< class ImageT >
+typename ImageT::Pointer CropImage(const ImageT* image,
+                                   typename ImageT::RegionType desiredRegion);
+template< class ImageT >
+typename ImageT::Pointer LoadImage(std::string filename);
+
+template< class ImageT >
+void WriteImage(std::string filename, const ImageT* image);
+
+template< class ImageT >
+void IsImageProper(const ImageT* image);
+
+bool endsWith(std::string const &fullString, std::string const &ending);
+
+
+template< class ImageT >
+typename ImageT::RegionType ImageLargestNonZeroRegion(const ImageT* image)
+  {
+  typedef ::itk::ImageMaskSpatialObject< ImageT::ImageDimension > ImageMaskSpatialObjectType;
+  typedef ::itk::BinaryThresholdImageFilter<ImageT, typename ImageMaskSpatialObjectType::ImageType> ThresholdFilterType;
+
+  typename ThresholdFilterType::Pointer threshold=ThresholdFilterType::New();
+  threshold->SetLowerThreshold(1);
+  threshold->SetInput(image);
+  threshold->SetOutsideValue(0);
+  threshold->SetInsideValue(1);
+  threshold->Update();
+
+  typename ImageMaskSpatialObjectType::Pointer imageMaskSpatialObject =
+      ImageMaskSpatialObjectType::New();
+
+
+  imageMaskSpatialObject->SetImage(threshold->GetOutput());
+  ::itk::ImageRegion< ImageT::ImageDimension > boundingBoxRegion =
+      imageMaskSpatialObject->GetAxisAlignedBoundingBoxRegion();
+
+  return boundingBoxRegion;
+  }
+
+template< class ImageT >
+typename ImageT::Pointer CropImage(const ImageT* image,
+                                   typename ImageT::RegionType desiredRegion)
+  {
+  typedef ::itk::ExtractImageFilter< ImageT, ImageT > CroppingFilterType;
+  typename CroppingFilterType::Pointer croppingFilter = CroppingFilterType::New();
+  croppingFilter->SetExtractionRegion(desiredRegion);
+  croppingFilter->SetInput(image);
+#if ITK_VERSION_MAJOR >= 4
+  croppingFilter->SetDirectionCollapseToIdentity();
+#endif
+  croppingFilter->Update();
+
+  typename ImageT::Pointer output = croppingFilter->GetOutput();
+  output->Update();
+  output->DisconnectPipeline();
+  return output;
+
+  }
+template< class ImageT >
 typename ImageT::Pointer LoadImage(std::string filename)
   {
   typedef ::itk::ImageFileReader< ImageT > ImageReaderType;
@@ -42,7 +110,7 @@ typename ImageT::Pointer LoadImage(std::string filename)
   return image;
   }
 
-template<class ImageT>
+template< class ImageT >
 void WriteImage(std::string filename, const ImageT* image)
   {
   typedef ::itk::ImageFileWriter< ImageT > ImageWriterType;
@@ -50,6 +118,18 @@ void WriteImage(std::string filename, const ImageT* image)
   writer->SetFileName(filename);
   writer->SetInput(image);
   writer->Update();
+  }
+
+template< class ImageT >
+void IsImageProper(const ImageT* image)
+  {
+  typedef ::itk::MinimumMaximumImageCalculator< ImageT > ImageCalculatorFilterType;
+  typename ImageCalculatorFilterType::Pointer imageCalculatorFilter =
+      ImageCalculatorFilterType::New();
+  imageCalculatorFilter->SetImage(image);
+  imageCalculatorFilter->Compute();
+  std::cout << "[" << imageCalculatorFilter->GetMinimum() << ", "
+            << imageCalculatorFilter->GetMaximum() << "]" << std::endl;
   }
 
 bool endsWith(std::string const &fullString, std::string const &ending)

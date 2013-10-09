@@ -44,7 +44,7 @@ MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::MahalanobisDistance
   m_OutsideValue = NumericTraits< OutputPixelType >::ZeroValue();
   /** Binary not of zero. All bits set. */
   m_PositiveOrientation = ~(0);
-
+  m_ConsiderOrientation = ~(0);
   }
 template< class TInputImage, class TOutputImage >
 void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::BeforeThreadedGenerateData()
@@ -75,6 +75,7 @@ void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::BeforeThreaded
     }
   int orientMask = (1 << inputImage->GetNumberOfComponentsPerPixel()) - 1;
   m_PositiveOrientation &= orientMask;
+  m_ConsiderOrientation &= orientMask;
   }
 //----------------------------------------------------------------------------
 template< class TInputImage, class TOutputImage >
@@ -130,10 +131,10 @@ void MahalanobisDistanceImageFilter< TInputImage, TOutputImage >::ThreadedGenera
         NumericTraits< InputPixelType >::AssignToArray(iImageIt.Get(), mv);
         oImageIt.Set(StateFunc::Distance(state, mv));
 
-        if (StateFunc::Orientation(state, mv) == m_PositiveOrientation)
-          oOrientIt.Set(1);
-        else
+        if ( (StateFunc::Orientation(state, mv) ^ m_PositiveOrientation) & m_ConsiderOrientation )
           oOrientIt.Set(-1);
+        else
+          oOrientIt.Set(+1);
         }
       else
         {

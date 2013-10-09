@@ -23,21 +23,22 @@
 
 namespace itk
 {
-template< class TInputImage >
+template< class TInputImage, class TOutputImage=TInputImage, class TMaskImage=TInputImage >
 class ITK_EXPORT SliceNormalizerPipeline: public ImageToImageFilter<
-    TInputImage, TInputImage >
+    TInputImage, TOutputImage >
 {
 public:
   /** Standard "Self" & Superclass typedef.   */
   typedef SliceNormalizerPipeline Self;
-  typedef ImageToImageFilter< TInputImage, TInputImage > Superclass;
+  typedef ImageToImageFilter< TInputImage, TOutputImage > Superclass;
 
   /** Extract some information from the image types.  Dimensionality
    * of the two images is assumed to be the same. */
-  typedef typename TInputImage::PixelType OutputImagePixelType;
-  typedef typename TInputImage::InternalPixelType OutputInternalPixelType;
+  typedef typename TOutputImage::PixelType OutputImagePixelType;
+  typedef typename TOutputImage::InternalPixelType OutputInternalPixelType;
   typedef typename TInputImage::PixelType InputImagePixelType;
   typedef typename TInputImage::InternalPixelType InputInternalPixelType;
+  typedef typename TMaskImage::PixelType MaskImagePixelType;
 
   itkStaticConstMacro(ImageDimension, unsigned int,
       TInputImage::ImageDimension);
@@ -46,20 +47,18 @@ public:
 
     /** Image typedef support. */
     typedef TInputImage InputImageType;
-    typedef TInputImage OutputImageType;
+    typedef TOutputImage OutputImageType;
+    typedef TMaskImage MaskImageType;
     typedef typename InputImageType::Pointer InputImagePointer;
     typedef typename NumericTraits< InputImagePixelType >::RealType RealType;
 
-    typedef InputInternalPixelType MaskImagePixelType;
 
     /** Smart pointer typedef support.   */
     typedef SmartPointer< Self > Pointer;
     typedef SmartPointer< const Self > ConstPointer;
 
     typedef Image< InputImagePixelType, SliceDimension> SliceType;
-
     typedef Image< MaskImagePixelType, SliceDimension> MaskSliceType;
-    typedef Image< MaskImagePixelType, ImageDimension> MaskImageType;
 
     typedef Statistics::MaskedImageToHistogramFilter<SliceType, MaskSliceType> SliceHistogramType;
     typedef Statistics::MaskedImageToHistogramFilter<InputImageType, MaskImageType> ImageHistogramType;

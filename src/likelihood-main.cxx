@@ -94,6 +94,10 @@ int main(int argc, char *argv[])
       "Transform from input space to standard (MNI) space. e.g. trans.tfm",
       true, "", "Transform", cmd);
 
+  TCLAP::MultiArg< std::string > inputOther(
+      "i", "input", "Normalized image file e.g. PD_normalized.nii.gz",
+      false, "Input", cmd);
+
   TCLAP::MultiArg< std::string > inputLight(
       "l", "light", "Normalized light image file e.g. FLAIR_normalized.nii.gz",
       false, "Light Input", cmd);
@@ -129,14 +133,26 @@ int main(int argc, char *argv[])
       {
       collector->PushBackInput(
           cascade::util::LoadImage< ImageType >(*seqNameIt));
-      likelihood->SetNthChannelLight(n++);
+      likelihood->SetNthChannelLight(n);
+      likelihood->ConsiderNthChannel(n);
+      n++;
       }
     for (TCLAP::MultiArg< std::string >::const_iterator seqNameIt =
         inputDark.begin(); seqNameIt != inputDark.end(); ++seqNameIt)
       {
       collector->PushBackInput(
           cascade::util::LoadImage< ImageType >(*seqNameIt));
-      likelihood->SetNthChannelDark(n++);
+      likelihood->SetNthChannelDark(n);
+      likelihood->ConsiderNthChannel(n);
+      n++;
+      }
+    for (TCLAP::MultiArg< std::string >::const_iterator seqNameIt =
+        inputDark.begin(); seqNameIt != inputOther.end(); ++seqNameIt)
+      {
+      collector->PushBackInput(
+          cascade::util::LoadImage< ImageType >(*seqNameIt));
+      likelihood->IgnoreNthChannel(n);
+      n++;
       }
 
     itkAssertOrThrowMacro(n!=0,

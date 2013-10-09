@@ -128,7 +128,8 @@ int main(int argc, char *argv[])
     const PixelType thrVal = 0;
     const PixelType foreground = 1;
 
-    ImageType* inputIMage = cascade::util::LoadImage<ImageType>(input.getValue());
+    ImageType::Pointer inputIMage = cascade::util::LoadImage< ImageType >(
+        input.getValue());
     BinaryThresholdImageFilterType::Pointer thresholdFilter =
         BinaryThresholdImageFilterType::New();
     thresholdFilter->SetInput(inputIMage);
@@ -138,9 +139,19 @@ int main(int argc, char *argv[])
 
     BinaryImageToShapeLabelMapFilterType::Pointer binaryImageToShapeLabelMapFilter =
         BinaryImageToShapeLabelMapFilterType::New();
+    binaryImageToShapeLabelMapFilter->FullyConnectedOn();
     binaryImageToShapeLabelMapFilter->SetInputForegroundValue(foreground);
     binaryImageToShapeLabelMapFilter->SetInput(inputIMage);
     binaryImageToShapeLabelMapFilter->Update();
+
+    ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter =
+        ShapeOpeningLabelMapFilterType::New();
+    shapeOpeningLabelMapFilter->SetInput(
+        binaryImageToShapeLabelMapFilter->GetOutput());
+    shapeOpeningLabelMapFilter->SetReverseOrdering(reverseSwitch.getValue());
+    shapeOpeningLabelMapFilter->SetLambda(threshold.getValue());
+    shapeOpeningLabelMapFilter->SetAttribute(property.getValue());
+    shapeOpeningLabelMapFilter->Update();
 
     /** Statistics on image should be reported */
     if (outfile.getValue() == "-")
@@ -150,15 +161,15 @@ int main(int argc, char *argv[])
       std::cout << "Perimeter" << ", ";
       std::cout << "Elongation" << ", ";
       std::cout << "Roundness" << ", ";
-      for (int i=0;i<DIM;i++)
-      std::cout << "Centroid[" << i << "], ";
+      for (int i = 0; i < DIM; i++)
+        std::cout << "Centroid[" << i << "], ";
 
       std::cout << "EquivalentSphericalRadius" << ", ";
       std::cout << "EquivalentSphericalPerimeter";
       std::cout << std::endl;
 
       ShapeLabelMapType* shapeLabel =
-          binaryImageToShapeLabelMapFilter->GetOutput();
+          shapeOpeningLabelMapFilter->GetOutput();
       ShapeLabelMapType::Iterator shapeIterator(shapeLabel);
       while (!shapeIterator.IsAtEnd())
         {
@@ -170,8 +181,8 @@ int main(int argc, char *argv[])
         std::cout << labelObject->GetElongation() << ", ";
         std::cout << labelObject->GetRoundness() << ", ";
 
-        for (int i=0;i<DIM;i++)
-        std::cout << labelObject->GetCentroid()[i] << ", ";
+        for (int i = 0; i < DIM; i++)
+          std::cout << labelObject->GetCentroid()[i] << ", ";
 
         std::cout << labelObject->GetEquivalentSphericalRadius() << ", ";
         std::cout << labelObject->GetEquivalentSphericalPerimeter();
@@ -181,14 +192,6 @@ int main(int argc, char *argv[])
       }
     else
       {
-      ShapeOpeningLabelMapFilterType::Pointer shapeOpeningLabelMapFilter =
-          ShapeOpeningLabelMapFilterType::New();
-      shapeOpeningLabelMapFilter->SetInput(
-          binaryImageToShapeLabelMapFilter->GetOutput());
-      shapeOpeningLabelMapFilter->SetReverseOrdering(reverseSwitch.getValue());
-      shapeOpeningLabelMapFilter->SetLambda(threshold.getValue());
-      shapeOpeningLabelMapFilter->SetAttribute(property.getValue());
-      shapeOpeningLabelMapFilter->Update();
 
       LabelMapToLabelImageFilterType::Pointer labelMapToLabelImageFilter =
           LabelMapToLabelImageFilterType::New();

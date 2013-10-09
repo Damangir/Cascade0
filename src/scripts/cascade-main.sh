@@ -93,16 +93,14 @@ fi
 if [ $MODE == "MEASURE" ]
 then
   echo "${bold}Running the Cascade in measurement mode.${normal}"
-[ $STATEIMAGE ] || echo_fatal "State file not set."
+  [ $STATEIMAGE ] || echo_fatal "State file not set."
 else
   echo "${bold}Running the Cascade in training mode.${normal}"
   [ $NEWSTATEIMAGE ] || echo_fatal "New state file not set."
   [ -d $(dirname $NEWSTATEIMAGE) ] || echo_fatal "Can not write to the folder: $(dirname $NEWSTATEIMAGE)"
-  [ $MASKIMAGE ] || echo_fatal "Mask file not set."
-  [ -r $MASKIMAGE ] || echo_fatal "Can not read the ground truth mask file: $MASKIMAGE"
+  [ $MASKIMAGE ] || echo_warning "Mask file not set. Training will perform assuming most of the brain is healthy."
 fi
 
-mkdir -p $IMAGEROOT/${report_dir}
 IMAGEROOT=$(readlink -f $IMAGEROOT)
 SUBJECTID=$(basename $IMAGEROOT)
 
@@ -111,7 +109,8 @@ check_fsl
 check_cascade
 
 set_filenames
-get_allimages
+
+ALL_IMAGES=$(ls ${IMAGEROOT}/${ranges_dir}/brain_*.nii.gz | grep -v t1 )
 
 if [ ! -s $FSL_STD_TRANSFORM ]
 then
@@ -146,8 +145,13 @@ then
     NEW_CLASS_STATE=${NEWSTATEIMAGE}_${CLASS_INDEX}.nii.gz
     
     fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
-    fslmaths $MASKIMAGE -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
-
+    if [ $MASKIMAGE ]
+    then
+      fslmaths $MASKIMAGE -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
+    else
+      fslmaths $(range_image brain_flair.nii.gz) -thr 1 -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
+    fi
+    
 	  if [ -f $CLASS_STATE ]
 	  then
 	    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $CLASS_STATE
@@ -162,13 +166,14 @@ then
       rundone 0
     else
       rundone 1
-      rm ${NEWSTATEIMAGE}_*.nii.gz
+      rm ${NEWSTATEIMAGE}_*.nii.gz  >/dev/null 2>&1
       echo_fatal "Unable to calculate the new state. NOTE: None of the new state for any class is not usable anymore."
     fi
   done
 
 else
   
+  mkdir -p $IMAGEROOT/${report_dir}    
   INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
   for img in $ALL_IMAGES
   do
@@ -185,7 +190,19 @@ else
     CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
     fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
     
-    $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
+    (
+	    set +e
+	    for try in {1..10}
+	    do	      
+	      $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
+	      OUT_RES=$?
+	      [ $OUT_RES -eq 0 ] && break 
+	      rm ${CLASS_LIKELIHOOD}
+	    done
+	    exit $OUT_RES
+    ) >/dev/null 2>&1
+    
+    
     fslmaths ${LIKELIHOOD} -add ${CLASS_LIKELIHOOD} ${LIKELIHOOD}
     )
 	  if [ $? -eq 0 ]
@@ -193,8 +210,8 @@ else
 	    rundone 0
 	  else
 	    rundone 1
-	    rm ${LIKELIHOOD}
-	    rm $IMAGEROOT/${temp_dir}/class*_likelihood.nii.gz
+      rm ${LIKELIHOOD} >/dev/null 2>&1 
+	    rm $IMAGEROOT/${temp_dir}/class*_likelihood.nii.gz  >/dev/null 2>&1
 	    echo_fatal "Unable to calculate likelihood."
 	  fi
   done

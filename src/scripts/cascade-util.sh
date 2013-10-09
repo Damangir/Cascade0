@@ -127,7 +127,7 @@ echo_fatal()
 runname()
 {
   echo -n "${1}"
-  reqcol=$(echo $(tput cols)-${#1}|bc)
+  reqcol=$(echo $(tput cols)-${#1}|bc)  
 }
 rundone()
 {
@@ -142,6 +142,11 @@ rundone()
     printf "$red%${reqcol}s$normal\n" "$FAILMSG"  
   fi
   return $1
+}
+runmsg()
+{
+  echo -n "${1}"
+  reqcol=$(echo ${reqcol}-${#1}-1|bc)
 }
 checkmsg()
 {
@@ -173,33 +178,31 @@ set_filenames()
 {
          T1_BRAIN=${IMAGEROOT}/${images_dir}/brain_t1.nii.gz
       FLAIR_BRAIN=${IMAGEROOT}/${images_dir}/brain_flair.nii.gz
-        BRAIN_PVE=${IMAGEROOT}/${images_dir}/brain_pve.nii.gz
-      BRAIN_MIXEL=${IMAGEROOT}/${images_dir}/brain_mixel.nii.gz
-       BRAIN_WMGM=${IMAGEROOT}/${images_dir}/wmgm.nii.gz
-        INIT_MASK=${IMAGEROOT}/${images_dir}/init.nii.gz
+        BRAIN_PVE=${IMAGEROOT}/${images_dir}/TissueType.nii.gz
+       BRAIN_WMGM=${IMAGEROOT}/${images_dir}/WhiteMatter+GrayMatter.nii.gz
+        BRAIN_CSF=${IMAGEROOT}/${images_dir}/CerebrospinalFluid.nii.gz
+         BRAIN_WM=${IMAGEROOT}/${images_dir}/WhiteMatter.nii.gz                
+         BRAIN_GM=${IMAGEROOT}/${images_dir}/GrayMatter.nii.gz
+    BRAIN_THIN_GM=${IMAGEROOT}/${images_dir}/ThinGrayMatter.nii.gz
+                                        
         HYPO_MASK=${IMAGEROOT}/${images_dir}/hypo.nii.gz
-       PROC_ATLAS=${IMAGEROOT}/${images_dir}/atlas.nii.gz
-PROC_MIDDLE_BRAIN=${IMAGEROOT}/${images_dir}/middle.nii.gz
+       PROC_ATLAS=${IMAGEROOT}/${images_dir}/Atlas.nii.gz
 
 FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
 ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name PROC STDIMAGE )
 
-       LIKELIHOOD=${IMAGEROOT}/${ranges_dir}/likelihood.nii.gz
-   ABS_LIKELIHOOD=${IMAGEROOT}/${ranges_dir}/likelihood_abs.nii.gz
-   
-          OUTMASK=${IMAGEROOT}/${report_dir}/wm.nii.gz
+       LIKELIHOOD=${IMAGEROOT}/${report_dir}/likelihood.nii.gz
+      PVALUEIMAGE=${IMAGEROOT}/${report_dir}/pvalue.nii.gz
+ PVALUEIMAGE_CONS=${IMAGEROOT}/${report_dir}/pvalue_cons.nii.gz     
+          OUTMASK=${IMAGEROOT}/${report_dir}/WMChanges.nii.gz
         REPORTCSV=${IMAGEROOT}/${report_dir}/report.csv
           LOGFILE=${IMAGEROOT}/${report_dir}/error.log
         
-     T1_BRAIN_TMP=${IMAGEROOT}/${temp_dir}/brain_t1.nii.gz
+     T1_BRAIN_TMP=${IMAGEROOT}/${temp_dir}/brain_t1_tmp.nii.gz
    TRAINMASKIMAGE=${IMAGEROOT}/${temp_dir}/normal_mask.nii.gz
        BRAIN_MASK=${IMAGEROOT}/${temp_dir}/$(trans_name T1_BRAIN_MASK FLAIR).nii.gz
 }
 
-get_allimages()
-{
-  ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_*.nii.gz | grep -v pve| grep -v mixel )
-}
 
 # Input 1: Moving
 # Input 2: Reference

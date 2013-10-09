@@ -23,11 +23,12 @@
 
 #include "util/itkIntensityTableLookupFunctor.h"
 #include "3rdparty/gnuplot-cpp/gnuplot_i.hpp"
+#include "util/helpers.h"
 
 namespace itk
 {
-template< class TInputImage >
-SliceNormalizerPipeline< TInputImage >::SliceNormalizerPipeline()
+template< class TInputImage, class TOutputImage, class TMaskImage >
+SliceNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::SliceNormalizerPipeline()
   {
   m_NumberOfLevels = 100;
   m_Percentile = 0.02;
@@ -35,15 +36,15 @@ SliceNormalizerPipeline< TInputImage >::SliceNormalizerPipeline()
   this->SetMaskValue(NumericTraits< MaskImagePixelType >::max());
   }
 
-template< class TInputImage >
-void SliceNormalizerPipeline< TInputImage >::PrintSelf(std::ostream & os,
+template< class TInputImage, class TOutputImage, class TMaskImage >
+void SliceNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::PrintSelf(std::ostream & os,
                                                        Indent indent) const
   {
   Superclass::PrintSelf(os, indent);
   }
 
-template< class TInputImage >
-void SliceNormalizerPipeline< TInputImage >::GenerateData()
+template< class TInputImage, class TOutputImage, class TMaskImage >
+void SliceNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::GenerateData()
   {
   this->AllocateOutputs();
 

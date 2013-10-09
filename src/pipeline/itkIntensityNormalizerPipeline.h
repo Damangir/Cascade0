@@ -27,7 +27,7 @@
 
 namespace itk
 {
-template< class TInputImage, class TOutputImage=TInputImage >
+template< class TInputImage, class TOutputImage=TInputImage, class TMaskImage=TInputImage >
 class ITK_EXPORT IntensityNormalizerPipeline:
   public ImageToImageFilter< TInputImage, TOutputImage >
 {
@@ -40,6 +40,7 @@ public:
    * of the two images is assumed to be the same. */
   typedef typename TOutputImage::PixelType         OutputImagePixelType;
   typedef typename TOutputImage::InternalPixelType OutputInternalPixelType;
+  typedef typename TMaskImage::PixelType           MaskPixelType;
   typedef typename TInputImage::PixelType          InputImagePixelType;
   typedef typename TInputImage::InternalPixelType  InputInternalPixelType;
   itkStaticConstMacro(InputImageDimension, unsigned int,
@@ -50,14 +51,12 @@ public:
   /** Image typedef support. */
   typedef TInputImage                      InputImageType;
   typedef TOutputImage                     OutputImageType;
+  typedef TMaskImage                       MaskImageType;
   typedef typename InputImageType::Pointer InputImagePointer;
 
   /** Smart pointer typedef support.   */
   typedef SmartPointer< Self >       Pointer;
   typedef SmartPointer< const Self > ConstPointer;
-
-  typedef InputInternalPixelType MaskPixelType;
-  typedef Image<MaskPixelType, InputImageDimension> MaskImageType;
 
   typedef Statistics::MaskedImageToHistogramFilter< InputImageType,
       MaskImageType > HistogramGeneratorType;

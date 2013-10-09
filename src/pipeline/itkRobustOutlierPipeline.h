@@ -93,6 +93,16 @@ public:
    */
   itkSetGetDecoratedInputMacro(MaskValue, MaskPixelType);
 
+  void ConsiderNthChannel(const int N)
+    {
+    m_MahalanobisFilter->ConsiderNthChannel(N);
+    this->Modified();
+    }
+  void IgnoreNthChannel(const int N)
+    {
+    m_MahalanobisFilter->IgnoreNthChannel(N);
+    this->Modified();
+    }
   void SetNthChannelLight(const int N)
     {
     m_MahalanobisFilter->SetNthChannelLight(N);
@@ -103,6 +113,7 @@ public:
     m_MahalanobisFilter->SetNthChannelDark(N);
     this->Modified();
     }
+
   virtual void SetStateImage(const StateImageType * _arg)
     {
     if (m_MahalanobisFilter->GetStateImage() != _arg)
@@ -187,8 +198,6 @@ public:
   private:
     RobustOutlierPipeline(const Self &); //purposely not implemented
     void operator=(const Self &);//purposely not implemented
-    unsigned int m_NumberOfBins;
-    double m_Percentile;
 
     /** Internal filters */
     typename MahalanobisDistanceImageFilterType::Pointer m_MahalanobisFilter;
