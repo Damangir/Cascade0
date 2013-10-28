@@ -25,10 +25,16 @@ This script runs the preprocessing of the Cascade pipeline
 ${bold}OPTIONS$normal:
    -h      Show this message
    -r      Image root directory
-   -b      Brain mask on T1
+
    -t      T1 image
    -f      FLAIR image
-   -a      Run all the steps, do not use cache
+   -p      PD image
+   -s      T2 image
+
+   -b      Brain mask
+   -n      Brain mask space (T1, FLAIR, PD or T2)
+
+   -a      Remove all pre-existing files
    -v      Verbose
    -l      Show licence
    
@@ -41,37 +47,51 @@ source $(dirname $0)/cascade-util.sh
 
 IMAGEROOT=.
 VERBOSE=
-FOURCERUN=1
-while getopts “hr:b:t:f:val” OPTION
+REMOVEALL="NO"
+while getopts “hr:b:n:t:f:p:s:avl” OPTION
 do
   case $OPTION in
-		h)
-		  usage
-      exit 1
-      ;;
+## Subject directory
     r)
       IMAGEROOT=$OPTARG
       ;;
+## Brain mask    
     b)
-      T1_BRAIN_MASK=`readlink -f $OPTARG`
+      INPUT_BRAIN_MASK=$(readlink -f $OPTARG)
       ;;
+    n)
+      BRAIN_MASK_SPACE=$(echo $OPTARG | tr '[:lower:]' '[:upper:]' )
+      ;;
+## Sequences      
     t)
-      T1=`readlink -f $OPTARG`
+      T1=$(readlink -f $OPTARG)
       ;;
     f)
-      FLAIR=`readlink -f $OPTARG`
+      FLAIR=$(readlink -f $OPTARG)
       ;;
+    p)
+      PD=$(readlink -f $OPTARG)
+      ;;
+    s)
+      T2=$(readlink -f $OPTARG)
+      ;;
+## Running behaviours        
     a)
-      FOURCERUN=
+      REMOVEALL="YES"
       ;;
     v)
       VERBOSE=1
       ;;
+## Help and licence      
     l)
       copyright
       licence
       exit 1
-      ;;    
+      ;;
+    h)
+      usage
+      exit 1
+      ;;
     ?)
       usage
       exit
@@ -86,66 +106,129 @@ then
     exit 1
 fi
 
-if [ ! $T1 ]
+# TODO: Check for allowed combination and produce readable error.
+if [ ! -f $T1 ]
 then
   echo_fatal "T1 image not found."
 fi
+if [ ! -f $T2 ] && [ ! -f $FLAIR ]
+then
+  echo_fatal "Either FLAIR or T2 should be available."
+fi
+if [ -f $T2 ] && [ -f $FLAIR ]
+then
+  echo_warning "It is not advised to use both T2 and FLAIR."
+fi
+if [ $BRAIN_MASK_SPACE != "NONE" ]
+then
+  if [ ! -f "$INPUT_BRAIN_MASK" ]
+  then
+    echo_fatal "No input brain mask. Hint! If the images are already brain extracted use -n NONE."
+  fi
+  if [ $BRAIN_MASK_SPACE != "T1" ] && [ $BRAIN_MASK_SPACE != "T2" ] && [ $BRAIN_MASK_SPACE != "PD" ] && [ $BRAIN_MASK_SPACE != "FLAIR" ]
+  then
+    echo_fatal "Invalid space for brain mask. T1, T2, FLAIR, PD or NONE is allowed." 
+  fi
+fi
+
 
 IMAGEROOT=$(readlink -f $IMAGEROOT)     
 echo "Preprocessing subject at: ${IMAGEROOT}"
-mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
 
 check_fsl
 check_cascade
-
 set_filenames
 
+rm -rf ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
+mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
 
 runname "Calculating registeration matrix"
 (
 set -e
-if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 FLAIR ) ]
+if [ "$FLAIR" ]
 then
-  register FLAIR T1
-  inverse_transform FLAIR T1
+  do_register T1 FLAIR
+  do_register T2 FLAIR
+  do_register PD FLAIR
+else
+  do_register T1 T2
+  do_register FLAIR T2
+  do_register PD T2
 fi
 )
 rundone $?
-runname "Registering and masking T1"
+
+runname "Masking brain"
 (
 set -e
-if [ ! -s ${IMAGEROOT}/${images_dir}/brain_t1.nii.gz ]
+
+
+if [ "$BRAIN_MASK_SPACE" = "NONE" ]
 then
-  mask T1 T1_BRAIN_MASK T1_BRAIN_TMP
-  register T1_BRAIN_TMP FLAIR - $(fsl_trans_name T1 FLAIR ) $T1_BRAIN
+  INPUT_BRAIN_MASK=${IMAGEROOT}/${temp_dir}/extracted_brain_mask.nii.gz
+  BRAIN_MASK_SPACE="T1"
+  fslmaths $T1 -bin $INPUT_BRAIN_MASK 
 fi
+
+if [  $FLAIR ]
+then
+  if [ $BRAIN_MASK_SPACE == "T1" ]; then
+    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T1 FLAIR ) $BRAIN_MASK
+  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
+    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T2 FLAIR ) $BRAIN_MASK
+  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
+    cp $INPUT_BRAIN_MASK $BRAIN_MASK
+  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
+	  register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name PD FLAIR ) $BRAIN_MASK
+	fi
+else
+  if [ $BRAIN_MASK_SPACE == "T1" ]; then
+    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name T1 T2 ) $BRAIN_MASK
+  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
+    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name FLAIR T2 ) $BRAIN_MASK
+  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
+    cp $INPUT_BRAIN_MASK $BRAIN_MASK
+  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
+    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name PD T2 ) $BRAIN_MASK
+  fi
+fi
+
+[ $T1 ] && mask T1 BRAIN_MASK T1_BRAIN
+[ $T2 ] && mask T2 BRAIN_MASK T2_BRAIN
+[ $FLAIR ] && mask FLAIR BRAIN_MASK FLAIR_BRAIN
+[ $PD ] && mask PD BRAIN_MASK PD_BRAIN
+)
+rundone $?
+
+runname "Registering normal brain"
+(
+set -e
 if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STDIMAGE ) ]
 then
-  register T1_BRAIN_TMP STDIMAGE
-  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1_BRAIN_TMP STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STDIMAGE )
+  register T1_BRAIN STDIMAGE
+  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1_BRAIN STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STDIMAGE )
 fi
+
 if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE ) ]
 then
-  concat_transform FLAIR T1 STDIMAGE
-  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name FLAIR STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
+  if [ $FLAIR ]
+  then
+    concat_transform FLAIR T1 STDIMAGE
+    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name FLAIR STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
+  else
+    concat_transform T2 T1 STDIMAGE
+    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T2 STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
+  fi
   inverse_transform PROC STDIMAGE
+fi
+if [ ! -s $PROC_ATLAS ]
+then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STDATLAS FLAIR - $(fsl_trans_name STDIMAGE PROC ) $PROC_ATLAS
 fi
 )
 rundone $?
 
-runname "Registering and masking FLAIR"
-(
-set -e
-if [ ! -s ${FLAIR_BRAIN} ]
-then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register T1_BRAIN_MASK FLAIR ${temp_dir} $(fsl_trans_name T1 FLAIR ) 
-  mask FLAIR BRAIN_MASK FLAIR_BRAIN 
-fi
-)
-rundone $?
 
 runname "Segmenting brain tissues"
 (
@@ -189,7 +272,6 @@ then
   fslmaths ${BRAIN_WM} -add ${BRAIN_GM} -bin ${BRAIN_WMGM}
 fslmaths ${BRAIN_WMGM} -bin -mul -1 -add 1 -kernel sphere 2 -dilM -dilM -mas ${BRAIN_GM} ${BRAIN_THIN_GM}
 fi 
-
 )
 rundone $?
 

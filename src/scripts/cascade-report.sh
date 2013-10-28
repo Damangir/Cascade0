@@ -100,20 +100,18 @@ find $IMAGEROOT/${report_dir} -type f -not -wholename "${LIKELIHOOD}" -print0 | 
 echo "${bold}The Cascade Reporter${normal}"
 ####### POSTPROCESSING
 runname "Processing likelihood"
-echo
 (
 set -e
 # Threshold likelihood
 LIKELIHOOD=${IMAGEROOT}/${ranges_dir}/brain_flair.nii.gz
-echo fsl5.0-fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
-echo fsl5.0-fslmaths $BRAIN_WMGM -sub $BRAIN_THIN_GM  -thr 0 -bin -mul $OUTMASK $OUTMASK
-echo $CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize -- threshold $MIN_PHYS
-echo fsl5.0-fslmaths $OUTMASK -kernel 2D -ero -dilM $OUTMASK
-echo fsl5.0-fslmaths $BRAIN_WMGM -sub $BRAIN_THIN_GM  -thr 0 -bin -mul $OUTMASK -mul $LIKELIHOOD $PVALUEIMAGE
-echo fsl5.0-fslmaths $BRAIN_WM -sub $BRAIN_THIN_GM -thr 0 -bin -mul $OUTMASK -mul $LIKELIHOOD $PVALUEIMAGE_CONS
+fsl5.0-fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
+fsl5.0-fslmaths $BRAIN_WMGM -sub $BRAIN_THIN_GM -thr 0 -bin -mul $OUTMASK $OUTMASK
+$CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize --threshold $MIN_PHYS
+fsl5.0-fslmaths $OUTMASK -bin $OUTMASK
+fsl5.0-fslmaths $OUTMASK -bin -mul $LIKELIHOOD $PVALUEIMAGE
+fsl5.0-fslmaths $OUTMASK -bin -mul $BRAIN_WM -bin -mul $LIKELIHOOD $PVALUEIMAGE_CONS
 )
 rundone $?
-exit
 ####### REPORTING  
 runname "Creating report"
 (
@@ -121,7 +119,7 @@ set -e
 mkdir -p $IMAGEROOT/${report_dir}/overlays
 if [ -f $OUTMASK ]
 then
-	echo "\"ID\",\"CSF VOL\",\"GM VOL\",\"WM VOL\",\"WML VOL (Strict)\",\"WML VOL (p-Value)\",\"WML VOL (conservative)\"">${REPORTCSV}
+	echo "\"ID\",\"CSF VOL\",\"GM VOL\",\"WM VOL\",\"WML VOL (Strict)\",\"WML VOL (p-Value)\",\"WML VOL (inside WM)\"">${REPORTCSV}
 	echo -n "\"$SUBJECTID\",">>${REPORTCSV}
 	fslstats $IMAGEROOT/${temp_dir}/brain_pve_0.nii.gz     -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV} 
 	fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_1.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
@@ -131,7 +129,7 @@ then
   fslstats $PVALUEIMAGE_CONS                             -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
     
   echo >> ${REPORTCSV}
-  
+    exit  
   ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_*.nii.gz | grep -v pve| grep -v mixel )
 	for img in $ALL_IMAGES
 	do

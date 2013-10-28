@@ -68,7 +68,7 @@ void IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::Gener
    * We want to normalize the normal part (i.e. the middle part of the histogram
    * for that the abnormalities usually lies in the rest)
    */
-  for (int i = 5; i <= 95 ; i++)
+  for (int i = 5; i <= 95; i++)
     {
     const double ratio = i * 0.01;
 
@@ -77,6 +77,14 @@ void IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::Gener
     lookupFunctor.AddLookupRow(levelIntensity, ratio);
     }
   lookupFunctor.AddLookupRow(0, 0);
+  /*
+   * TODO: Make the decision for 1 parametric.
+   */
+  const double quantile_ratio = 1.1434; /** q97/q95 in normal distribution */
+  lookupFunctor.AddLookupRow(
+      histogramGenerator->GetOutput()->Quantile(0, 0.95) * (  quantile_ratio  )-
+      histogramGenerator->GetOutput()->Quantile(0, 0.50) * (1 - quantile_ratio),
+      1);
 
   /* Linearly map peak and extreme landmarks to desired valuse */
   typename LookupTransform::Pointer lookupTransform = LookupTransform::New();

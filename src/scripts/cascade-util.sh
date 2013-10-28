@@ -177,7 +177,11 @@ CLOSING_FlAG="-ero -dilM"
 set_filenames()
 {
          T1_BRAIN=${IMAGEROOT}/${images_dir}/brain_t1.nii.gz
+         T2_BRAIN=${IMAGEROOT}/${images_dir}/brain_t2.nii.gz
+         PD_BRAIN=${IMAGEROOT}/${images_dir}/brain_pd.nii.gz
       FLAIR_BRAIN=${IMAGEROOT}/${images_dir}/brain_flair.nii.gz
+       BRAIN_MASK=${IMAGEROOT}/${images_dir}/mask.nii.gz
+      
         BRAIN_PVE=${IMAGEROOT}/${images_dir}/TissueType.nii.gz
        BRAIN_WMGM=${IMAGEROOT}/${images_dir}/WhiteMatter+GrayMatter.nii.gz
         BRAIN_CSF=${IMAGEROOT}/${images_dir}/CerebrospinalFluid.nii.gz
@@ -200,7 +204,6 @@ ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name PROC STDIMAGE )
         
      T1_BRAIN_TMP=${IMAGEROOT}/${temp_dir}/brain_t1_tmp.nii.gz
    TRAINMASKIMAGE=${IMAGEROOT}/${temp_dir}/normal_mask.nii.gz
-       BRAIN_MASK=${IMAGEROOT}/${temp_dir}/$(trans_name T1_BRAIN_MASK FLAIR).nii.gz
 }
 
 
@@ -248,6 +251,16 @@ register()
 inverse_transform()
 { 
   convert_xfm -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $1 ) -inverse ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
+}
+# Input 1: Moving
+# Input 2: Reference
+do_register()
+{
+  if [ "${!1}" ] && [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 ) ]
+  then
+    register ${2} ${1}
+    inverse_transform ${2} ${1}
+  fi
 }
 # Input 1: Moving A
 # Input 2: Via B
