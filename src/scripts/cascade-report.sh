@@ -102,12 +102,12 @@ runname "Processing likelihood"
 (
 set -e
 # Threshold likelihood
-fsl5.0-fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
-fsl5.0-fslmaths $BRAIN_WMGM -sub $BRAIN_THIN_GM -thr 0 -bin -mul $OUTMASK $OUTMASK
+${FSLPREFIX}fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
+${FSLPREFIX}fslmaths $BRAIN_WMGM -sub $BRAIN_THIN_GM -thr 0 -bin -mul $OUTMASK $OUTMASK
 $CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize --threshold $MIN_PHYS
-fsl5.0-fslmaths $OUTMASK -bin $OUTMASK
-fsl5.0-fslmaths $OUTMASK -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE
-fsl5.0-fslmaths $OUTMASK -bin -mul $BRAIN_WM -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE_CONS
+${FSLPREFIX}fslmaths $OUTMASK -bin $OUTMASK
+${FSLPREFIX}fslmaths $OUTMASK -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE
+${FSLPREFIX}fslmaths $OUTMASK -bin -mul $BRAIN_WM -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE_CONS
 )
 rundone $?
 ####### REPORTING  
@@ -122,7 +122,7 @@ then
   
 	if [ -e "$PROC_ATLAS" ]
 	then
-		for lvl in $(seq $(fsl5.0-fslstats $PROC_ATLAS -R))
+		for lvl in $(seq $(${FSLPREFIX}fslstats $PROC_ATLAS -R))
 	  do
 	    [ "$(echo $lvl '==' 0 | bc)" -eq 1 ] && continue
 	    echo -n ",\"atlas.level.`printf "%.0f" ${lvl}`\"" >> ${REPORTCSV}
@@ -131,19 +131,19 @@ then
 
   echo  >> ${REPORTCSV}
 	echo -n "\"$SUBJECTID\",">>${REPORTCSV}
-	fslstats $IMAGEROOT/${temp_dir}/brain_pve_0.nii.gz     -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV} 
-	fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_1.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-	fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_2.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-  fslstats $PVALUEIMAGE                                  -M -V | awk '{ printf "%.0f",  $1 * $3 }' >> ${REPORTCSV}
+	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_0.nii.gz     -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV} 
+	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_1.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
+	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_2.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
+  ${FSLPREFIX}fslstats $PVALUEIMAGE                                  -M -V | awk '{ printf "%.0f",  $1 * $3 }' >> ${REPORTCSV}
   
   if [ -e "$PROC_ATLAS" ]
   then
-    for lvl in $(seq $(fsl5.0-fslstats $PROC_ATLAS -R))
+    for lvl in $(seq $(${FSLPREFIX}fslstats $PROC_ATLAS -R))
     do
       [ "$(echo $lvl '==' 0 | bc -l)" -eq 1 ] && continue
   	  tmp_image=$IMAGEROOT/${temp_dir}/temp.nii.gz
-	    fsl5.0-fslmaths $PROC_ATLAS -thr $lvl -uthr $lvl -bin -mul $PVALUEIMAGE $tmp_image
-	    fslstats $tmp_image -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
+	    ${FSLPREFIX}fslmaths $PROC_ATLAS -thr $lvl -uthr $lvl -bin -mul $PVALUEIMAGE $tmp_image
+	    ${FSLPREFIX}fslstats $tmp_image -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
     done
   fi 
   

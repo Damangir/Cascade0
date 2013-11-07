@@ -36,7 +36,7 @@ add_executable(property-filter property-filter-main.cxx)
 target_link_libraries(property-filter ${ITK_LIBRARIES})
 
 message("Installation root is ${CMAKE_INSTALL_PREFIX}")
-foreach(targ train likelihood range report inspect property-filter distancemap)
+foreach(targ train likelihood range report inspect property-filter)
  message("Install rule: ${targ} as ${TARGET_PREFIX}${targ}")
  set_property(TARGET ${targ} PROPERTY INSTALL_RPATH_USE_LINK_PATH true)
  set_property(TARGET ${targ} PROPERTY OUTPUT_NAME "${TARGET_PREFIX}${targ}")

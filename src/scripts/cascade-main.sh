@@ -110,7 +110,7 @@ check_cascade
 
 set_filenames
 
-ALL_IMAGES=$(ls ${IMAGEROOT}/${ranges_dir}/brain_*.nii.gz | grep -v t1 )
+ALL_IMAGES=$(echo ${IMAGEROOT}/${ranges_dir}/brain_{flair,t1}.nii.gz)
 
 if [ ! -s $FSL_STD_TRANSFORM ]
 then
@@ -143,12 +143,12 @@ then
     CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
     NEW_CLASS_STATE=${NEWSTATEIMAGE}_${CLASS_INDEX}.nii.gz
     
-    fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
+    ${FSLPREFIX}fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
     if [ $MASKIMAGE ]
     then
-      fslmaths $MASKIMAGE -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
+      ${FSLPREFIX}fslmaths $MASKIMAGE -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
     else
-      fslmaths $(range_image brain_flair.nii.gz) -thr 1 -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
+      ${FSLPREFIX}fslmaths $(range_image brain_flair.nii.gz) -thr 1.2 -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
     fi
     
 	  if [ -f $CLASS_STATE ]
@@ -178,7 +178,7 @@ else
   do
     INPUT_ARGS="$INPUT_ARGS --$(sequence_type $img) $(range_image $img)"
   done
-  fslmaths ${BRAIN_WMGM} -mul 0 ${LIKELIHOOD}
+  ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mul 0 ${LIKELIHOOD}
   for CLASS_INDEX in {2..3}
   do
 	  runname "Calculating likelihood for class ${CLASS_INDEX}"
@@ -187,12 +187,12 @@ else
     CLASS_MASK=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_mask.nii.gz
     CLASS_LIKELIHOOD=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_likelihood.nii.gz
     CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
-    fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
+    ${FSLPREFIX}fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
     
     (
 	    set +e
 	    for try in {1..10}
-	    do	      
+	    do
 	      $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
 	      OUT_RES=$?
 	      [ $OUT_RES -eq 0 ] && break 
@@ -202,7 +202,7 @@ else
     ) >/dev/null 2>&1
     
     
-    fslmaths ${LIKELIHOOD} -add ${CLASS_LIKELIHOOD} ${LIKELIHOOD}
+    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -add ${CLASS_LIKELIHOOD} ${LIKELIHOOD}
     )
 	  if [ $? -eq 0 ]
 	  then
@@ -214,5 +214,12 @@ else
 	    echo_fatal "Unable to calculate likelihood."
 	  fi
   done
+  
+  if [ -s $HYP_MASK ]
+  then
+    runname "Filtering base on heuristic mask"
+    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -abs -mas ${HYP_MASK} ${LIKELIHOOD}
+    rundone $?    
+  fi
 fi
 echo

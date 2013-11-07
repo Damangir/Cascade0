@@ -167,7 +167,7 @@ if [ "$BRAIN_MASK_SPACE" = "NONE" ]
 then
   INPUT_BRAIN_MASK=${IMAGEROOT}/${temp_dir}/extracted_brain_mask.nii.gz
   BRAIN_MASK_SPACE="T1"
-  fslmaths $T1 -bin $INPUT_BRAIN_MASK 
+  ${FSLPREFIX}fslmaths $T1 -bin $INPUT_BRAIN_MASK 
 fi
 if  [ ! -s $BRAIN_MASK ]
 then
@@ -230,8 +230,16 @@ if [ ! -s $PROC_ATLAS ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STDATLAS FLAIR - $(fsl_trans_name STDIMAGE PROC ) $PROC_ATLAS
-  fsl5.0-fslcpgeom $T1_BRAIN $PROC_ATLAS
+  ${FSLPREFIX}fslcpgeom $T1_BRAIN $PROC_ATLAS
 fi
+if [ ! -s $ATLAS_BRAIN_MASK ]
+then
+  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
+  register STDIMAGE FLAIR - $(fsl_trans_name STDIMAGE PROC ) $ATLAS_BRAIN_MASK
+  ${FSLPREFIX}fslcpgeom $T1_BRAIN $ATLAS_BRAIN_MASK
+  ${FSLPREFIX}fslmaths $ATLAS_BRAIN_MASK -bin $ATLAS_BRAIN_MASK
+fi
+
 )
 rundone $?
 
@@ -241,42 +249,42 @@ runname "Segmenting brain tissues"
 set -e
 if [ ! -s ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz ]
 then
-  fast -t 1 -o ${IMAGEROOT}/${temp_dir}/brain -n 3 ${T1_BRAIN}
+  ${FSLPREFIX}fast -t 1 -o ${IMAGEROOT}/${temp_dir}/brain -n 3 ${T1_BRAIN}
 fi
 
 if [ ! -s ${BRAIN_CSF} ]
 then
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -nan -thr 0.5 -bin ${IMAGEROOT}/${temp_dir}/brain_puregm.nii.gz
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -nan -thr 0.5 -bin ${IMAGEROOT}/${temp_dir}/brain_puregm.nii.gz
   $CASCADEDIR/cascade-property-filter -i ${IMAGEROOT}/${temp_dir}/brain_puregm.nii.gz -o ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz --property PhysicalSize --threshold 1000 -r     
   
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -kernel 3D -dilM ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -bin -mul ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -add ${IMAGEROOT}/${temp_dir}/brain_pve_2.nii.gz ${IMAGEROOT}/${temp_dir}/brain_pve_mod_2.nii.gz   
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -sub ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -thr 0 ${IMAGEROOT}/${temp_dir}/brain_pve_mod_1.nii.gz   
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -kernel 3D -dilM ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -bin -mul ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -add ${IMAGEROOT}/${temp_dir}/brain_pve_2.nii.gz ${IMAGEROOT}/${temp_dir}/brain_pve_mod_2.nii.gz   
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz -sub ${IMAGEROOT}/${temp_dir}/brain_false_puregm.nii.gz -thr 0 ${IMAGEROOT}/${temp_dir}/brain_pve_mod_1.nii.gz   
     
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_mod_2.nii.gz -thr 0.5 -bin ${BRAIN_WM}
-  fslmaths ${BRAIN_WM} -mul -1 -add 1 ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz 
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_mod_2.nii.gz -thr 0.5 -bin ${BRAIN_WM}
+  ${FSLPREFIX}fslmaths ${BRAIN_WM} -mul -1 -add 1 ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz 
   $CASCADEDIR/cascade-property-filter -i ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz -o ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz --property PhysicalSize --threshold 300 --reverse
   
-  fslmaths ${BRAIN_WM} -add ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz ${BRAIN_WM} 
+  ${FSLPREFIX}fslmaths ${BRAIN_WM} -add ${IMAGEROOT}/${temp_dir}/brain_wm_holes.nii.gz ${BRAIN_WM} 
   
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_mod_1.nii.gz -thr 0.5 -bin ${BRAIN_GM}
-  fslmaths ${BRAIN_WM} -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_mod_1.nii.gz -thr 0.5 -bin ${BRAIN_GM}
+  ${FSLPREFIX}fslmaths ${BRAIN_WM} -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}
   
-  fslmaths ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz -thr 1 -uthr 1 ${BRAIN_CSF}
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz -thr 1 -uthr 1 ${BRAIN_CSF}
 fi
 
 if [ ! -s ${BRAIN_PVE} ]
 then
-  fslmaths ${BRAIN_CSF} -bin -mul 1 ${BRAIN_CSF}
-  fslmaths ${BRAIN_GM} -bin -mul 2 ${BRAIN_GM}
-  fslmaths ${BRAIN_WM} -bin -mul 3 ${BRAIN_WM}
-  fslmaths ${BRAIN_CSF} -add ${BRAIN_GM} -add ${BRAIN_WM} ${BRAIN_PVE}
+  ${FSLPREFIX}fslmaths ${BRAIN_CSF} -bin -mul 1 ${BRAIN_CSF}
+  ${FSLPREFIX}fslmaths ${BRAIN_GM} -bin -mul 2 ${BRAIN_GM}
+  ${FSLPREFIX}fslmaths ${BRAIN_WM} -bin -mul 3 ${BRAIN_WM}
+  ${FSLPREFIX}fslmaths ${BRAIN_CSF} -add ${BRAIN_GM} -add ${BRAIN_WM} ${BRAIN_PVE}
 fi
 
 if [ ! -s ${BRAIN_THIN_GM} ]
 then
-  fslmaths ${BRAIN_WM} -add ${BRAIN_GM} -bin ${BRAIN_WMGM}
-  fslmaths ${BRAIN_WMGM} -bin -mul -1 -add 1 -kernel sphere 2 -dilM -dilM -mas ${BRAIN_GM} ${BRAIN_THIN_GM}
+  ${FSLPREFIX}fslmaths ${BRAIN_WM} -add ${BRAIN_GM} -bin ${BRAIN_WMGM}
+  ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -bin -mul -1 -add 1 -kernel sphere 2 -dilM -dilM -mas ${BRAIN_GM} ${BRAIN_THIN_GM}
 fi
  
 )

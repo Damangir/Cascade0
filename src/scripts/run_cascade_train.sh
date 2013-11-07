@@ -5,7 +5,7 @@
 [ -z "$PRJHOME" ] && [ -f "./project_setting.sh" ] && source ./project_setting.sh
 [ -z "$PRJHOME" ] && echo "No proper settings. Are you sure you have a proper project_setting.sh file?" >&2 && exit 1
 
-if [ 1 == 2 ]
+if [ 1 == 1 ]
 then
 rm -rf ${STATE_PREFIX}* 2>/dev/null
 for f in $(find "${PRJCASCADE}" -mindepth 1 -maxdepth 1 -name "${PRJSUBJPATTERN}" | sort)
@@ -28,13 +28,13 @@ num_image=${PRJCASCADE}/inspect/${state_id}_000.nii.gz
 for elem in $(seq 1 $D1)
 do
   item=${PRJCASCADE}/inspect/${state_id}_$(printf "%03d" $elem).nii.gz
-  fsl5.0-fslmaths $item -div $num_image ${PRJCASCADE}/inspect/mean_$(printf "%03d" $elem)_${state_id}.nii.gz 
+  ${FSLPREFIX}fslmaths $item -div $num_image ${PRJCASCADE}/inspect/mean_$(printf "%03d" $elem)_${state_id}.nii.gz 
 done
 
 for elem in $(seq $(echo "$D1+1"|bc) $(echo "$D2-1"|bc))
 do
   item=${PRJCASCADE}/inspect/${state_id}_$(printf "%03d" $elem).nii.gz
-  fsl5.0-fslmaths $num_image -sub 1 -recip -mul $item ${PRJCASCADE}/inspect/cov_$(printf "%03d" $elem)_${state_id}.nii.gz 
+  ${FSLPREFIX}fslmaths $num_image -sub 1 -recip -mul $item ${PRJCASCADE}/inspect/cov_$(printf "%03d" $elem)_${state_id}.nii.gz 
 done
 
 done

@@ -9,5 +9,6 @@ for f in $(find "${PRJCASCADE}" -mindepth 1 -maxdepth 1 -name "${PRJSUBJPATTERN}
 do
 id=$(basename $f)
 echo Processing $id
+${CASCADEDIR}/cascade-hyp.sh -r ${PRJCASCADE}/${id}
 ${CASCADEDIR}/cascade-main.sh -r ${f} -s $STATE_PREFIX 
 done

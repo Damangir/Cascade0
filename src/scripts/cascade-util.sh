@@ -74,16 +74,16 @@ do
 done
 STDMIDDLEBRAIN=$CASCADEDATA/middle_brain.nii.gz
 }
-
+FSLPREFIX="fsl5.0-"
 check_fsl()
 {
 if [ ! $FSLDIR ]
 then
   echo_fatal "Can not find FSL installation."
 else
-  for ce in {fslmaths,flirt,fast}
+  for ce in ${FSLPREFIX}{fslmaths,fslstats,fslcpgeom,flirt,fast}
   do
-    if [ ! -x $FSLDIR/bin/$ce ]
+    if [ -z "$(command -v $ce)" ]
     then
       echo_fatal "$ce executable is not available. Please check your FSL installation."
     fi
@@ -98,14 +98,7 @@ else
   then
       echo_fatal "Can not find the atlas image at $STDATLAS. Please check your FSL installation."
   fi
-    
-  if echo "$LD_LIBRARY_PATH" | grep -qv "$FSLDIR/bin"
-  then
-    OLD_LD="$LD_LIBRARY_PATH"
-    trap "LD_LIBRARY_PATH=$OLD_LD" EXIT
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${FSLDIR}/bin 
-  fi
-  
+     
   FLAIR_OPTIONS_FOR_ATLAS="-interp nearestneighbour"
 fi
 }
@@ -181,7 +174,8 @@ set_filenames()
          PD_BRAIN=${IMAGEROOT}/${images_dir}/brain_pd.nii.gz
       FLAIR_BRAIN=${IMAGEROOT}/${images_dir}/brain_flair.nii.gz
        BRAIN_MASK=${IMAGEROOT}/${images_dir}/mask.nii.gz
-      
+         HYP_MASK=${IMAGEROOT}/${images_dir}/hyp.nii.gz
+         
         BRAIN_PVE=${IMAGEROOT}/${images_dir}/TissueType.nii.gz
        BRAIN_WMGM=${IMAGEROOT}/${images_dir}/WhiteMatter+GrayMatter.nii.gz
         BRAIN_CSF=${IMAGEROOT}/${images_dir}/CerebrospinalFluid.nii.gz
@@ -191,6 +185,7 @@ set_filenames()
                                         
         HYPO_MASK=${IMAGEROOT}/${images_dir}/hypo.nii.gz
        PROC_ATLAS=${IMAGEROOT}/${images_dir}/Atlas.nii.gz
+ ATLAS_BRAIN_MASK=${IMAGEROOT}/${images_dir}/BrainAtlas.nii.gz
 
 FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name STDIMAGE PROC )
 ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name STDIMAGE PROC )
@@ -233,16 +228,16 @@ register()
 { 
   if [ $# == 2 ]
   then
-    flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${IMAGEROOT}/${temp_dir}/$(trans_name $1 $2 ) -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 ) -dof 12
+    ${FSLPREFIX}flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${IMAGEROOT}/${temp_dir}/$(trans_name $1 $2 ) -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 ) -dof 12
   elif [ $# == 3 ]
   then
-    flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${IMAGEROOT}/${3}/$(trans_name $1 $2 ) -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 ) -dof 21
+    ${FSLPREFIX}flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${IMAGEROOT}/${3}/$(trans_name $1 $2 ) -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 ) -dof 21
   elif [ $# == 4 ]
   then
-    flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${IMAGEROOT}/${3}/$(trans_name $1 $2 ) -init ${IMAGEROOT}/${trans_dir}/${4} -applyxfm
+    ${FSLPREFIX}flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${IMAGEROOT}/${3}/$(trans_name $1 $2 ) -init ${IMAGEROOT}/${trans_dir}/${4} -applyxfm
   elif [ $# == 5 ]
   then
-    flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${5} -init ${IMAGEROOT}/${trans_dir}/${4} -applyxfm
+    ${FSLPREFIX}flirt ${FLIRT_OPTION} -in ${!1} -ref ${!2} -out ${5} -init ${IMAGEROOT}/${trans_dir}/${4} -applyxfm
   fi
   FLIRT_OPTION=
 }
@@ -250,7 +245,7 @@ register()
 # Input 2: Reference
 inverse_transform()
 { 
-  convert_xfm -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $1 ) -inverse ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
+  ${FSLPREFIX}convert_xfm -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $1 ) -inverse ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
 }
 # Input 1: Moving
 # Input 2: Reference
@@ -282,11 +277,11 @@ do_register()
 # Input 3: Reference C
 concat_transform()
 { 
-  convert_xfm -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $3 ) -concat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $3 ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
+  ${FSLPREFIX}convert_xfm -omat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $3 ) -concat ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $3 ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
 }
 mask()
 {
-  fslmaths ${!1} -mas ${!2} ${!3}
+  ${FSLPREFIX}fslmaths ${!1} -mas ${!2} ${!3}
 }
 
 range_image()

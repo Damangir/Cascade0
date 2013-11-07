@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
       n++;
       }
     for (TCLAP::MultiArg< std::string >::const_iterator seqNameIt =
-        inputDark.begin(); seqNameIt != inputOther.end(); ++seqNameIt)
+        inputOther.begin(); seqNameIt != inputOther.end(); ++seqNameIt)
       {
       collector->PushBackInput(
           cascade::util::LoadImage< ImageType >(*seqNameIt));
