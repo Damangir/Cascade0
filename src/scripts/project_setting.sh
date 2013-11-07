@@ -14,6 +14,7 @@ PRJBRAINMASKPATTERN=
 # Brain mask native space Can be either T1, T2, FLAIR or PD
 PRJBRAINMASKSPACE="T1"
 
+STATE_PREFIX="${PRJCASCADE}/state"
 ## Reporting values
 CONF=1
 ## In cubic millimeter

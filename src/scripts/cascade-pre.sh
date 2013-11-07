@@ -48,6 +48,7 @@ source $(dirname $0)/cascade-util.sh
 IMAGEROOT=.
 VERBOSE=
 REMOVEALL="NO"
+REGISTERED="YES"
 while getopts “hr:b:n:t:f:p:s:avl” OPTION
 do
   case $OPTION in
@@ -139,13 +140,14 @@ check_fsl
 check_cascade
 set_filenames
 
-rm -rf ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
+[ $REMOVEALL == "YES" ] && rm -rf ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
+
 mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
 
 runname "Calculating registeration matrix"
 (
 set -e
-if [ "$FLAIR" ]
+if [ -s "$FLAIR" ]
 then
   do_register T1 FLAIR
   do_register T2 FLAIR
@@ -161,42 +163,44 @@ rundone $?
 runname "Masking brain"
 (
 set -e
-
-
 if [ "$BRAIN_MASK_SPACE" = "NONE" ]
 then
   INPUT_BRAIN_MASK=${IMAGEROOT}/${temp_dir}/extracted_brain_mask.nii.gz
   BRAIN_MASK_SPACE="T1"
   fslmaths $T1 -bin $INPUT_BRAIN_MASK 
 fi
-
-if [  $FLAIR ]
+if  [ ! -s $BRAIN_MASK ]
 then
-  if [ $BRAIN_MASK_SPACE == "T1" ]; then
-    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T1 FLAIR ) $BRAIN_MASK
-  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
-    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T2 FLAIR ) $BRAIN_MASK
-  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
-    cp $INPUT_BRAIN_MASK $BRAIN_MASK
-  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
-	  register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name PD FLAIR ) $BRAIN_MASK
+	if [  $FLAIR ]
+	then
+	  if [ $BRAIN_MASK_SPACE == "T1" ]; then
+	    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T1 FLAIR ) $BRAIN_MASK
+	  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
+	    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T2 FLAIR ) $BRAIN_MASK
+	  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
+	    cp $INPUT_BRAIN_MASK $BRAIN_MASK
+	  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
+		  register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name PD FLAIR ) $BRAIN_MASK
+		fi
+	else
+	  if [ $BRAIN_MASK_SPACE == "T1" ]; then
+	    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name T1 T2 ) $BRAIN_MASK
+	  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
+	    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name FLAIR T2 ) $BRAIN_MASK
+	  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
+	    cp $INPUT_BRAIN_MASK $BRAIN_MASK
+	  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
+	    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name PD T2 ) $BRAIN_MASK
+	  fi
 	fi
-else
-  if [ $BRAIN_MASK_SPACE == "T1" ]; then
-    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name T1 T2 ) $BRAIN_MASK
-  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
-    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name FLAIR T2 ) $BRAIN_MASK
-  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
-    cp $INPUT_BRAIN_MASK $BRAIN_MASK
-  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
-    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name PD T2 ) $BRAIN_MASK
-  fi
 fi
 
-[ $T1 ] && mask T1 BRAIN_MASK T1_BRAIN
-[ $T2 ] && mask T2 BRAIN_MASK T2_BRAIN
-[ $FLAIR ] && mask FLAIR BRAIN_MASK FLAIR_BRAIN
-[ $PD ] && mask PD BRAIN_MASK PD_BRAIN
+[ $T1 ] && [ ! -s $T1_BRAIN ] && mask T1 BRAIN_MASK T1_BRAIN
+[ $T2 ] && [ ! -s $T2_BRAIN ] && mask T2 BRAIN_MASK T2_BRAIN
+[ $FLAIR ] && [ ! -s $FLAIR_BRAIN ] && mask FLAIR BRAIN_MASK FLAIR_BRAIN
+[ $PD ] && [ ! -s $PD_BRAIN ] && mask PD BRAIN_MASK PD_BRAIN
+
+true
 )
 rundone $?
 
@@ -221,10 +225,12 @@ then
   fi
   inverse_transform PROC STDIMAGE
 fi
+
 if [ ! -s $PROC_ATLAS ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STDATLAS FLAIR - $(fsl_trans_name STDIMAGE PROC ) $PROC_ATLAS
+  fsl5.0-fslcpgeom $T1_BRAIN $PROC_ATLAS
 fi
 )
 rundone $?
@@ -270,8 +276,9 @@ fi
 if [ ! -s ${BRAIN_THIN_GM} ]
 then
   fslmaths ${BRAIN_WM} -add ${BRAIN_GM} -bin ${BRAIN_WMGM}
-fslmaths ${BRAIN_WMGM} -bin -mul -1 -add 1 -kernel sphere 2 -dilM -dilM -mas ${BRAIN_GM} ${BRAIN_THIN_GM}
-fi 
+  fslmaths ${BRAIN_WMGM} -bin -mul -1 -add 1 -kernel sphere 2 -dilM -dilM -mas ${BRAIN_GM} ${BRAIN_THIN_GM}
+fi
+ 
 )
 rundone $?
 

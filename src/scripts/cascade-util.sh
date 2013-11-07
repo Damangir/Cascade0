@@ -192,8 +192,8 @@ set_filenames()
         HYPO_MASK=${IMAGEROOT}/${images_dir}/hypo.nii.gz
        PROC_ATLAS=${IMAGEROOT}/${images_dir}/Atlas.nii.gz
 
-FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
-ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name PROC STDIMAGE )
+FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name STDIMAGE PROC )
+ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name STDIMAGE PROC )
 
        LIKELIHOOD=${IMAGEROOT}/${report_dir}/likelihood.nii.gz
       PVALUEIMAGE=${IMAGEROOT}/${report_dir}/pvalue.nii.gz
@@ -256,10 +256,25 @@ inverse_transform()
 # Input 2: Reference
 do_register()
 {
-  if [ "${!1}" ] && [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 ) ]
+  if [ -s "${!1}" ]
   then
-    register ${2} ${1}
-    inverse_transform ${2} ${1}
+    local TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $1 )
+    local ITRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
+    local REG_IMG=${IMAGEROOT}/${temp_dir}/$(trans_name $2 $1 ).nii.gz
+        
+	  if [ $REGISTERED == "YES" ]
+	  then
+	    echo -e "1 0 0 0\n0 1 0 0\n0 0 1 0\n0 0 0 1" >$TRANSFORM
+	    cat $TRANSFORM>$ITRANSFORM
+      if [ ! -s "$REG_IMG" ]
+      then
+        register ${2} ${1} ${temp_dir} $(basename $TRANSFORM)
+      fi
+    elif [ ! -s "$REG_IMG" ]
+    then
+	    register ${2} ${1}
+	    inverse_transform ${2} ${1}
+    fi
   fi
 }
 # Input 1: Moving A

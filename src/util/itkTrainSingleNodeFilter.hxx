@@ -28,8 +28,17 @@
 #include <functional>
 #include <numeric>
 
+#define EXTENT(_img) \
+  { \
+  ::itk::Point<double, Dimension> _point; \
+  _img->TransformIndexToPhysicalPoint(_img->GetLargestPossibleRegion().GetIndex() + _img->GetLargestPossibleRegion().GetSize(), _point); \
+  std::cout << "From: "<< _img->GetOrigin()<<" to: " << _point << std::endl; \
+  } \
+
 namespace itk
 {
+
+
 
 template< class TInputImage, class TOutputImage >
 TrainSingleNodeFilter< TInputImage, TOutputImage >::TrainSingleNodeFilter()
@@ -60,34 +69,34 @@ void TrainSingleNodeFilter< TInputImage, TOutputImage >::SetOutputParametersFrom
 
 template< class TInputImage, class TOutputImage >
 void TrainSingleNodeFilter< TInputImage, TOutputImage >::SetOutputParameterFromImageWithCustomSize(
-    const ImageBaseType *image, const SizeType& size)
+    const ImageBaseType *iImage, const SizeType& oSize)
   {
-  /** Position and orientation is defined by it's Origin and Direction */
-  this->SetOutputOrigin(image->GetOrigin());
-  this->SetOutputDirection(image->GetDirection());
-  this->SetSize(size);
+  OutputImageType* oImage =
+      static_cast< OutputImageType * >(this->ProcessObject::GetOutput(0));
+  itkAssertOrThrowMacro(oImage, "No output Set");
 
-  SizeType oSize = image->GetLargestPossibleRegion().GetSize();
-  SpacingType oSpacing = image->GetSpacing();
-  SpacingType spacing;
+  /** Position and orientation is defined by it's Origin and Direction */
+  this->SetOutputOrigin(iImage->GetOrigin());
+  this->SetOutputDirection(iImage->GetDirection());
+  this->SetSize(oSize);
+
+  SizeType iSize = iImage->GetLargestPossibleRegion().GetSize();
+  SpacingType iSpacing = iImage->GetSpacing();
+  SpacingType oSpacing;
   for (int i = 0; i < Dimension; i++)
     {
-    spacing[i] = oSpacing[i] * oSize[i] / size[i];
+    oSpacing[i] = iSpacing[i] * iSize[i] / oSize[i];
     }
-  this->SetOutputSpacing(spacing);
-  OutputIndexType index;
-  InputPointType oPoint;
-  InputIndexType oIndex = image->GetLargestPossibleRegion().GetIndex();
-
+  this->SetOutputSpacing(oSpacing);
   this->UpdateOutputParameters();
 
-  OutputImageType* outputPtr =
-      static_cast< OutputImageType * >(this->ProcessObject::GetOutput(0));
-  itkAssertOrThrowMacro(outputPtr, "No output Set");
+  InputIndexType iIndex = iImage->GetLargestPossibleRegion().GetIndex();
+  InputPointType iPoint;
+  OutputIndexType oIndex;
 
-  image->TransformIndexToPhysicalPoint(oIndex, oPoint);
-  outputPtr->TransformPhysicalPointToIndex(oPoint, index);
-  this->SetOutputStartIndex(index);
+  iImage->TransformIndexToPhysicalPoint(iIndex, iPoint);
+  oImage->TransformPhysicalPointToIndex(iPoint, oIndex);
+  this->SetOutputStartIndex(oIndex);
 
   this->Modified();
   }

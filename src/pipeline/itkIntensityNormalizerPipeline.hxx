@@ -64,11 +64,20 @@ void IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::Gener
   histogramGenerator->Update();
 
   LookupFunctorType lookupFunctor;
+
+  /*
+   * It's more robust but does not support scan with different parameters (i.e.
+   * different FLAIRs can not be treated the same way)
+   * TODO: Sequence specific normalization.
+   */
+  lookupFunctor.AddLookupRow(0, 0);
+  lookupFunctor.AddLookupRow(histogramGenerator->GetOutput()->Quantile(0, .75), 0.8);
+
+
   /*
    * We want to normalize the normal part (i.e. the middle part of the histogram
    * for that the abnormalities usually lies in the rest)
-   */
-  for (int i = 5; i <= 95; i++)
+  for (int i = 25; i <= 75; i+=10)
     {
     const double ratio = i * 0.01;
 
@@ -77,14 +86,16 @@ void IntensityNormalizerPipeline< TInputImage, TOutputImage, TMaskImage >::Gener
     lookupFunctor.AddLookupRow(levelIntensity, ratio);
     }
   lookupFunctor.AddLookupRow(0, 0);
+   */
+
   /*
    * TODO: Make the decision for 1 parametric.
-   */
-  const double quantile_ratio = 1.1434; /** q97/q95 in normal distribution */
+  const double quantile_ratio = 1.1434; // q97/q95 in normal distribution
   lookupFunctor.AddLookupRow(
       histogramGenerator->GetOutput()->Quantile(0, 0.95) * (  quantile_ratio  )-
       histogramGenerator->GetOutput()->Quantile(0, 0.50) * (1 - quantile_ratio),
       1);
+   */
 
   /* Linearly map peak and extreme landmarks to desired valuse */
   typename LookupTransform::Pointer lookupTransform = LookupTransform::New();

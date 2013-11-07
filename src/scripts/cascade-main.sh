@@ -123,7 +123,7 @@ fi
 
 (
 set -- $ALL_IMAGES
-$CASCADEDIR/c3d_affine_tool -ref $STDIMAGE -src $1 $FSL_STD_TRANSFORM -fsl2ras -oitk $ITK_STD_TRANSFORM 
+$CASCADEDIR/c3d_affine_tool -src $STDIMAGE -ref $1 $FSL_STD_TRANSFORM -fsl2ras -oitk $ITK_STD_TRANSFORM 
 )
 
 if [ $MODE == "TRAIN" ]
@@ -133,7 +133,6 @@ then
 	do
 	  INPUT_ARGS="$INPUT_ARGS --input $(range_image $img)"
 	done
-
 
   for CLASS_INDEX in {1..3}
   do

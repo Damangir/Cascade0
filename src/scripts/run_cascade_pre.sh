@@ -5,10 +5,9 @@
 [ -z "$PRJHOME" ] && [ -f "./project_setting.sh" ] && source ./project_setting.sh
 [ -z "$PRJHOME" ] && echo "No proper settings. Are you sure you have a proper project_setting.sh file?" >&2 && exit 1
 
-for f in $(find "${PRJORIGINAL}" -maxdepth 1 -name "${PRJSUBJPATTERN}" | sort )
+for f in $(find "${PRJORIGINAL}" -mindepth 1 -maxdepth 1 -name "${PRJSUBJPATTERN}" | sort)
 do
     id=$(basename $f)
-
     t1=$(find "$f" -iname "$PRJT1PATTERN"        |head -n 1)
     t2=$(find "$f" -iname "$PRJT2PATTERN"        |head -n 1)
     pd=$(find "$f" -iname "$PRJPDPATTERN"        |head -n 1)
@@ -41,7 +40,5 @@ INPUT_ARG=""
 [ -s "$t2" ]    && INPUT_ARG="$INPUT_ARG -s $t2"
 
 mkdir -p ${PRJCASCADE}/${id}
-${CASCADEDIR}/cascade-pre.sh -r ${PRJCASCADE}/${id} -n $mask_space $INPUT_ARG
-
-
+time ${CASCADEDIR}/cascade-pre.sh -r ${PRJCASCADE}/${id} -n $mask_space $INPUT_ARG
 done
