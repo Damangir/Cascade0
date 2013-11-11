@@ -49,7 +49,6 @@ do
 	     printf("\n")
 	  }
 	}' ${PRJCASCADE}/${PRJSUBJPATTERN}/transformations/${hist} >${normal_histogram}
-done
 
 	TRG_INTENSITY=($(cut -d ' ' -f1 ${normal_histogram}))
 	TRG_PERCENTILE=($(cut -d ' ' -f4 ${normal_histogram}))
@@ -83,9 +82,7 @@ done
 	  INTERPOLATION="( $INT_HI - $INT_LO )/( $PERC_HI - $PERC_LO ) * ( $PERC - $PERC_LO ) + $INT_LO"
 	fi  
 	
-	ONE_INT=$(bc -l <<< "a=$INTERPOLATION;if(a>0) a else 0" )
-	done
-  
+	ONE_INT=$(bc -l <<< "a=$INTERPOLATION;if(a>0) a else 0" ) 
   awk -v one_int=$ONE_INT '{printf("%f", $1 / one_int);for (j = 2; j <= NF; j++) printf(" %.10f",$j);printf("\n")}' ${normal_histogram} > $TMPHIST && mv $TMPHIST ${normal_histogram}
 	
 done
