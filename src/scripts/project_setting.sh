@@ -21,6 +21,10 @@ CONF=1
 MINSIZE=200
 RESULT=${PRJHOME}/Cascade/results_${CONF}.csv
 
+## PARAMETER EXTRACTION
+NBIN=100
+PERCENTILE=98
+
 ## Cascade location
 CASCADEDIR=/home/soheil/workspace/Cascade/src/scripts
 

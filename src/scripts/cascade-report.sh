@@ -120,9 +120,9 @@ then
 	echo -n "\"ID\",\"CSF VOL\",\"GM VOL\",\"WM VOL\",\"WML VOL (p-Value)\"">${REPORTCSV}
   
   
-	if [ -e "$PROC_ATLAS" ]
+	if [ -e "$ATLAS" ]
 	then
-		for lvl in $(seq $(${FSLPREFIX}fslstats $PROC_ATLAS -R))
+		for lvl in $(seq $(${FSLPREFIX}fslstats $ATLAS -R))
 	  do
 	    [ "$(echo $lvl '==' 0 | bc)" -eq 1 ] && continue
 	    echo -n ",\"atlas.level.`printf "%.0f" ${lvl}`\"" >> ${REPORTCSV}
@@ -136,19 +136,19 @@ then
 	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_2.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
   ${FSLPREFIX}fslstats $PVALUEIMAGE                                  -M -V | awk '{ printf "%.0f",  $1 * $3 }' >> ${REPORTCSV}
   
-  if [ -e "$PROC_ATLAS" ]
+  if [ -e "$ATLAS" ]
   then
-    for lvl in $(seq $(${FSLPREFIX}fslstats $PROC_ATLAS -R))
+    for lvl in $(seq $(${FSLPREFIX}fslstats $ATLAS -R))
     do
       [ "$(echo $lvl '==' 0 | bc -l)" -eq 1 ] && continue
   	  tmp_image=$IMAGEROOT/${temp_dir}/temp.nii.gz
-	    ${FSLPREFIX}fslmaths $PROC_ATLAS -thr $lvl -uthr $lvl -bin -mul $PVALUEIMAGE $tmp_image
+	    ${FSLPREFIX}fslmaths $ATLAS -thr $lvl -uthr $lvl -bin -mul $PVALUEIMAGE $tmp_image
 	    ${FSLPREFIX}fslstats $tmp_image -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
     done
   fi 
   
   echo >> ${REPORTCSV}
-  ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_flair.nii.gz | grep -v pve| grep -v mixel )
+  ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
 	for img in $ALL_IMAGES
 	do
 	  image_type=$(basename $img|sed "s/brain_//g"|sed "s/\..*//g")

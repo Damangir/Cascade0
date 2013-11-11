@@ -23,9 +23,10 @@ ${bold}usage${normal}: $0 options
 This script creats a heuristic based mask for possible position of a lesion
 
 ${bold}OPTIONS$normal:
-   -h      Show this message
    -r      Image root directory
-
+   -n      Number of bins
+   
+   -h      Show this message
    -l      Show licence
    
 EOF
@@ -34,13 +35,17 @@ EOF
 source $(dirname $0)/cascade-setup.sh
 source $(dirname $0)/cascade-util.sh
 
-
-while getopts “hr:l” OPTION
+NBIN=100
+while getopts “hr:n:l” OPTION
 do
   case $OPTION in
 ## Subject directory
     r)
       IMAGEROOT=$OPTARG
+      ;;
+## Settings
+    n)
+      NBIN=$OPTARG
       ;;
 ## Help and licence      
     l)
@@ -69,36 +74,37 @@ check_fsl
 check_cascade
 set_filenames
 
-mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
+TMP_DIR=$(mktemp -d)
+trap "rm -rf ${TMP_DIR}" EXIT
 
-runname "Heuristic: Light part on FLAIR or T2"
+runname "Calculating effective histogram"
 (
 set -e
-cp $MIDDLE $HYP_MASK
-if [ -s $FLAIR_BRAIN ]
-then
-  PERCENTILE=($(fsl5.0-fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95))
-  flair_thresh=$(${FSLPREFIX}fslstats $FLAIR_BRAIN -k $BRAIN_WM -P 50)
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[0]} -mul $HYP_MASK -bin $HYP_MASK
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[4]} -mas $OUTER_10 -add $MIDDLE_10 -bin -mul $HYP_MASK -bin $HYP_MASK 
-fi
-if [ -s $T2_BRAIN ]
-then
-  t2_thresh=$(${FSLPREFIX}fslstats $T2_BRAIN -k $BRAIN_WM -P 50)
-  ${FSLPREFIX}fslmaths $T2_BRAIN -thr $t2_thresh -mul $HYP_MASK -bin $HYP_MASK
-fi
-)
-rundone $?
-
-runname "Heuristic: Not bright on T1"
-(
-set -e
-if [ -s $T1_BRAIN ]
-then
-  t1_thresh=$(${FSLPREFIX}fslstats $T1_BRAIN -k $BRAIN_WM -P 90)
-  ${FSLPREFIX}fslmaths $T1_BRAIN -uthr $t1_thresh -mul $HYP_MASK -bin $HYP_MASK
-fi
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
+for IMGNAME in $ALL_IMAGES
+do
+  IMGNAME=$(basename $IMGNAME)
+  IMGTYPE=$(basename $IMGNAME .nii.gz)
+	HISTOGRAM_FILE=${IMAGEROOT}/${trans_dir}/${IMGTYPE}.hist
+	MASK_IMAGE=${TMP_DIR}/mask.nii.gz
+  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${images_dir}/WhiteMatter+GrayMatter.nii.gz -mas ${IMAGEROOT}/${std_dir}/BrainMiddleMask10.nii.gz -mas ${IMAGEROOT}/${images_dir}/${IMGNAME} -bin $MASK_IMAGE
+	MASK_OPTIONS="-k $MASK_IMAGE"
+	
+	this_maximum=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} -P 95 )
+	this_histogram=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} $MASK_OPTIONS -H $NBIN 0 ${this_maximum} )
+	
+	this_total=$(echo $this_histogram | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/  */+/g' | bc)
+	 
+	i=0;this_cum=0
+	> $HISTOGRAM_FILE
+	for elem in $this_histogram
+	do
+	  this_elem=$(echo "$elem / ${this_total}" | bc -l )
+	  this_cum=$(echo "$this_cum + $this_elem" | bc -l )
+	  this_bin=$(echo "($i + 0.5) * ${this_maximum} / $NBIN " | bc -l )   
+	  echo $i $this_bin $this_elem $this_cum >> $HISTOGRAM_FILE
+	  i=$(( $i + 1 ))
+	done
+done
 )
 rundone $?

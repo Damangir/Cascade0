@@ -29,7 +29,7 @@
  */
 #include "itkBinaryThresholdImageFilter.hxx"
 #include "itkApproximateSignedDistanceMapImageFilter.h"
-
+#include <itkHistogramMatchingImageFilter.h>
 /*
  * Others
  */

@@ -29,14 +29,14 @@ target_link_libraries(report ${ITK_LIBRARIES})
 add_executable(inspect inspectstate-main.cxx)
 target_link_libraries(inspect ${ITK_LIBRARIES})
 
-add_executable(distancemap distancemap-main.cxx)
-target_link_libraries(distancemap ${ITK_LIBRARIES})
+add_executable(transform transform-main.cxx)
+target_link_libraries(transform ${ITK_LIBRARIES})
 
 add_executable(property-filter property-filter-main.cxx)
 target_link_libraries(property-filter ${ITK_LIBRARIES})
 
 message("Installation root is ${CMAKE_INSTALL_PREFIX}")
-foreach(targ train likelihood range report inspect property-filter)
+foreach(targ train likelihood range report inspect property-filter transform)
  message("Install rule: ${targ} as ${TARGET_PREFIX}${targ}")
  set_property(TARGET ${targ} PROPERTY INSTALL_RPATH_USE_LINK_PATH true)
  set_property(TARGET ${targ} PROPERTY OUTPUT_NAME "${TARGET_PREFIX}${targ}")

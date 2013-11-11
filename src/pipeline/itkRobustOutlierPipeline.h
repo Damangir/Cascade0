@@ -93,6 +93,10 @@ public:
    */
   itkSetGetDecoratedInputMacro(MaskValue, MaskPixelType);
 
+  itkSetMacro(PerformOrient, bool);
+  itkGetMacro(PerformOrient, bool);
+  itkBooleanMacro(PerformOrient);
+
   void ConsiderNthChannel(const int N)
     {
     m_MahalanobisFilter->ConsiderNthChannel(N);
@@ -199,6 +203,7 @@ public:
     RobustOutlierPipeline(const Self &); //purposely not implemented
     void operator=(const Self &);//purposely not implemented
 
+    bool m_PerformOrient;
     /** Internal filters */
     typename MahalanobisDistanceImageFilterType::Pointer m_MahalanobisFilter;
     typename MeanVariancePipelineType::Pointer m_MeanCovCalculator;

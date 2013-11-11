@@ -20,12 +20,12 @@ usage()
 cat << EOF
 ${bold}usage${normal}: $0 options
 
-This script creats a heuristic based mask for possible position of a lesion
+This script runs the preprocessing of the Cascade pipeline
 
 ${bold}OPTIONS$normal:
    -h      Show this message
    -r      Image root directory
-
+   
    -l      Show licence
    
 EOF
@@ -59,7 +59,10 @@ do
   esac
 done
 
+
+
 IMAGEROOT=$(readlink -f $IMAGEROOT)     
+    
 if [ ! -d "${IMAGEROOT}" ]
 then
   echo_fatal "IMAGEROOT is not a directory."
@@ -69,36 +72,35 @@ check_fsl
 check_cascade
 set_filenames
 
-mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
-
-runname "Heuristic: Light part on FLAIR or T2"
+runname "Normalizing input images"
 (
 set -e
-cp $MIDDLE $HYP_MASK
-if [ -s $FLAIR_BRAIN ]
-then
-  PERCENTILE=($(fsl5.0-fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95))
-  flair_thresh=$(${FSLPREFIX}fslstats $FLAIR_BRAIN -k $BRAIN_WM -P 50)
 
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[0]} -mul $HYP_MASK -bin $HYP_MASK
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[4]} -mas $OUTER_10 -add $MIDDLE_10 -bin -mul $HYP_MASK -bin $HYP_MASK 
-fi
-if [ -s $T2_BRAIN ]
-then
-  t2_thresh=$(${FSLPREFIX}fslstats $T2_BRAIN -k $BRAIN_WM -P 50)
-  ${FSLPREFIX}fslmaths $T2_BRAIN -thr $t2_thresh -mul $HYP_MASK -bin $HYP_MASK
-fi
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
+for img in $ALL_IMAGES
+do
+  img_type=$(basename $img .nii.gz)
+  transform_file=${IMAGEROOT}/${trans_dir}/${img_type}.trans
+  
+  ranged_img=$(range_image $img)
+  if [ ! -s $ranged_img ]
+  then
+    if [ -s $transform_file ]
+    then
+      $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale
+      scale_factor=$(${FSLPREFIX}fslstats ${ranged_img} -k ${BRAIN_WMGM} -P 75)
+      ${FSLPREFIX}fslmaths ${ranged_img} -div ${scale_factor} $(sed 's/.nii.gz$/_other.nii.gz/g' <<< "${ranged_img}")
+      $CASCADEDIR/cascade-transform --input ${ranged_img} --transform ${transform_file} --out ${ranged_img}
+    else
+      $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale
+      scale_factor=$(${FSLPREFIX}fslstats ${ranged_img} -k ${BRAIN_WMGM} -P 75)
+      ${FSLPREFIX}fslmaths ${ranged_img} -div ${scale_factor} ${ranged_img}
+    fi
+  fi
+done
 )
 rundone $?
-
-runname "Heuristic: Not bright on T1"
-(
+exit
 set -e
-if [ -s $T1_BRAIN ]
-then
-  t1_thresh=$(${FSLPREFIX}fslstats $T1_BRAIN -k $BRAIN_WM -P 90)
-  ${FSLPREFIX}fslmaths $T1_BRAIN -uthr $t1_thresh -mul $HYP_MASK -bin $HYP_MASK
-fi
-)
-rundone $?
+$(dirname $0)/cascade-hyp.sh -r $IMAGEROOT
+set +e

@@ -148,7 +148,7 @@ then
     then
       ${FSLPREFIX}fslmaths $MASKIMAGE -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
     else
-      ${FSLPREFIX}fslmaths $(range_image brain_flair.nii.gz) -thr 1.2 -bin -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
+      ${FSLPREFIX}fslmaths $HYP_MASK -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
     fi
     
 	  if [ -f $CLASS_STATE ]
@@ -178,7 +178,7 @@ else
   do
     INPUT_ARGS="$INPUT_ARGS --$(sequence_type $img) $(range_image $img)"
   done
-  ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mul 0 ${LIKELIHOOD}
+  ${FSLPREFIX}fslmaths ${BRAIN_PVE} -mul 0 ${LIKELIHOOD}
   for CLASS_INDEX in {2..3}
   do
 	  runname "Calculating likelihood for class ${CLASS_INDEX}"
@@ -193,7 +193,7 @@ else
 	    set +e
 	    for try in {1..10}
 	    do
-	      $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
+	      $CASCADEDIR/cascade-likelihood $INPUT_ARGS --no-sign --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
 	      OUT_RES=$?
 	      [ $OUT_RES -eq 0 ] && break 
 	      rm ${CLASS_LIKELIHOOD}
@@ -218,7 +218,8 @@ else
   if [ -s $HYP_MASK ]
   then
     runname "Filtering base on heuristic mask"
-    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -abs -mas ${HYP_MASK} ${LIKELIHOOD}
+    #-mas ${HYP_MASK}
+    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -abs ${LIKELIHOOD}
     rundone $?    
   fi
 fi

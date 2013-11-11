@@ -72,19 +72,26 @@ void RobustOutlierPipeline< TInputImage, TOutputImage >::GenerateData()
 
   m_ChiFilter->GetFunctor().SetDOF(inputImage->GetNumberOfComponentsPerPixel());
   m_ChiFilter->SetInput(m_MahalanobisFilter->GetDistanceImage());
+  m_ChiFilter->Update();
+  typename ScalarImageType::Pointer out_img = m_ChiFilter->GetOutput();
 
-  typedef MultiplyImageFilter< ScalarImageType, ScalarImageType > MultiplyImageFilterType;
-  typename MultiplyImageFilterType::Pointer multiplyFilter =
-      MultiplyImageFilterType::New();
-  typedef OrientationEnhanceFilter< ScalarImageType > OrientEnhanceType;
-  typename OrientEnhanceType::Pointer orientEnhance = OrientEnhanceType::New();
+  if (m_PerformOrient)
+    {
+    typedef MultiplyImageFilter< ScalarImageType, ScalarImageType > MultiplyImageFilterType;
+    typename MultiplyImageFilterType::Pointer multiplyFilter =
+        MultiplyImageFilterType::New();
+    typedef OrientationEnhanceFilter< ScalarImageType > OrientEnhanceType;
+    typename OrientEnhanceType::Pointer orientEnhance =
+        OrientEnhanceType::New();
 
-  multiplyFilter->SetInput1(m_ChiFilter->GetOutput());
-  multiplyFilter->SetInput2(m_MahalanobisFilter->GetOrientImage());
+    multiplyFilter->SetInput1(out_img);
+    multiplyFilter->SetInput2(m_MahalanobisFilter->GetOrientImage());
+    orientEnhance->SetInput(multiplyFilter->GetOutput());
+    orientEnhance->Update();
+    out_img = orientEnhance->GetOutput();
+    }
 
-  orientEnhance->SetInput(multiplyFilter->GetOutput());
-
-  m_Castor->SetInput(orientEnhance->GetOutput());
+  m_Castor->SetInput(out_img);
 
   m_Castor->Update();
   this->GraftOutput(m_Castor->GetOutput());

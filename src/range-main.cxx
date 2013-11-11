@@ -77,6 +77,9 @@ int main(int argc, char *argv[])
   TCLAP::ValueArg< std::string > outfile("o", "out", "Output filename", false,
                                          "out.nii.gz", "string", cmd);
 
+  TCLAP::SwitchArg scaleSwitch("", "no-scale", "Do not apply scale factor", cmd,
+                                 true);
+
   TCLAP::ValueArg< unsigned int > bins("b", "bins", "", false, 20, "Integer",
                                        cmd);
 
@@ -141,15 +144,21 @@ int main(int argc, char *argv[])
 
     IntensityNormalizerType::Pointer intensityNormalizer =
         IntensityNormalizerType::New();
-    intensityNormalizer->SetInput(n4Corrector->GetOutput());
-    intensityNormalizer->SetMaskImage(thresholdFilter->GetOutput());
-    intensityNormalizer->SetMaskValue(thresholdFilter->GetInsideValue());
-    intensityNormalizer->SetNumberOfLevels(bins.getValue());
 
     MaskFilterType::Pointer maskFilter = MaskFilterType::New();
-    maskFilter->SetInput(intensityNormalizer->GetOutput());
     maskFilter->SetMaskImage(castToInterim->GetOutput());
 
+    if(scaleSwitch.getValue())
+      {
+      intensityNormalizer->SetInput(n4Corrector->GetOutput());
+      intensityNormalizer->SetMaskImage(thresholdFilter->GetOutput());
+      intensityNormalizer->SetMaskValue(thresholdFilter->GetInsideValue());
+      intensityNormalizer->SetNumberOfLevels(bins.getValue());
+
+      maskFilter->SetInput(intensityNormalizer->GetOutput());
+      }else{
+        maskFilter->SetInput(n4Corrector->GetOutput());
+      }
     CastToOutputType::Pointer castToOutput = CastToOutputType::New();
     castToOutput->SetInput(maskFilter->GetOutput());
     castToOutput->Update();

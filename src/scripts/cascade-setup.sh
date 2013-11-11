@@ -23,6 +23,8 @@ do
 done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
+NUMCPU=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || echo 1)
+
 CASCADESCRIPT=$DIR
 CASCADEDIR=/home/soheil/workspace/Cascade/build
 CASCADEDATA=/home/soheil/workspace/Cascade/data

@@ -77,6 +77,9 @@ int main(int argc, char *argv[])
   TCLAP::ValueArg< std::string > outfile("o", "out", "Output state file.",
                                          false, "out.nii.gz", "Output", cmd);
 
+  TCLAP::SwitchArg signSwitch("", "no-sign", "Do not apply sign filter", cmd,
+                                 true);
+
   TCLAP::ValueArg< std::string > trainedState(
       "s",
       "state",
@@ -98,13 +101,13 @@ int main(int argc, char *argv[])
       "i", "input", "Normalized image file e.g. PD_normalized.nii.gz",
       false, "Input", cmd);
 
-  TCLAP::MultiArg< std::string > inputLight(
-      "l", "light", "Normalized light image file e.g. FLAIR_normalized.nii.gz",
-      false, "Light Input", cmd);
-
   TCLAP::MultiArg< std::string > inputDark(
       "d", "dark", "Normalized dark image file e.g. MPRAGE_normalized.nii.gz",
       false, "Dark Input", cmd);
+
+  TCLAP::MultiArg< std::string > inputLight(
+      "l", "light", "Normalized light image file e.g. FLAIR_normalized.nii.gz",
+      false, "Light Input", cmd);
 
   /** Parse the argv array.   */
   try
@@ -183,7 +186,7 @@ int main(int argc, char *argv[])
     stateReader->SetFileName(trainedState.getValue());
     stateReader->Update();
     likelihood->SetStateImage(stateReader->GetOutput());
-
+    likelihood->SetPerformOrient(signSwitch.getValue());
     likelihood->Update();
 
     ImageWriterType::Pointer stateWriter = ImageWriterType::New();
