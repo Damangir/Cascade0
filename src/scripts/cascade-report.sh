@@ -31,12 +31,12 @@ Misc.:
    -h      Show this message
    -f      Fource run all steps
    -v      Verbose
-   -l      Show licence
+   -l      Show license
 EOF
 }
 
 source $(dirname $0)/cascade-setup.sh
-source $(dirname $0)/cascade-util.sh
+
 
 MIN_PHYS=100
 CHI_CUTOFF=0.875
@@ -66,8 +66,8 @@ do
       VERBOSE=1
       ;;
     l)
-      copyright
-      licence
+      cascade_copyright
+      cascade_license
       exit 1
       ;;    
     ?)
@@ -77,7 +77,7 @@ do
   esac
 done
 
-copyright
+cascade_copyright
 if [ $# == 0 ]
 then
     usage
@@ -88,11 +88,9 @@ mkdir -p $IMAGEROOT/${report_dir}
 IMAGEROOT=$(readlink -f $IMAGEROOT)
 SUBJECTID=$(basename $IMAGEROOT)
 
-check_fsl
-check_cascade
+
 
 set_filenames
-
 # first we need to remove previous reports.
 find $IMAGEROOT/${report_dir} -type f -not -wholename "${LIKELIHOOD}" -print0 | xargs -0 rm -f
 
@@ -103,11 +101,9 @@ runname "Processing likelihood"
 set -e
 # Threshold likelihood
 ${FSLPREFIX}fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
-${FSLPREFIX}fslmaths $BRAIN_WMGM -sub $BRAIN_THIN_GM -thr 0 -bin -mul $OUTMASK $OUTMASK
-$CASCADEDIR/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize --threshold $MIN_PHYS
+${CASCADEDIR}/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize --threshold $MIN_PHYS
 ${FSLPREFIX}fslmaths $OUTMASK -bin $OUTMASK
 ${FSLPREFIX}fslmaths $OUTMASK -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE
-${FSLPREFIX}fslmaths $OUTMASK -bin -mul $BRAIN_WM -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE_CONS
 )
 rundone $?
 ####### REPORTING  
@@ -120,41 +116,34 @@ then
 	echo -n "\"ID\",\"CSF VOL\",\"GM VOL\",\"WM VOL\",\"WML VOL (p-Value)\"">${REPORTCSV}
   
   
-	if [ -e "$ATLAS" ]
+	if [ "$STD_ATLAS" ] && [ -e "$ATLAS" ]
 	then
-		for lvl in $(seq $(${FSLPREFIX}fslstats $ATLAS -R))
+	  atlas_labels=($(get_atlas_label $STD_ATLAS))
+		for lvl in "${!atlas_labels[@]}"
 	  do
-	    [ "$(echo $lvl '==' 0 | bc)" -eq 1 ] && continue
-	    echo -n ",\"atlas.level.`printf "%.0f" ${lvl}`\"" >> ${REPORTCSV}
+	    [[ $lvl == 0 ]] && continue
+	    echo -n ",\"${atlas_labels[${lvl}]}\"" >> ${REPORTCSV}
 	  done
   fi
 
   echo  >> ${REPORTCSV}
-	echo -n "\"$SUBJECTID\",">>${REPORTCSV}
-	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_0.nii.gz     -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV} 
-	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_1.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-	${FSLPREFIX}fslstats $IMAGEROOT/${temp_dir}/brain_pve_mod_2.nii.gz -M -V | awk '{ printf "%.0f,",  $1 * $3 }' >> ${REPORTCSV}
-  ${FSLPREFIX}fslstats $PVALUEIMAGE                                  -M -V | awk '{ printf "%.0f",  $1 * $3 }' >> ${REPORTCSV}
+	echo -n "\"$SUBJECTID\"">>${REPORTCSV}
+	${FSLPREFIX}fslstats $BRAIN_CSF   -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV} 
+	${FSLPREFIX}fslstats $BRAIN_GM    -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
+	${FSLPREFIX}fslstats $BRAIN_WM    -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
+  ${FSLPREFIX}fslstats $PVALUEIMAGE -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
   
-  if [ -e "$ATLAS" ]
+  if [ "$STD_ATLAS" ] && [ -e "$ATLAS" ]
   then
-    for lvl in $(seq $(${FSLPREFIX}fslstats $ATLAS -R))
+    for lvl in "${!atlas_labels[@]}"
     do
-      [ "$(echo $lvl '==' 0 | bc -l)" -eq 1 ] && continue
-  	  tmp_image=$IMAGEROOT/${temp_dir}/temp.nii.gz
+      [[ $lvl == 0 ]] && continue
+  	  tmp_image=${SAFE_TMP_DIR}/atlas_level.nii.gz
 	    ${FSLPREFIX}fslmaths $ATLAS -thr $lvl -uthr $lvl -bin -mul $PVALUEIMAGE $tmp_image
 	    ${FSLPREFIX}fslstats $tmp_image -M -V | awk '{ printf ",%.0f",  $1 * $3 }' >> ${REPORTCSV}
     done
   fi 
-  
   echo >> ${REPORTCSV}
-  ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
-	for img in $ALL_IMAGES
-	do
-	  image_type=$(basename $img|sed "s/brain_//g"|sed "s/\..*//g")
-	  $CASCADEDIR/cascade-report --input $img --mask $OUTMASK --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
-	  montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png 
-	done
 fi
 )
 rundone $?

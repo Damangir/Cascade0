@@ -27,13 +27,13 @@ ${bold}OPTIONS$normal:
    -n      Number of bins
    
    -h      Show this message
-   -l      Show licence
+   -l      Show license
    
 EOF
 }
 
 source $(dirname $0)/cascade-setup.sh
-source $(dirname $0)/cascade-util.sh
+
 
 NBIN=100
 while getopts “hr:n:l” OPTION
@@ -47,10 +47,10 @@ do
     n)
       NBIN=$OPTARG
       ;;
-## Help and licence      
+## Help and license      
     l)
-      copyright
-      licence
+      cascade_copyright
+      cascade_license
       exit 1
       ;;
     h)
@@ -70,12 +70,7 @@ then
   echo_fatal "IMAGEROOT is not a directory."
 fi
 
-check_fsl
-check_cascade
 set_filenames
-
-TMP_DIR=$(mktemp -d)
-trap "rm -rf ${TMP_DIR}" EXIT
 
 runname "Calculating effective histogram"
 (
@@ -86,25 +81,29 @@ do
   IMGNAME=$(basename $IMGNAME)
   IMGTYPE=$(basename $IMGNAME .nii.gz)
 	HISTOGRAM_FILE=${IMAGEROOT}/${trans_dir}/${IMGTYPE}.hist
-	MASK_IMAGE=${TMP_DIR}/mask.nii.gz
-  ${FSLPREFIX}fslmaths ${IMAGEROOT}/${images_dir}/WhiteMatter+GrayMatter.nii.gz -mas ${IMAGEROOT}/${std_dir}/BrainMiddleMask10.nii.gz -mas ${IMAGEROOT}/${images_dir}/${IMGNAME} -bin $MASK_IMAGE
-	MASK_OPTIONS="-k $MASK_IMAGE"
-	
-	this_maximum=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} -P 95 )
-	this_histogram=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} $MASK_OPTIONS -H $NBIN 0 ${this_maximum} )
-	
-	this_total=$(echo $this_histogram | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/  */+/g' | bc)
-	 
-	i=0;this_cum=0
-	> $HISTOGRAM_FILE
-	for elem in $this_histogram
-	do
-	  this_elem=$(echo "$elem / ${this_total}" | bc -l )
-	  this_cum=$(echo "$this_cum + $this_elem" | bc -l )
-	  this_bin=$(echo "($i + 0.5) * ${this_maximum} / $NBIN " | bc -l )   
-	  echo $i $this_bin $this_elem $this_cum >> $HISTOGRAM_FILE
-	  i=$(( $i + 1 ))
-	done
+  
+  if ! [ -s $HISTOGRAM_FILE ]
+  then
+	  [ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mas ${MIDDLE_10} -mas ${IMAGEROOT}/${images_dir}/${IMGNAME} -bin $MASK_FOR_HISTOGRAM
+		MASK_OPTIONS="-k $MASK_FOR_HISTOGRAM"
+		
+		this_maximum=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} -P 95 )
+		this_histogram=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} $MASK_OPTIONS -H $NBIN 0 ${this_maximum} )
+		
+		this_total=$(echo $this_histogram | sed -e 's/^ *//g' -e 's/ *$//g' -e 's/  */+/g' | bc)
+		
+		i=0;this_cum=0
+		> $HISTOGRAM_FILE
+		for elem in $this_histogram
+		do
+		  this_elem=$(bc -l <<< "$elem / ${this_total}" )
+		  this_cum=$(bc -l <<< "$this_cum + $this_elem" )
+		  this_bin=$(bc -l <<< "($i + 0.5) * ${this_maximum} / $NBIN " )
+		     
+		  echo $i $this_bin $this_elem $this_cum >> $HISTOGRAM_FILE
+		  i=$(( $i + 1 ))
+		done
+  fi
 done
 )
 rundone $?

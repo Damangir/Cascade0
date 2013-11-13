@@ -26,12 +26,11 @@ ${bold}OPTIONS$normal:
    -h      Show this message
    -r      Image root directory
 
-   -l      Show licence  
+   -l      Show license  
 EOF
 }
 
 source $(dirname $0)/cascade-setup.sh
-source $(dirname $0)/cascade-util.sh
 
 while getopts “hr:l” OPTION
 do
@@ -40,10 +39,10 @@ do
     r)
       IMAGEROOT=$OPTARG
       ;;
-## Help and licence      
+## Help and license      
     l)
-      copyright
-      licence
+      cascade_copyright
+      cascade_license
       exit 1
       ;;
     h)
@@ -63,8 +62,6 @@ then
   echo_fatal "IMAGEROOT \"${IMAGEROOT}\" is not a directory."
 fi
 
-check_fsl
-check_cascade
 set_filenames
 
 mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
@@ -83,6 +80,7 @@ rundone $?
 runname "Refining brain segmentation"
 (
 set -e
+#if true
 if [ ! -s ${BRAIN_WM} ]
 then
   ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/brain_pve_0.nii.gz -nan -thr 0.5 -bin ${BRAIN_CSF}
@@ -91,23 +89,28 @@ then
       
 	if [ -s $FLAIR_BRAIN ]
 	then  
-	  PERCENTILE=($(fsl5.0-fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95))
+	  PERCENTILE=($(fsl5.0-fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95 -P 99))
 	  
-#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[0]} -bin ${IMAGEROOT}/${temp_dir}/est_wml_50_flair.nii.gz
-${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[1]} -bin ${IMAGEROOT}/${temp_dir}/est_wml_60_flair.nii.gz
-#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[2]} -bin ${IMAGEROOT}/${temp_dir}/est_wml_70_flair.nii.gz
-${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[3]} -bin ${IMAGEROOT}/${temp_dir}/est_wml_80_flair.nii.gz
-#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[4]} -bin ${IMAGEROOT}/${temp_dir}/est_wml_90_flair.nii.gz
-${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[5]} -bin ${IMAGEROOT}/${temp_dir}/est_wml_95_flair.nii.gz
-	  	  
+
+#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[1]} -bin ${SAFE_TMP_DIR}/est_wml_60_flair.nii.gz
+#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[2]} -bin ${SAFE_TMP_DIR}/est_wml_70_flair.nii.gz
+${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[3]} -bin ${SAFE_TMP_DIR}/est_wml_80_flair.nii.gz
+${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[4]} -bin ${SAFE_TMP_DIR}/est_wml_90_flair.nii.gz
+${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[5]} -bin ${SAFE_TMP_DIR}/est_wml_95_flair.nii.gz
+${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[6]} -bin ${SAFE_TMP_DIR}/est_wml_99_flair.nii.gz
+
+    # Try not to touch cortex
+    # TODO: A better way to identify cortex
     # If a CSF is bright in FLAIR, it might be misclassified WML.
-    # Misclassified in the outer part should be very bright.
-    ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/est_wml_95_flair.nii.gz -mas $OUTER_10 -mul -1 -add 1 -mas ${BRAIN_CSF} -bin ${BRAIN_CSF}
-    # Misclassified in the outer part should be very bright.
-    ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/est_wml_60_flair.nii.gz -mul -1 -add 1 -mas ${BRAIN_CSF} -bin ${BRAIN_CSF}
-        
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_90_flair.nii.gz -mas $OUTER_20 -mul -1 -add 1 -mul ${BRAIN_CSF} -bin ${BRAIN_CSF}
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_80_flair.nii.gz -mas $MIDDLE_20 -mul -1 -add 1 -mul ${BRAIN_CSF} -bin ${BRAIN_CSF}
+    
     # If a GM is bright in FLAIR, it might be misclassified WML.
-    ${FSLPREFIX}fslmaths ${IMAGEROOT}/${temp_dir}/est_wml_80_flair.nii.gz -mas $MIDDLE_10 -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_99_flair.nii.gz -mas $OUTER_20 -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_95_flair.nii.gz -mas $MIDDLE_20 -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}
+    
+    $CASCADEDIR/cascade-property-filter -i ${BRAIN_GM} -o ${BRAIN_GM} --property PhysicalSize --threshold 1000
+    ${FSLPREFIX}fslcpgeom ${BRAIN_MASK} ${BRAIN_GM}
     
     ${FSLPREFIX}fslmaths $BRAIN_MASK -bin -sub ${BRAIN_GM} -sub ${BRAIN_CSF} ${BRAIN_WM}
    fi

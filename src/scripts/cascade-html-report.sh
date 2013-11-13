@@ -20,7 +20,7 @@ usage()
 cat << EOF
 ${bold}usage${normal}: $0 options
 
-This script creats a heuristic based mask for possible position of a lesion
+This script runs the main procedure of the Cascade pipeline
 
 ${bold}OPTIONS$normal:
    -h      Show this message
@@ -68,39 +68,23 @@ fi
 
 set_filenames
 
-mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_flair.nii.gz 2>/dev/null)
+for img in $ALL_IMAGES
+do
+  image_type=$(sequence_name $img)
+  valid_window=$( ${FSLPREFIX}fslstats $img -w )
+  ${FSLPREFIX}fslroi $img ${SAFE_TMP_DIR}/image.nii.gz $valid_window
+  ${FSLPREFIX}fslroi $OUTMASK ${SAFE_TMP_DIR}/mask.nii.gz $valid_window
+  ${FSLPREFIX}fslcpgeom ${SAFE_TMP_DIR}/image.nii.gz ${SAFE_TMP_DIR}/mask.nii.gz
+  $CASCADEDIR/cascade-report --input ${SAFE_TMP_DIR}/image.nii.gz --mask ${SAFE_TMP_DIR}/mask.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
+  if [ $(command -v montage) ]
+  then
+    montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png
+    rm $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png
+  fi 
+done
 
-echo "${bold}Calculating heuristics${normal}"
+cat << EOF
 
-[ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mas ${MIDDLE_10} -mas ${T1_BRAIN} -bin $MASK_FOR_HISTOGRAM
 
-runname "    Heuristic: Light part on FLAIR or T2"
-(
-set -e
-cp $MIDDLE $HYP_MASK
-if [ -s $FLAIR_BRAIN ]
-then
-  PERCENTILE=($(${FSLPREFIX}fslstats $FLAIR_BRAIN -k ${MASK_FOR_HISTOGRAM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95))
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[0]} -mul $HYP_MASK -bin $HYP_MASK
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[5]} -mas $OUTER_10 -mas ${BRAIN_WM} -add $MIDDLE_10 -bin -mul $HYP_MASK -bin $HYP_MASK 
-fi
-if [ -s $T2_BRAIN ]
-then
-  t2_thresh=$(${FSLPREFIX}fslstats $T2_BRAIN -k ${MASK_FOR_HISTOGRAM} -P 50)
-  ${FSLPREFIX}fslmaths $T2_BRAIN -thr $t2_thresh -mul $HYP_MASK -bin $HYP_MASK
-fi
-)
-rundone $?
-
-runname "    Heuristic: Not bright on T1"
-(
-set -e
-if [ -s $T1_BRAIN ]
-then
-  t1_thresh=$(${FSLPREFIX}fslstats $T1_BRAIN -k $BRAIN_WM -P 90)
-  ${FSLPREFIX}fslmaths $T1_BRAIN -uthr $t1_thresh -mul $HYP_MASK -bin $HYP_MASK
-fi
-)
-rundone $?
+EOF

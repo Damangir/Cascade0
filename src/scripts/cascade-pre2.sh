@@ -26,13 +26,13 @@ ${bold}OPTIONS$normal:
    -h      Show this message
    -r      Image root directory
    
-   -l      Show licence
+   -l      Show license
    
 EOF
 }
 
 source $(dirname $0)/cascade-setup.sh
-source $(dirname $0)/cascade-util.sh
+
 
 
 while getopts “hr:l” OPTION
@@ -42,10 +42,10 @@ do
     r)
       IMAGEROOT=$OPTARG
       ;;
-## Help and licence      
+## Help and license      
     l)
-      copyright
-      licence
+      cascade_copyright
+      cascade_license
       exit 1
       ;;
     h)
@@ -59,8 +59,6 @@ do
   esac
 done
 
-
-
 IMAGEROOT=$(readlink -f $IMAGEROOT)     
     
 if [ ! -d "${IMAGEROOT}" ]
@@ -68,9 +66,9 @@ then
   echo_fatal "IMAGEROOT is not a directory."
 fi
 
-check_fsl
-check_cascade
+
 set_filenames
+echo "${bold}The Cascade Pre-processing step 1${normal}"
 
 runname "Normalizing input images"
 (
@@ -85,22 +83,20 @@ do
   ranged_img=$(range_image $img)
   if [ ! -s $ranged_img ]
   then
+    [ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mas ${MIDDLE_10} -mas ${img} -bin $MASK_FOR_HISTOGRAM
+    
+    $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale     
     if [ -s $transform_file ]
     then
-      $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale
-      scale_factor=$(${FSLPREFIX}fslstats ${ranged_img} -k ${BRAIN_WMGM} -P 75)
-      ${FSLPREFIX}fslmaths ${ranged_img} -div ${scale_factor} $(sed 's/.nii.gz$/_other.nii.gz/g' <<< "${ranged_img}")
       $CASCADEDIR/cascade-transform --input ${ranged_img} --transform ${transform_file} --out ${ranged_img}
     else
-      $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale
-      scale_factor=$(${FSLPREFIX}fslstats ${ranged_img} -k ${BRAIN_WMGM} -P 75)
+      scale_factor=$(${FSLPREFIX}fslstats ${ranged_img} -k ${MASK_FOR_HISTOGRAM} -P 75)
       ${FSLPREFIX}fslmaths ${ranged_img} -div ${scale_factor} ${ranged_img}
     fi
   fi
 done
 )
 rundone $?
-exit
 set -e
 $(dirname $0)/cascade-hyp.sh -r $IMAGEROOT
 set +e

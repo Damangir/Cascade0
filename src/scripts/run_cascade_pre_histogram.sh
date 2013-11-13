@@ -1,22 +1,21 @@
 #! /bin/bash
 
+[ -z "$PRJHOME" ] && [ -f "$1" ] && PRJSETTINGS="$1"
+[ -z "$PRJHOME" ] && [ -d "$1" ] && [ -f "${1}/project_setting.sh" ] && PRJSETTINGS="${1}/project_setting.sh"
+[ -z "$PRJHOME" ] && [ -f "./project_setting.sh" ] && PRJSETTINGS="./project_setting.sh"
+
 source $(dirname $0)/cascade-setup.sh
 
-[ -z "$PRJHOME" ] && [ -f "$1" ] && source "$1"
-[ -z "$PRJHOME" ] && [ -d "$1" ] && [ -f "${1}/project_setting.sh" ] && source "${1}/project_setting.sh"
-[ -z "$PRJHOME" ] && [ -f "./project_setting.sh" ] && source ./project_setting.sh
 [ -z "$PRJHOME" ] && echo "No proper settings. Are you sure you have a proper project_setting.sh file?" >&2 && exit 1
 
-hist_root=${CASCADEDATA}/histograms
-
-#if ! [ "${hist_root}" -ef "${CASCADEDATA}/histograms" ]
-#then
+if ! [ "$(dirname ${HIST_ROOT})" -ef "${CASCADEDATA}" ]
+then
 TMPHIST=$(mktemp -u --suffix .hist)
 trap "rm ${TMPHIST}" EXIT
 histograms=$(ls ${PRJCASCADE}/${PRJSUBJPATTERN}/transformations/*.hist 2>/dev/null | xargs -n 1 basename |sort | uniq)
 for hist in $histograms
 do 
-  normal_histogram=${hist_root}/$hist
+  normal_histogram=${HIST_ROOT}/$hist
   ## Run an awk to average histograms
 	awk '
 	NR==FNR{
@@ -86,12 +85,12 @@ do
   awk -v one_int=$ONE_INT '{printf("%f", $1 / one_int);for (j = 2; j <= NF; j++) printf(" %.10f",$j);printf("\n")}' ${normal_histogram} > $TMPHIST && mv $TMPHIST ${normal_histogram}
 	
 done
-#fi
+fi
 
 COMMANDS=
 for hist in $(ls ${PRJCASCADE}/${PRJSUBJPATTERN}/transformations/*.hist 2>/dev/null)
 do
-  normal_histogram=${hist_root}/$(basename $hist)
+  normal_histogram=${HIST_ROOT}/$(basename $hist)
   transform=$(sed 's/.hist$/.trans/g' <<<"$hist")
   COMMANDS="${COMMANDS}\n$hist $normal_histogram $transform"
 done

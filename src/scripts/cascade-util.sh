@@ -14,35 +14,6 @@
 #  http://creativecommons.org/licenses/by-nc-nd/3.0/
 #  
 
-copyright()
-{
-cat << EOF
-
-The Cascade pipeline. github.com/Damangir/Cascade
-Copyright (C) 2013 Soheil Damangir - All Rights Reserved
-
-EOF
-}
-
-licence()
-{
-cat << EOF
-You may use and distribute, but not modify this code under the terms of the
-Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License
-under the following conditions:
-Attribution — You must attribute the work in the manner specified by the
-author or licensor (but not in any way that suggests that they endorse you
-or your use of the work).
-Noncommercial — You may not use this work for commercial purposes.
-No Derivative Works — You may not alter, transform, or build upon this
-work
-
-To view a copy of the license, visit
-http://creativecommons.org/licenses/by-nc-nd/3.0/
-
-EOF
-}
-FSLPREFIX="SALAM"
 # check if stdout is a terminal...
 if [ -t 1 ]; then
   # see if it supports colors...
@@ -60,8 +31,12 @@ if [ -t 1 ]; then
     magenta="$(tput setaf 5)"
     cyan="$(tput setaf 6)"
     white="$(tput setaf 7)"
+    header_format="\n${bold}${underline}##   "
   fi
 fi
+
+SAFE_TMP_DIR=$(mktemp -d)
+trap "rm -rf ${SAFE_TMP_DIR}" EXIT
 
 check_cascade()
 {
@@ -72,13 +47,25 @@ do
     echo_fatal "Cascade executable ${underline}${ce}${normal} is not available. Please check your Cascade installation."
   fi
 done
-STD_MIDDLE=$CASCADEDATA/mask/MNI152_T1_1mm_middle_brain_mask.nii.gz
-STD_MIDDLE_10=$CASCADEDATA/mask/MNI152_T1_1mm_middle_brain_mask_err_10.nii.gz
-STD_MIDDLE_20=$CASCADEDATA/mask/MNI152_T1_1mm_middle_brain_mask_err_20.nii.gz
-STD_OUTER_10=$CASCADEDATA/mask/MNI152_T1_1mm_middle_brain_mask_outer_10.nii.gz
-STD_OUTER_20=$CASCADEDATA/mask/MNI152_T1_1mm_middle_brain_mask_outer_20.nii.gz
+STD_MIDDLE=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask.nii.gz
+STD_MIDDLE_10=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_err_10.nii.gz
+STD_OUTER_10=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_outer_10.nii.gz
+STD_MIDDLE_20=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_err_20.nii.gz
+STD_OUTER_20=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_outer_20.nii.gz
 
-STD_ATLAS=$CASCADEDATA/atlas/MNI152_1mm_ATLAS.nii.gz
+STD_IMAGE=$STANDARD_ROOT/MNI152_T1_1mm_brain.nii.gz
+
+if [ ! -f $STD_IMAGE ]
+then
+  echo_fatal "Can not find the standard image at $STD_IMAGE. Please check your FSL installation."
+fi
+
+if [ "$ATLAS_TO_USE" ]
+then
+  STD_ATLAS=
+  [ -e "$ATLAS_TO_USE" ] && STD_ATLAS=$ATLAS_TO_USE
+  [ -e "$ATLAS_ROOT/$ATLAS_TO_USE" ] && STD_ATLAS=$ATLAS_ROOT/$ATLAS_TO_USE
+fi
 }
 
 check_fsl()
@@ -103,11 +90,6 @@ else
       echo_fatal "$ce executable is not available. Please check your FSL installation."
     fi
   done
-  STDIMAGE=$FSLDIR/data/standard/MNI152_T1_1mm_brain.nii.gz
-  if [ ! -f $STDIMAGE ]
-  then
-      echo_fatal "Can not find the standard image at $STDIMAGE. Please check your FSL installation."
-  fi
   FLAIR_OPTIONS_FOR_ATLAS="-interp nearestneighbour"
 fi
 }
@@ -202,8 +184,8 @@ set_filenames()
          OUTER_10=${IMAGEROOT}/${std_dir}/BrainOuterMask10.nii.gz
          OUTER_20=${IMAGEROOT}/${std_dir}/BrainOuterMask20.nii.gz
                                             
-FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name STDIMAGE PROC )
-ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name STDIMAGE PROC )
+FSL_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name STD_IMAGE PROC )
+ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name STD_IMAGE PROC )
 
        LIKELIHOOD=${IMAGEROOT}/${report_dir}/likelihood.nii.gz
       PVALUEIMAGE=${IMAGEROOT}/${report_dir}/pvalue.nii.gz
@@ -214,6 +196,7 @@ ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name STDIMAGE PROC )
         
      T1_BRAIN_TMP=${IMAGEROOT}/${temp_dir}/brain_t1_tmp.nii.gz
    TRAINMASKIMAGE=${IMAGEROOT}/${temp_dir}/normal_mask.nii.gz
+MASK_FOR_HISTOGRAM=${IMAGEROOT}/${temp_dir}/mask_for_histogram.nii.gz
 }
 
 
@@ -298,25 +281,80 @@ mask()
 {
   ${FSLPREFIX}fslmaths ${!1} -mas ${!2} ${!3}
 }
+trim()
+{
+  ${FSLPREFIX}fslroi ${1} ${2} $( ${FSLPREFIX}fslstats ${1} -w )
+}
 
 range_image()
 {
   echo "$IMAGEROOT/$ranges_dir/$(basename $1)"
 }
 
+
+sequence_name()
+{
+  sed s'/brain_//g' <<< "$(basename $1 .nii.gz)"
+}
 # Type of WML in each image
 sequence_type()
 {
-  if [[ "$(basename $1)" == *t1* ]]
+  local seq_name=$(sequence_name $1)
+  local seq_type="other"
+  [[ "${seq_name}" == "t1" ]] && seq_type="dark"
+  [[ "${seq_name}" == "t2" ]] && seq_type="light"
+  [[ "${seq_name}" == "flair" ]] && seq_type="light"
+  [[ "${seq_name}" == "pd" ]] && seq_type="light"
+  echo $seq_type
+}
+
+# Type of WML in each image
+tissue_name()
+{
+  local name="Other"
+  [[ "$1" == "1" ]] && name="Cerebrospinal Fluid"
+  [[ "$1" == "2" ]] && name="Gray Matter"
+  [[ "$1" == "3" ]] && name="White Matter"
+  echo $name
+}
+
+sequence_weight()
+{
+  local seq_name=$(sequence_name $1)
+  local seq_weight="1"
+  [[ "${seq_name}" == "t1" ]] && seq_weight="0.8"
+  [[ "${seq_name}" == "t2" ]] && seq_weight="1"
+  [[ "${seq_name}" == "flair" ]] && seq_weight="1.5"
+  [[ "${seq_name}" == "pd" ]] && seq_weight="0.5"
+  echo $seq_weight
+}
+
+total_weight()
+{
+  export -f sequence_weight sequence_name
+  if [ "$ALL_IMAGES" ]
   then
-    echo "dark"
-  elif [[ "$(basename $1)" == *t2* ]]
-  then
-    echo "light"
-  elif [[ "$(basename $1)" == *flair* ]]
-  then
-    echo "light"
+    xargs -n 1 -d ' ' -I {} bash -c 'sequence_weight "$@"' _ {}  <<< $ALL_IMAGES | paste -sd+ | bc -l
   else
-    echo "light"
+    echo 0
   fi
 }
+
+get_atlas_label()
+{
+  max_index=$(${FSLPREFIX}fslstats $1 -R|cut -d ' ' -f2| sed 's/.0*$//g')
+  out_label=("NONE" $(printf "Label_%d\n" $( eval echo {1..$max_index} )))
+  
+  name_file=$(sed 's/.nii.gz$/.labels/g' <<<"$1")
+  if [ -s "$name_file" ]
+  then
+    tmp_label=("NONE" $(cat $name_file | tr ' ' '-'))
+		for i in "${!tmp_label[@]}"; do 
+		  out_label[$i]="${tmp_label[$i]}"
+		done
+  fi
+  printf -- '%s\n' "${out_label[@]}"
+}
+
+
+

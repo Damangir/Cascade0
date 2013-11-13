@@ -33,12 +33,12 @@ Misc.:
    -h      Show this message
    -f      Fource run all steps
    -v      Verbose
-   -l      Show licence
+   -l      Show license
 EOF
 }
 
 source $(dirname $0)/cascade-setup.sh
-source $(dirname $0)/cascade-util.sh
+
 
 IMAGEROOT=.
 VERBOSE=
@@ -72,8 +72,8 @@ do
       VERBOSE=1
       ;;
     l)
-      copyright
-      licence
+      cascade_copyright
+      cascade_license
       exit 1
       ;;    
     ?)
@@ -83,7 +83,7 @@ do
   esac
 done
 
-copyright
+cascade_copyright
 if [ $# == 0 ]
 then
     usage
@@ -105,12 +105,10 @@ IMAGEROOT=$(readlink -f $IMAGEROOT)
 SUBJECTID=$(basename $IMAGEROOT)
 
 
-check_fsl
-check_cascade
 
 set_filenames
 
-ALL_IMAGES=$(echo ${IMAGEROOT}/${ranges_dir}/brain_{flair,t1}.nii.gz)
+ALL_IMAGES=$(echo ${IMAGEROOT}/${ranges_dir}/brain_{flair,t1,t2,pd}.nii.gz)
 
 if [ ! -s $FSL_STD_TRANSFORM ]
 then
@@ -123,25 +121,19 @@ fi
 
 (
 set -- $ALL_IMAGES
-$CASCADEDIR/c3d_affine_tool -src $STDIMAGE -ref $1 $FSL_STD_TRANSFORM -fsl2ras -oitk $ITK_STD_TRANSFORM 
+$CASCADEDIR/c3d_affine_tool -src $STD_IMAGE -ref $1 $FSL_STD_TRANSFORM -fsl2ras -oitk $ITK_STD_TRANSFORM 
 )
 
 if [ $MODE == "TRAIN" ]
 then
-  INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
-	for img in $ALL_IMAGES
-	do
-	  INPUT_ARGS="$INPUT_ARGS --input $(range_image $img)"
-	done
 
-  for CLASS_INDEX in {1..3}
+  for CLASS_INDEX in {2..3}
   do
-    runname "Training class ${CLASS_INDEX}"
+    runname "Training on $(tissue_name ${CLASS_INDEX})"
     (
     set -e
-    CLASS_MASK=$IMAGEROOT/${temp_dir}/class_traing_${CLASS_INDEX}_mask.nii.gz
-    CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
-    NEW_CLASS_STATE=${NEWSTATEIMAGE}_${CLASS_INDEX}.nii.gz
+    
+    CLASS_MASK=${SAFE_TMP_DIR}/class_traing_${CLASS_INDEX}_mask.nii.gz
     
     ${FSLPREFIX}fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
     if [ $MASKIMAGE ]
@@ -151,14 +143,24 @@ then
       ${FSLPREFIX}fslmaths $HYP_MASK -mul -1 -add 1 -mas ${CLASS_MASK} ${CLASS_MASK}
     fi
     
-	  if [ -f $CLASS_STATE ]
-	  then
-	    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $CLASS_STATE
-	    train_result=$?
-	  else
-	    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $STDIMAGE --size 40
-	    train_result=$?
-	  fi
+		for img in $ALL_IMAGES
+		do
+		  IMAGE_NAME=$(sequence_name $img)
+		  RANGE_IMAGE=$(range_image $img)
+	    CLASS_STATE=${STATEIMAGE}_${IMAGE_NAME}_${CLASS_INDEX}.nii.gz
+	    NEW_CLASS_STATE=${NEWSTATEIMAGE}_${IMAGE_NAME}_${CLASS_INDEX}.nii.gz
+	    
+		  INPUT_ARGS="--transform $ITK_STD_TRANSFORM --input $RANGE_IMAGE"
+		  if [ -f $CLASS_STATE ]
+		  then
+		    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $CLASS_STATE
+		    train_result=$?
+		  else
+		    $CASCADEDIR/cascade-train $INPUT_ARGS --out $NEW_CLASS_STATE --mask ${CLASS_MASK} --init $STD_IMAGE --size 40
+		    train_result=$?
+		  fi
+		    
+	  done
     )
     if [ $? -eq 0 ]
     then
@@ -168,41 +170,50 @@ then
       rm ${NEWSTATEIMAGE}_*.nii.gz  >/dev/null 2>&1
       echo_fatal "Unable to calculate the new state. NOTE: None of the new state for any class is not usable anymore."
     fi
-  done
+      
+	done
 
 else
-  
+        
   mkdir -p $IMAGEROOT/${report_dir}    
-  INPUT_ARGS="--transform $ITK_STD_TRANSFORM"
-  for img in $ALL_IMAGES
-  do
-    INPUT_ARGS="$INPUT_ARGS --$(sequence_type $img) $(range_image $img)"
-  done
   ${FSLPREFIX}fslmaths ${BRAIN_PVE} -mul 0 ${LIKELIHOOD}
+  
+  W_total=$(total_weight)
+  
   for CLASS_INDEX in {2..3}
   do
-	  runname "Calculating likelihood for class ${CLASS_INDEX}"
-	  (
+    runname "Calculating likelihood for $(tissue_name ${CLASS_INDEX})"
+    (
     set -e
-    CLASS_MASK=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_mask.nii.gz
-    CLASS_LIKELIHOOD=$IMAGEROOT/${temp_dir}/class${CLASS_INDEX}_likelihood.nii.gz
-    CLASS_STATE=${STATEIMAGE}_${CLASS_INDEX}.nii.gz
+    CLASS_MASK=${SAFE_TMP_DIR}/class_${CLASS_INDEX}_mask.nii.gz
     ${FSLPREFIX}fslmaths ${BRAIN_PVE} -thr ${CLASS_INDEX} -uthr ${CLASS_INDEX} -bin ${CLASS_MASK}
     
-    (
-	    set +e
-	    for try in {1..10}
-	    do
-	      $CASCADEDIR/cascade-likelihood $INPUT_ARGS --no-sign --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
-	      OUT_RES=$?
-	      [ $OUT_RES -eq 0 ] && break 
-	      rm ${CLASS_LIKELIHOOD}
-	    done
-	    exit $OUT_RES
-    ) >/dev/null 2>&1
-    
-    
-    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -add ${CLASS_LIKELIHOOD} ${LIKELIHOOD}
+    for img in $ALL_IMAGES
+    do
+      IMAGE_NAME=$(sequence_name $img)
+      IMAGE_TYPE=$(sequence_type $img)
+      IMAGE_WEIGHT=$( bc -l <<< "$(sequence_weight $img) / $W_total" )
+      RANGE_IMAGE=$(range_image $img)
+      
+      CLASS_STATE=${STATEIMAGE}_${IMAGE_NAME}_${CLASS_INDEX}.nii.gz
+	    CLASS_LIKELIHOOD=$IMAGEROOT/${temp_dir}/${IMAGE_NAME}_class_${CLASS_INDEX}_likelihood.nii.gz
+      
+      INPUT_ARGS="--transform $ITK_STD_TRANSFORM --${IMAGE_TYPE} ${RANGE_IMAGE}"  
+	    (
+	      set +e
+	      for try in {1..10}
+	      do
+	        $CASCADEDIR/cascade-likelihood $INPUT_ARGS --out ${CLASS_LIKELIHOOD} --state ${CLASS_STATE} --mask ${CLASS_MASK}
+	        OUT_RES=$?
+	        [ $OUT_RES -eq 0 ] && break 
+	        rm ${CLASS_LIKELIHOOD}
+	      done
+	      exit $OUT_RES
+	    ) >/dev/null 2>&1
+	      
+      ${FSLPREFIX}fslmaths ${CLASS_LIKELIHOOD} -mul $IMAGE_WEIGHT -add ${LIKELIHOOD} ${LIKELIHOOD}
+
+    done
     )
 	  if [ $? -eq 0 ]
 	  then
@@ -213,6 +224,7 @@ else
 	    rm $IMAGEROOT/${temp_dir}/class*_likelihood.nii.gz  >/dev/null 2>&1
 	    echo_fatal "Unable to calculate likelihood."
 	  fi
+     
   done
   
   if [ -s $HYP_MASK ]
@@ -222,5 +234,6 @@ else
     ${FSLPREFIX}fslmaths ${LIKELIHOOD} -abs ${LIKELIHOOD}
     rundone $?    
   fi
+
 fi
 echo

@@ -36,13 +36,13 @@ ${bold}OPTIONS$normal:
 
    -a      Remove all pre-existing files
    -v      Verbose
-   -l      Show licence
+   -l      Show license
    
 EOF
 }
 
 source $(dirname $0)/cascade-setup.sh
-source $(dirname $0)/cascade-util.sh
+
 
 
 IMAGEROOT=.
@@ -83,10 +83,10 @@ do
     v)
       VERBOSE=1
       ;;
-## Help and licence      
+## Help and license      
     l)
-      copyright
-      licence
+      cascade_copyright
+      cascade_license
       exit 1
       ;;
     h)
@@ -100,7 +100,7 @@ do
   esac
 done
 
-copyright
+cascade_copyright
 if [ $# == 0 ]
 then
     usage
@@ -133,11 +133,9 @@ then
 fi
 
 
-IMAGEROOT=$(readlink -f $IMAGEROOT)     
-echo "Preprocessing subject at: ${IMAGEROOT}"
+IMAGEROOT=$(readlink -f $IMAGEROOT)
+echo "${bold}The Cascade Pre-processing step 1${normal}"
 
-check_fsl
-check_cascade
 set_filenames
 
 [ $REMOVEALL == "YES" ] && rm -rf ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
@@ -207,23 +205,23 @@ rundone $?
 runname "Calculating registeration matrix for MNI space"
 (
 set -e
-if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STDIMAGE ) ]
+if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STD_IMAGE ) ]
 then
-  register T1_BRAIN STDIMAGE
-  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1_BRAIN STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STDIMAGE )
+  register T1_BRAIN STD_IMAGE
+  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1_BRAIN STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STD_IMAGE )
 fi
 
-if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE ) ]
+if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE ) ]
 then
   if [ $FLAIR ]
   then
-    concat_transform FLAIR T1 STDIMAGE
-    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name FLAIR STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
+    concat_transform FLAIR T1 STD_IMAGE
+    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name FLAIR STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE )
   else
-    concat_transform T2 T1 STDIMAGE
-    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T2 STDIMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STDIMAGE )
+    concat_transform T2 T1 STD_IMAGE
+    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T2 STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE )
   fi
-  inverse_transform PROC STDIMAGE
+  inverse_transform PROC STD_IMAGE
 fi
 )
 rundone $?
@@ -234,26 +232,38 @@ set -e
 if [ ! -s $ATLAS ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_ATLAS FLAIR - $(fsl_trans_name STDIMAGE PROC ) $ATLAS
+  register STD_ATLAS FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $ATLAS
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $ATLAS
 fi
 if [ ! -s $MIDDLE ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_MIDDLE FLAIR - $(fsl_trans_name STDIMAGE PROC ) $MIDDLE
+  register STD_MIDDLE FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE
 fi
 if [ ! -s $OUTER_10 ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_OUTER_10 FLAIR - $(fsl_trans_name STDIMAGE PROC ) $OUTER_10
+  register STD_OUTER_10 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_10
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $OUTER_10
 fi
 if [ ! -s $MIDDLE_10 ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_MIDDLE_10 FLAIR - $(fsl_trans_name STDIMAGE PROC ) $MIDDLE_10
+  register STD_MIDDLE_10 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_10
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE_10
+fi
+if [ ! -s $OUTER_20 ]
+then
+  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
+  register STD_OUTER_20 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_20
+  ${FSLPREFIX}fslcpgeom $T1_BRAIN $OUTER_20
+fi
+if [ ! -s $MIDDLE_20 ]
+then
+  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
+  register STD_MIDDLE_20 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_20
+  ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE_20
 fi
 )
 rundone $?
