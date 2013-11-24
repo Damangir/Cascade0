@@ -17,7 +17,8 @@ Content
 Introduction
 -------
 Cascade, Classification of White Matter Lesions, is a fully automated tool for quantification of White Matter Lesions. Cascade is designed to be as flexible as possible. and can work with all sort of input sequences. It can work without any manually delineated samples as reference.
-Please report any issue at (https://github.com/Damangir/Cascade/issues).
+
+Please [report any issue](https://github.com/Damangir/Cascade/issues) at https://github.com/Damangir/Cascade/issues.
 
 Install
 -------
