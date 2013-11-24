@@ -1,9 +1,23 @@
 Cascade: Classification of White Matter Lesions
 =======
 
+Content
+-------
+* [Introduction](#introduction)
+* [Installation](#install)
+* [Manual](#manual)
+  * [Preprocessing](#preprocessing)
+  * [White matter lesion segmentation](#wml-segmentation)
+  * [Sample usage](#sample-usage)
+* [Citation](#citation)
+* [Copyright](#copyright)
+* [License](#license)
+
+
 Introduction
 -------
 Cascade, Classification of White Matter Lesions, is a fully automated tool for quantification of White Matter Lesions. Cascade is designed to be as flexible as possible. and can work with all sort of input sequences. It can work without any manually delineated samples as reference.
+Please report any issue at (https://github.com/Damangir/Cascade/issues).
 
 Install
 -------
@@ -122,11 +136,11 @@ Any scientific work derived from the result of this software or its modification
 
 Copyright
 -------
-Copyright (C) 2013 Soheil Damangir - All Rights Reserved
+Copyright (C) 2013 [Soheil Damangir](http://www.linkedin.com/in/soheildamangir) - All Rights Reserved
 
-Licence
+License
 -------
-[![Creative Commons License](http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png "Creative Commons License")](http://creativecommons.org/licenses/by-nc-nd/3.0/)
+[![Creative Commons License](https://raw.github.com/Damangir/Cascade/master/licence.png "Creative Commons License")](http://creativecommons.org/licenses/by-nc-nd/3.0/)
 
 Cascade by [Soheil Damangir](http://www.linkedin.com/in/soheildamangir) is licensed under a [Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported License](http://creativecommons.org/licenses/by-nc-nd/3.0/).
 To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/3.0/.
