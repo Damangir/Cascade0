@@ -185,16 +185,46 @@ typename WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::ScalarR
 
   return md;
   }
-/**Calculate Mahalanobis distance of the input point using the READY stare */
+
+/**Calculate statistics for difference between two states */
+template< class TState, class TMeasurement >
+typename WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::ScalarRealType WeightedSinglePassMeanCovarianceUpdate<
+    TState, TMeasurement >::Difference(const StateType& state1,
+                                       const StateType& state2)
+  {
+  const unsigned int D2 = StateTrait::GetLength(state1);
+  const unsigned int D = StateToMeasurementDim(D2);
+  MeasurementType mv;
+  MeasurementTrait::SetLength(mv, D);
+
+  /** Compute ( mv - mean ) */
+  for (int i = 0; i < D; i++)
+    {
+    mv[i] = GetMeanElement(state1, i) - GetMeanElement(state2, i);
+    }
+
+  /** Compute md=( mv - mean )^t InverseCovariance ( mv - mean ) */
+  ScalarRealType md = 0;
+  for (int i = 0; i < D; i++)
+    {
+    for (int j = 0; j < D; j++)
+      {
+      md += mv[j] * mv[i] * GetCovElement(state1, i, j);
+      }
+    }
+
+  return md;
+  }
+
 template< class TState, class TMeasurement >
 int WeightedSinglePassMeanCovarianceUpdate< TState, TMeasurement >::Orientation(
     const StateType& state, const MeasurementType & r)
   {
   const unsigned int D = MeasurementTrait::GetLength(r);
-  int orient=0;
-  for (int i=0;i<D;i++)
+  int orient = 0;
+  for (int i = 0; i < D; i++)
     {
-    if (r[i] > state[i+1])
+    if (r[i] > state[i + 1])
       {
       orient |= 1 << i;
       }

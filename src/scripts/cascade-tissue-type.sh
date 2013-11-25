@@ -69,11 +69,15 @@ mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
 runname "Segmenting brain tissues"
 (
 set -e
-if [ ! -s ${IMAGEROOT}/${temp_dir}/brain_pveseg.nii.gz ]
-then
-  ${FSLPREFIX}fast -t 1 -o ${IMAGEROOT}/${temp_dir}/brain -n 3 ${T1_BRAIN}
-  rm -rf ${BRAIN_CSF} ${BRAIN_GM} ${BRAIN_WM}
-fi
+for pve_ in $(echo ${IMAGEROOT}/${temp_dir}/brain_pve_{0,1,2}.nii.gz )
+do
+  if [ ! -s "${pve_}" ]
+  then
+    ${FSLPREFIX}fast -t 1 -o ${IMAGEROOT}/${temp_dir}/brain -n 3 ${T1_BRAIN}
+    rm -rf ${BRAIN_CSF} ${BRAIN_GM} ${BRAIN_WM}
+    break
+  fi
+done
 )
 rundone $?
 
@@ -90,20 +94,16 @@ then
 	if [ -s $FLAIR_BRAIN ]
 	then  
 	  PERCENTILE=($(fsl5.0-fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95 -P 99))
-	  
 
-#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[1]} -bin ${SAFE_TMP_DIR}/est_wml_60_flair.nii.gz
-#${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[2]} -bin ${SAFE_TMP_DIR}/est_wml_70_flair.nii.gz
 ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[3]} -bin ${SAFE_TMP_DIR}/est_wml_80_flair.nii.gz
 ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[4]} -bin ${SAFE_TMP_DIR}/est_wml_90_flair.nii.gz
 ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[5]} -bin ${SAFE_TMP_DIR}/est_wml_95_flair.nii.gz
 ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[6]} -bin ${SAFE_TMP_DIR}/est_wml_99_flair.nii.gz
 
-    # Try not to touch cortex
     # TODO: A better way to identify cortex
     # If a CSF is bright in FLAIR, it might be misclassified WML.
-    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_90_flair.nii.gz -mas $OUTER_20 -mul -1 -add 1 -mul ${BRAIN_CSF} -bin ${BRAIN_CSF}
-    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_80_flair.nii.gz -mas $MIDDLE_20 -mul -1 -add 1 -mul ${BRAIN_CSF} -bin ${BRAIN_CSF}
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_95_flair.nii.gz -mas $OUTER_20 -mul -1 -add 1 -mul ${BRAIN_CSF} -bin ${BRAIN_CSF}
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_90_flair.nii.gz -mas $MIDDLE_20 -mul -1 -add 1 -mul ${BRAIN_CSF} -bin ${BRAIN_CSF}
     
     # If a GM is bright in FLAIR, it might be misclassified WML.
     ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/est_wml_99_flair.nii.gz -mas $OUTER_20 -mul -1 -add 1 -mul ${BRAIN_GM} -bin ${BRAIN_GM}

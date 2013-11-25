@@ -192,11 +192,14 @@ ITK_STD_TRANSFORM=${IMAGEROOT}/${trans_dir}/$(itk_trans_name STD_IMAGE PROC )
  PVALUEIMAGE_CONS=${IMAGEROOT}/${report_dir}/pvalue_cons.nii.gz     
           OUTMASK=${IMAGEROOT}/${report_dir}/WMChanges.nii.gz
         REPORTCSV=${IMAGEROOT}/${report_dir}/report.csv
+       REPORTHTML=${IMAGEROOT}/${report_dir}/report.html
           LOGFILE=${IMAGEROOT}/${report_dir}/error.log
+      OVERVIEWIMG=${IMAGEROOT}/${report_dir}/overview.png
         
      T1_BRAIN_TMP=${IMAGEROOT}/${temp_dir}/brain_t1_tmp.nii.gz
    TRAINMASKIMAGE=${IMAGEROOT}/${temp_dir}/normal_mask.nii.gz
 MASK_FOR_HISTOGRAM=${IMAGEROOT}/${temp_dir}/mask_for_histogram.nii.gz
+         SUBJECTID=$(basename $IMAGEROOT)
 }
 
 
@@ -356,5 +359,24 @@ get_atlas_label()
   printf -- '%s\n' "${out_label[@]}"
 }
 
-
-
+do_overlay()
+{
+  local img=$1
+  local image_type=$(sequence_name $img)
+  local valid_window=$( ${FSLPREFIX}fslstats $img -w )
+  ${FSLPREFIX}fslroi $img ${SAFE_TMP_DIR}/image.nii.gz $valid_window
+  ${FSLPREFIX}fslroi $OUTMASK ${SAFE_TMP_DIR}/mask.nii.gz $valid_window
+  ${FSLPREFIX}fslcpgeom ${SAFE_TMP_DIR}/image.nii.gz ${SAFE_TMP_DIR}/mask.nii.gz
+  $CASCADEDIR/cascade-report --input ${SAFE_TMP_DIR}/image.nii.gz --mask ${SAFE_TMP_DIR}/mask.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
+  if [ $(command -v montage) ]
+  then
+    montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png
+    rm $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png
+    echo $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png
+  else
+    local overlays=$(echo $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png)
+    local toshow=$(bc <<< "$(wc -w <<< $overlays) / 2")
+    overlays=($overlays)
+    echo ${overlays[$toshow]}
+  fi
+}

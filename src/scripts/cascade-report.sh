@@ -86,9 +86,6 @@ fi
 
 mkdir -p $IMAGEROOT/${report_dir}
 IMAGEROOT=$(readlink -f $IMAGEROOT)
-SUBJECTID=$(basename $IMAGEROOT)
-
-
 
 set_filenames
 # first we need to remove previous reports.
@@ -100,10 +97,9 @@ runname "Processing likelihood"
 (
 set -e
 # Threshold likelihood
-${FSLPREFIX}fslmaths $LIKELIHOOD -thr $CHI_CUTOFF -bin $OUTMASK
-${CASCADEDIR}/cascade-property-filter --input $OUTMASK --out $OUTMASK --property PhysicalSize --threshold $MIN_PHYS
-${FSLPREFIX}fslmaths $OUTMASK -bin $OUTMASK
-${FSLPREFIX}fslmaths $OUTMASK -bin -mul $LIKELIHOOD -min 1 $PVALUEIMAGE
+${CASCADEDIR}/cascade-statistics-filter -i $LIKELIHOOD -b $CHI_CUTOFF -o $PVALUEIMAGE --property Sum --threshold $MIN_PHYS
+${FSLPREFIX}fslmaths $PVALUEIMAGE -kernel 2D -ero -dilM $PVALUEIMAGE
+${FSLPREFIX}fslmaths $PVALUEIMAGE -bin $OUTMASK
 )
 rundone $?
 ####### REPORTING  

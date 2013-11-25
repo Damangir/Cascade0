@@ -13,5 +13,4 @@ do
 id=$(basename $f)
 echo -e "${header_format}Processing ${id}${normal}"
 ${CASCADESCRIPT}/cascade-main.sh -r ${f} -s $STATE_PREFIX 
-
 done

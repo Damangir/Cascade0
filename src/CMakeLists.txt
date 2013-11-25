@@ -4,7 +4,6 @@ project(Cascade)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS}" )
 
-
 SET(CMAKE_BUILD_TYPE RelWithDebInfo)
 IF(NOT DEFINED TARGET_PREFIX)
   SET(TARGET_PREFIX "cascade-")
@@ -35,8 +34,14 @@ target_link_libraries(transform ${ITK_LIBRARIES})
 add_executable(property-filter property-filter-main.cxx)
 target_link_libraries(property-filter ${ITK_LIBRARIES})
 
+add_executable(statistics-filter statistics-filter-main.cxx)
+target_link_libraries(statistics-filter ${ITK_LIBRARIES})
+
+#add_executable(register register-main.cxx)
+#target_link_libraries(register ${ITK_LIBRARIES})
+
 message("Installation root is ${CMAKE_INSTALL_PREFIX}")
-foreach(targ train likelihood range report inspect property-filter transform)
+foreach(targ train likelihood range report inspect property-filter statistics-filter transform)
  message("Install rule: ${targ} as ${TARGET_PREFIX}${targ}")
  set_property(TARGET ${targ} PROPERTY INSTALL_RPATH_USE_LINK_PATH true)
  set_property(TARGET ${targ} PROPERTY OUTPUT_NAME "${TARGET_PREFIX}${targ}")
@@ -48,5 +53,6 @@ foreach(targ train likelihood range report inspect property-filter transform)
  )
 endforeach()
 
+# Third party executable
 ADD_EXECUTABLE(c3d_affine_tool 3rdparty/AffineTransformTools/AffineTransformTool.cxx)
 TARGET_LINK_LIBRARIES(c3d_affine_tool ${ITK_LIBRARIES})

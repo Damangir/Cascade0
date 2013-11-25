@@ -82,6 +82,11 @@ public:
    * Calculate the Mahalanobis distance between a measurement and a state
    */
   static ScalarRealType Distance(const StateType& state, const MeasurementType & r);
+  /*
+   * Calculate statistics for difference between two states
+   */
+  static ScalarRealType Difference(const StateType& state1, const StateType& state2);
+
   /** Calculate bitwise orientation of a sample compare to state mean. */
   static int Orientation(const StateType& state, const MeasurementType & r);
   /**

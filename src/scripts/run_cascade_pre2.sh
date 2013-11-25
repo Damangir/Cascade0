@@ -10,6 +10,7 @@ source $(dirname $0)/cascade-setup.sh
 
 for f in $(find "${PRJCASCADE}" -mindepth 1 -maxdepth 1 -name "${PRJSUBJPATTERN}" | sort)
 do
+  id=$(basename $f)
   echo -e "${header_format}Processing ${id}${normal}"
   ${CASCADESCRIPT}/cascade-pre2.sh -r ${f} 
 done

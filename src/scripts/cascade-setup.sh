@@ -58,12 +58,33 @@ export HIST_ROOT=${CASCADEDATA}/histograms
 export ATLAS_ROOT=${CASCADEDATA}/atlas
 export STANDARD_ROOT=$CASCADEDATA/standard
 export MASK_ROOT=$CASCADEDATA/mask
+export REPORT_ROOT=$CASCADEDATA/report
 
 if [ -s "$PRJSETTINGS" ]
 then
   source $PRJSETTINGS
+  [ -z "$PRJHOME" ] && echo "PRJHOME not set. Please double check your project setting. Current setting is: $PRJSETTINGS" >&2 && exit 1
+  
+  [ -z "$PRJNAME" ] && PRJNAME=$(basename "$PRJHOME")
+  [ -z "$PRJORIGINAL" ] && PRJORIGINAL=${PRJHOME}/Original
+  [ -z "$PRJCASCADE" ] && PRJCASCADE=${PRJHOME}/Cascade
+  [ -z "$PRJRESULTS" ] && PRJRESULTS=${PRJHOME}/Results
+  
+	[ -z "$CONF" ] && CONF=0.925
+	[ -z "$MINSIZE" ] && MINSIZE=200
+	[ -z "$STATE_PREFIX" ] && STATE_PREFIX="${PRJCASCADE}/state"
+	[ -z "$RESULT" ] && RESULT=${PRJRESULTS}/results_${CONF}.csv
+	[ -z "$PRJREPORTHTML" ] && PRJREPORTHTML=${PRJRESULTS}/results_${CONF}.html
+	[ -z "$NBIN" ] && NBIN=100
+	[ -z "$PERCENTILE" ] && PERCENTILE=98
+	
+	mkdir -p "$PRJORIGINAL" "$PRJCASCADE" "$PRJRESULTS"
+	ORIG_DIR=$(pwd)
+	trap "cd ${ORIG_DIR}" EXIT
+
   export MUTE_COPYRIGHT
   [ "$MUTE_COPYRIGHT" ] &&  ( MUTE_COPYRIGHT=; cascade_copyright;cascade_license )
+	
 fi 
 
 if ! [ "$(command -v ${FSLPREFIX}fslmaths)" ]

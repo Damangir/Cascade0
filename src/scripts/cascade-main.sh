@@ -107,7 +107,7 @@ SUBJECTID=$(basename $IMAGEROOT)
 
 
 set_filenames
-
+  
 ALL_IMAGES=$(echo ${IMAGEROOT}/${ranges_dir}/brain_{flair,t1,t2,pd}.nii.gz)
 
 if [ ! -s $FSL_STD_TRANSFORM ]
@@ -230,10 +230,13 @@ else
   if [ -s $HYP_MASK ]
   then
     runname "Filtering base on heuristic mask"
-    #-mas ${HYP_MASK}
-    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -abs ${LIKELIHOOD}
-    rundone $?    
+    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -mas ${HYP_MASK} -abs ${LIKELIHOOD}
+    rundone $?
+  else
+    runname "Filtering through WML direction"
+    ${FSLPREFIX}fslmaths ${LIKELIHOOD} -thr 0 ${LIKELIHOOD}
+    rundone $?
   fi
-
+  ${FSLPREFIX}fslmaths ${LIKELIHOOD} -sub 0.85 -mul -40 -exp -add 1 -recip ${LIKELIHOOD}
 fi
 echo

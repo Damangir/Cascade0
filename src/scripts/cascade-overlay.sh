@@ -65,26 +65,10 @@ then
   echo_fatal "IMAGEROOT is not a directory."
 fi
 
-
 set_filenames
 
-ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_flair.nii.gz 2>/dev/null)
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t2,t1,pd}.nii.gz 2>/dev/null)
 for img in $ALL_IMAGES
 do
-  image_type=$(sequence_name $img)
-  valid_window=$( ${FSLPREFIX}fslstats $img -w )
-  ${FSLPREFIX}fslroi $img ${SAFE_TMP_DIR}/image.nii.gz $valid_window
-  ${FSLPREFIX}fslroi $OUTMASK ${SAFE_TMP_DIR}/mask.nii.gz $valid_window
-  ${FSLPREFIX}fslcpgeom ${SAFE_TMP_DIR}/image.nii.gz ${SAFE_TMP_DIR}/mask.nii.gz
-  $CASCADEDIR/cascade-report --input ${SAFE_TMP_DIR}/image.nii.gz --mask ${SAFE_TMP_DIR}/mask.nii.gz --out $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}
-  if [ $(command -v montage) ]
-  then
-    montage $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}.png
-    rm $IMAGEROOT/${report_dir}/overlays/wm_on_${image_type}_*.png
-  fi 
+  do_overlay $img 
 done
-
-cat << EOF
-
-
-EOF

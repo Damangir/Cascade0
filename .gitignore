@@ -7,7 +7,7 @@ build/
 history/
 
 # Data file directory
-data/
+test-data/
 
 #User Specific Files
 *.user
