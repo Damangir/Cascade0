@@ -271,6 +271,7 @@ do_register()
 	    register ${2} ${1}
 	    inverse_transform ${2} ${1}
     fi
+    echo $REG_IMG
   fi
 }
 # Input 1: Moving A

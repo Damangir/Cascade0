@@ -131,15 +131,13 @@ then
     echo_fatal "Invalid space for brain mask. T1, T2, FLAIR, PD or NONE is allowed." 
   fi
 fi
-
+# By here, we are sure that T1 image is there and also either FLAIR and T2 is
+# available
 
 IMAGEROOT=$(readlink -f $IMAGEROOT)
 echo "${bold}The Cascade Pre-processing step 1${normal}"
-
 set_filenames
-
 [ $REMOVEALL == "YES" ] && rm -rf ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
-
 mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir},${std_dir}}
 
 runname "Calculating registeration matrix"
@@ -147,15 +145,19 @@ runname "Calculating registeration matrix"
 set -e
 if [ -s "$FLAIR" ]
 then
-  do_register T1 FLAIR
-  do_register T2 FLAIR
-  do_register PD FLAIR
+  REG_T1=$(do_register T1 FLAIR)
+  REG_T2=$(do_register T2 FLAIR)
+  REG_PD=$(do_register PD FLAIR)
+  REG_FLAIR=$FLAIR
 else
-  do_register T1 T2
-  do_register FLAIR T2
-  do_register PD T2
+  REG_T1=$(do_register T1 T2)
+  REG_T2=$T2
+  REG_PD=$(do_register PD T2)
+  REG_FLAIR=$(do_register FLAIR T2)
 fi
 )
+# By here we are sure that all images $REG_ are present and in the common space
+# of either FLAIR or T2
 rundone $?
 
 runname "Masking brain"
@@ -193,13 +195,13 @@ then
 	fi
 fi
 
-[ $T1 ] && [ ! -s $T1_BRAIN ] && mask T1 BRAIN_MASK T1_BRAIN
-[ $T2 ] && [ ! -s $T2_BRAIN ] && mask T2 BRAIN_MASK T2_BRAIN
-[ $FLAIR ] && [ ! -s $FLAIR_BRAIN ] && mask FLAIR BRAIN_MASK FLAIR_BRAIN
-[ $PD ] && [ ! -s $PD_BRAIN ] && mask PD BRAIN_MASK PD_BRAIN
-
+[ "$REG_T1" ] && [ ! -s "$T1_BRAIN" ] && mask REG_T1 BRAIN_MASK T1_BRAIN
+[ "$REG_T2" ] && [ ! -s "$T2_BRAIN" ] && mask REG_T2 BRAIN_MASK T2_BRAIN
+[ "$REG_FLAIR" ] && [ ! -s "$FLAIR_BRAIN" ] && mask REG_FLAIR BRAIN_MASK FLAIR_BRAIN
+[ "$REG_PD" ] && [ ! -s "$PD_BRAIN" ] && mask REG_PD BRAIN_MASK PD_BRAIN
 true
 )
+# By here $BRAIN_MASK and brain images are created _BRAIN
 rundone $?
 
 runname "Calculating registeration matrix for MNI space"
