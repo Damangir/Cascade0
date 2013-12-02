@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
         rgbImage->GetLargestPossibleRegion();
     const RGBImageType::IndexType requestedIndex = imageRegion.GetIndex();
     const RGBImageType::SizeType requestedSize = imageRegion.GetSize();
-    typename RGBSliceType::RegionType sliceRegion;
+    RGBSliceType::RegionType sliceRegion;
 
     for (unsigned int i = 0, internal_i = 0; internal_i < DIM - 1;
         ++i, ++internal_i)
