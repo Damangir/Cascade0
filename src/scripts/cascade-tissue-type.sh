@@ -112,7 +112,7 @@ ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[6]} -bin ${SAFE_TMP_DIR}/est
     $CASCADEDIR/cascade-property-filter -i ${BRAIN_GM} -o ${BRAIN_GM} --property PhysicalSize --threshold 1000
     ${FSLPREFIX}fslcpgeom ${BRAIN_MASK} ${BRAIN_GM}
     
-    ${FSLPREFIX}fslmaths $BRAIN_MASK -bin -sub ${BRAIN_GM} -sub ${BRAIN_CSF} ${BRAIN_WM}
+    ${FSLPREFIX}fslmaths $T1_BRAIN -bin -sub ${BRAIN_GM} -sub ${BRAIN_CSF} ${BRAIN_WM}
    fi
    rm -rf ${BRAIN_PVE}
 fi

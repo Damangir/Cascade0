@@ -52,12 +52,11 @@ STD_MIDDLE_10=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_err_10.nii.gz
 STD_OUTER_10=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_outer_10.nii.gz
 STD_MIDDLE_20=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_err_20.nii.gz
 STD_OUTER_20=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_outer_20.nii.gz
-
 STD_IMAGE=$STANDARD_ROOT/MNI152_T1_1mm_brain.nii.gz
 
 if [ ! -f $STD_IMAGE ]
 then
-  echo_fatal "Can not find the standard image at $STD_IMAGE. Please check your FSL installation."
+  echo_fatal "Can not find the standard image at $STD_IMAGE. Please check your Cascade installation."
 fi
 
 if [ "$ATLAS_TO_USE" ]
@@ -66,6 +65,7 @@ then
   [ -e "$ATLAS_TO_USE" ] && STD_ATLAS=$ATLAS_TO_USE
   [ -e "$ATLAS_ROOT/$ATLAS_TO_USE" ] && STD_ATLAS=$ATLAS_ROOT/$ATLAS_TO_USE
 fi
+
 }
 
 check_fsl()
@@ -110,9 +110,10 @@ echo_fatal()
 
 runname()
 {
-  echo -n "${1}"
+  printf "${1}"
   reqcol=$(echo $(tput cols)-${#1}|bc)  
 }
+
 rundone()
 {
   local OKMSG="[OK] "
@@ -257,21 +258,28 @@ do_register()
     local TRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $2 $1 )
     local ITRANSFORM=${IMAGEROOT}/${trans_dir}/$(fsl_trans_name $1 $2 )
     local REG_IMG=${IMAGEROOT}/${temp_dir}/$(trans_name $2 $1 ).nii.gz
-        
+    local REG_IMG_INVERSE=${IMAGEROOT}/${temp_dir}/$(trans_name $1 $2 ).nii.gz
+                
 	  if [ $REGISTERED == "YES" ]
 	  then
 	    echo -e "1 0 0 0\n0 1 0 0\n0 0 1 0\n0 0 0 1" >$TRANSFORM
 	    cat $TRANSFORM>$ITRANSFORM
       if [ ! -s "$REG_IMG" ]
       then
-        register ${2} ${1} ${temp_dir} $(basename $TRANSFORM)
+        register ${2} ${1} - $(basename $TRANSFORM) $REG_IMG
       fi
     elif [ ! -s "$REG_IMG" ]
     then
 	    register ${2} ${1}
 	    inverse_transform ${2} ${1}
     fi
-    echo $REG_IMG
+    
+    if [ ! -s "$REG_IMG_INVERSE" ]
+    then
+      register ${1} ${2} - $(basename $ITRANSFORM) $REG_IMG_INVERSE
+    fi
+    
+    echo $REG_IMG_INVERSE
   fi
 }
 # Input 1: Moving A

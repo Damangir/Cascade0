@@ -5,6 +5,7 @@ Content
 -------
 * [Introduction](#introduction)
 * [Installation](#install)
+* [Getting started](#getting-started)
 * [Manual](#manual)
   * [Preprocessing](#preprocessing)
   * [White matter lesion segmentation](#wml-segmentation)
@@ -31,9 +32,9 @@ In order to install the software you need to have the following application inst
 
 You can check availability of these packages on your computer (on Unix-like computers e.g. Mac and Ubuntu)
 ```bash
-echo -ne "C++ compiler: "; command -v cc||  command -v gcc||  command -v clang||  command -v c++||  echo "No C++ compiler found"
-make --version
-cmake --version
+~$ echo -ne "C++ compiler: "; command -v cc||  command -v gcc||  command -v clang||  command -v c++||  echo "No C++ compiler found"
+~$ make --version
+~$ cmake --version
 ```
 
 In order to check if you have Insight Toolkit installed, you have to search for the file: ITKConfig.cmake . If you can not find this file
@@ -41,30 +42,62 @@ you have to download and install Insight Toolkit. If you have C++ compiler, make
 forward. Suppose the directory containing ITKConfig.cmake is named `/usr/local/lib/cmake/InsightToolkit4.3/` . Run:
 
 ```bash
-export ITK_DIR=/usr/local/lib/cmake/InsightToolkit4.3/
+~$ export ITK_DIR=/usr/local/lib/cmake/InsightToolkit4.3/
 ```
 
 Now you are ready to install the **cascade**:
 
 ```bash
-unzip CascadevXX.zip
-cd CascadevXX
-mkdir build
-cd build
-cmake ../src
-make
+~$ unzip Cascadev-master.zip
+~$ cd Cascadev-master
+Cascadev-master$ mkdir build
+Cascadev-master$ cd build
+build$ cmake ../src
+build$ make
 ```
 
 Optionally if you want to install the software systemwide you can do so by (you should have the administrative right to do so):
 
 ```bash
-sudo make install
+build$ sudo make install
+```
+
+___This is a development version. It is not recommended to globaly install it is under developement. Instead you can run using the full path to the executables in the folder you downloaded. Alternatively you can:___
+
+```bash
+export PATH=$PATH:Cascadev-master/src/script
 ```
 
 You can assert the installation
 
 ```bash
-cascade -v
+~$ cascade-check.sh
+```
+
+Getting started
+---------------
+For the basic use of the software, it is recommended to use the project structure and use the helper scripts. The required folder structure is:
+```
+~/MyProject
+├── Original
+│   ├── Subject1
+│   │   ├── T1.nii.gz
+│   │   ├── FLAIR.nii.gz
+│   │   ├── .... All other sequences
+│   │   └── BRAIN_MASK.nii.gz
+│   ├── Subject2
+│   ├── ....
+│   └── Subject100
+│
+└── project_setting.sh
+```
+___Please make sure you perform QC on the brain mask before running the CASCADE.___
+
+You can copy project_seeting.sh from the CASCADE scripts to your project home and modify it according to your project file name. Once everything in place, you can run the Cascade as:
+
+```bash
+~$ cd MyProject
+MyProject$ run_cascade.sh
 ```
 
 Manual
@@ -78,7 +111,7 @@ Before running the **cascade** you should perform the following preprocessing st
  * Partial Volume Estimation
  * Intensity normalization
 
-There is a helper script to do these steps called `cascade_pre.sh`. Type `cascade_pre.sh -h` for more help and options.
+There is a helper script to do these steps called `cascade_pre1.sh` and `cascade_pre2.sh`.
 
 ### WML segmentation
 You should be provided with a state file series alongside your **cascade** installation. There is a two step procedure before you can have your final report"
@@ -86,22 +119,26 @@ You should be provided with a state file series alongside your **cascade** insta
  * Likelihood calculation
  * False positive removal and post processing
 
-There is a helper script to do these steps called `cascade_main.sh`. Type `cascade_main.sh -h` for more help and options.
+There is a helper script to do these steps called `cascade_main.sh` and `cascade_post.sh`.
 
+### Reporting
 There is also a reporting part which will provide a comma-separated values (CSV) file containing WML volume, WML volume per lobe, brain tissue fractions (WM, GM and CSF). The reporting system will also create overlays on all input sequences on NIFTI (for 3d viewing) and PNG (for use in publication).
+
+You can use `cascade_report.sh` and `cascade_html.sh` for reporting.
 
 
 ### Sample usage
-Suppose that for your subject you have T1-weighted and FLAIR sequence. Select a folder name where you want your result to be. For this example I'll use `/home/soheil/Project_1/Subject_1`
+Suppose that for your subject you have T1-weighted and FLAIR sequence. Select a folder name where you want your result to be. For this example I'll use `/home/soheil/Project_1/Cascade/Subject_1`
 
 ```bash
-cascade-pre.sh -t T1.nii.gz -f FLAIR.nii.gz -b T1_BRAIN_MASK.nii.gz -r /home/soheil/Project_1/Subject_1
+cascade-pre1.sh -t T1.nii.gz -f FLAIR.nii.gz -b T1_BRAIN_MASK.nii.gz -r /home/soheil/Project_1/Cascade/Subject_1
+cascade-pre2.sh -r /home/soheil/Project_1/Cascade/Subject_1
 ```
 
 This will create a directory structure and put all needed files in place. You should have a directory structure similar to:
 
 ```
-/home/soheil/Project_1/Subject_1
+/home/soheil/Project_1/Cascade/Subject_1
 ├── cache
 ├── images
 └── transformations
@@ -110,15 +147,19 @@ This will create a directory structure and put all needed files in place. You sh
 Once the preprocessing completed you should run the main script:
 
 ```bash
-cascade-main.sh -r /home/soheil/Project_1/Subject_1 -s ${CASCADEDIR}/states/FLAIR_T1
+cascade-main.sh -r /home/soheil/Project_1/Cascade/Subject_1 -s ${CASCADEDIR}/states/FLAIR_T1
+```
+where `${CASCADEDIR}/states/FLAIR_T1` is the location of state images.
+Then you will be able to run the reporting systm:
+```bash
+cascade-report.sh -r /home/soheil/Project_1/Cascade/Subject_1
+cascade-html.sh -r /home/soheil/Project_1/Cascade/Subject_1
 ```
 
-where `${CASCADEDIR}/states/FLAIR_T1` is the location of state images. You can use the pre-trained state image shipped alongside the **cascade** installation or use your own trained state image.
 
 After running the main script your directory structure would be:
-
 ```
-/home/soheil/Project_1/Subject_1
+/home/soheil/Project_1/Cascade/Subject_1
 ├── cache
 ├── images
 ├── ranges

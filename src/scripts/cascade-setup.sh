@@ -49,7 +49,6 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 export NUMCPU=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || echo 1)
-
 export CASCADESCRIPT=$DIR
 export CASCADEDIR=${DIR}/../../build
 export CASCADEDATA=${DIR}/../../data
@@ -78,7 +77,10 @@ then
 	[ -z "$NBIN" ] && NBIN=100
 	[ -z "$PERCENTILE" ] && PERCENTILE=98
 	
+	export ATLAS_TO_USE
+	
 	mkdir -p "$PRJORIGINAL" "$PRJCASCADE" "$PRJRESULTS"
+	
 	ORIG_DIR=$(pwd)
 	trap "cd ${ORIG_DIR}" EXIT
 

@@ -68,7 +68,7 @@ fi
 
 
 set_filenames
-echo "${bold}The Cascade Pre-processing step 1${normal}"
+echo "${bold}The Cascade Pre-processing step 2${normal}"
 
 runname "Normalizing input images"
 (

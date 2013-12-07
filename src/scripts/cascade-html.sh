@@ -33,7 +33,6 @@ EOF
 
 source $(dirname $0)/cascade-setup.sh
 
-
 while getopts “hr:l” OPTION
 do
   case $OPTION in

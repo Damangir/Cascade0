@@ -43,12 +43,11 @@ EOF
 
 source $(dirname $0)/cascade-setup.sh
 
-
-
 IMAGEROOT=.
 VERBOSE=
 REMOVEALL="NO"
-REGISTERED="YES"
+# TODO: Infere from parameters.
+REGISTERED="NO"
 while getopts “hr:b:n:t:f:p:s:avl” OPTION
 do
   case $OPTION in
@@ -141,7 +140,8 @@ set_filenames
 mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir},${std_dir}}
 
 runname "Calculating registeration matrix"
-(
+
+# TODO: REG_ should be saved somewhere.
 set -e
 if [ -s "$FLAIR" ]
 then
@@ -155,7 +155,6 @@ else
   REG_PD=$(do_register PD T2)
   REG_FLAIR=$(do_register FLAIR T2)
 fi
-)
 # By here we are sure that all images $REG_ are present and in the common space
 # of either FLAIR or T2
 rundone $?
@@ -171,28 +170,29 @@ then
 fi
 if  [ ! -s $BRAIN_MASK ]
 then
-	if [  $FLAIR ]
-	then
-	  if [ $BRAIN_MASK_SPACE == "T1" ]; then
-	    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T1 FLAIR ) $BRAIN_MASK
-	  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
-	    register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T2 FLAIR ) $BRAIN_MASK
-	  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
-	    cp $INPUT_BRAIN_MASK $BRAIN_MASK
-	  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
-		  register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name PD FLAIR ) $BRAIN_MASK
-		fi
-	else
-	  if [ $BRAIN_MASK_SPACE == "T1" ]; then
-	    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name T1 T2 ) $BRAIN_MASK
-	  elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
-	    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name FLAIR T2 ) $BRAIN_MASK
-	  elif [ $BRAIN_MASK_SPACE == "T2" ]; then
-	    cp $INPUT_BRAIN_MASK $BRAIN_MASK
-	  elif [ $BRAIN_MASK_SPACE == "PD" ]; then
-	    register INPUT_BRAIN_MASK T2 - $(fsl_trans_name PD T2 ) $BRAIN_MASK
-	  fi
-	fi
+  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
+  if [  $FLAIR ]
+  then
+    if [ $BRAIN_MASK_SPACE == "T1" ]; then
+      register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T1 FLAIR ) $BRAIN_MASK
+    elif [ $BRAIN_MASK_SPACE == "T2" ]; then
+      register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T2 FLAIR ) $BRAIN_MASK
+    elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
+      cp $INPUT_BRAIN_MASK $BRAIN_MASK
+    elif [ $BRAIN_MASK_SPACE == "PD" ]; then
+      register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name PD FLAIR ) $BRAIN_MASK
+    fi
+  else
+    if [ $BRAIN_MASK_SPACE == "T1" ]; then
+      register INPUT_BRAIN_MASK T2 - $(fsl_trans_name T1 T2 ) $BRAIN_MASK
+    elif [ $BRAIN_MASK_SPACE == "FLAIR" ]; then
+      register INPUT_BRAIN_MASK T2 - $(fsl_trans_name FLAIR T2 ) $BRAIN_MASK
+    elif [ $BRAIN_MASK_SPACE == "T2" ]; then
+      cp $INPUT_BRAIN_MASK $BRAIN_MASK
+    elif [ $BRAIN_MASK_SPACE == "PD" ]; then
+      register INPUT_BRAIN_MASK T2 - $(fsl_trans_name PD T2 ) $BRAIN_MASK
+    fi
+  fi
 fi
 
 [ "$REG_T1" ] && [ ! -s "$T1_BRAIN" ] && mask REG_T1 BRAIN_MASK T1_BRAIN
@@ -207,22 +207,11 @@ rundone $?
 runname "Calculating registeration matrix for MNI space"
 (
 set -e
-if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STD_IMAGE ) ]
-then
-  register T1_BRAIN STD_IMAGE
-  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1_BRAIN STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1 STD_IMAGE )
-fi
-
+# By here, T1 and FLAIR are in the same space
 if [ ! -s ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE ) ]
 then
-  if [ $FLAIR ]
-  then
-    concat_transform FLAIR T1 STD_IMAGE
-    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name FLAIR STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE )
-  else
-    concat_transform T2 T1 STD_IMAGE
-    mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T2 STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE )
-  fi
+  register T1_BRAIN STD_IMAGE
+  mv ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name T1_BRAIN STD_IMAGE ) ${IMAGEROOT}/${trans_dir}/$(fsl_trans_name PROC STD_IMAGE )
   inverse_transform PROC STD_IMAGE
 fi
 )
@@ -231,37 +220,37 @@ rundone $?
 runname "Registering atlases and masks from MNI space"
 (
 set -e
-if [ ! -s $ATLAS ]
+if [ ! -s "$ATLAS" ] && [ -e "$STD_ATLAS" ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STD_ATLAS FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $ATLAS
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $ATLAS
 fi
-if [ ! -s $MIDDLE ]
+if [ ! -s "$MIDDLE" ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STD_MIDDLE FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE
 fi
-if [ ! -s $OUTER_10 ]
+if [ ! -s "$OUTER_10" ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STD_OUTER_10 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_10
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $OUTER_10
 fi
-if [ ! -s $MIDDLE_10 ]
+if [ ! -s "$MIDDLE_10" ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STD_MIDDLE_10 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_10
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE_10
 fi
-if [ ! -s $OUTER_20 ]
+if [ ! -s "$OUTER_20" ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STD_OUTER_20 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_20
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $OUTER_20
 fi
-if [ ! -s $MIDDLE_20 ]
+if [ ! -s "$MIDDLE_20" ]
 then
   FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
   register STD_MIDDLE_20 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_20
@@ -270,10 +259,30 @@ fi
 )
 rundone $?
 
-set -e
-$(dirname $0)/cascade-tissue-type.sh -r $IMAGEROOT
-set +e
+runname "Checking brain mask"
+${FSLPREFIX}fslmaths $MIDDLE -mul 2 -add $BRAIN_MASK ${IMAGEROOT}/${temp_dir}/std_vs_mask.nii.gz
+dets=($(${FSLPREFIX}fslstats ${IMAGEROOT}/${temp_dir}/std_vs_mask.nii.gz -l 0 -H 3 1 3))
+rundone $?
+if [ "$(bc -l <<<"(${dets[0]} + ${dets[1]}) / ${dets[2]} < 0.5")" -eq "1" ]
+then
+  echo_warning "Brain mask seems odd. Please QC the brain mask."
+fi
+if [ "$(bc -l <<<"(${dets[0]} + ${dets[1]}) / ${dets[2]} < 0.8")" -eq "1" ]
+then
+  echo_warning "Brain mask seems odd. Will be replaced with the brain mask from standard atlas"
+  runname "Re-masking brain"
+  (
+    set +e
+	  [ "$REG_T1" ]  && mask REG_T1 MIDDLE T1_BRAIN
+		[ "$REG_T2" ]  && mask REG_T2 MIDDLE T2_BRAIN
+		[ "$REG_FLAIR" ] && mask REG_FLAIR MIDDLE FLAIR_BRAIN
+		[ "$REG_PD" ]  && mask REG_PD MIDDLE PD_BRAIN
+		true
+	)
+  rundone $?
+fi
 
 set -e
+$(dirname $0)/cascade-tissue-type.sh -r $IMAGEROOT
 $(dirname $0)/cascade-histogram.sh -r $IMAGEROOT
 set +e
