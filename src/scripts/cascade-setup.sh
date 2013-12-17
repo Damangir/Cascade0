@@ -38,6 +38,7 @@ http://creativecommons.org/licenses/by-nc-nd/3.0/
 EOF
 }
 
+source $(dirname $0)/portability.sh
 
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]
