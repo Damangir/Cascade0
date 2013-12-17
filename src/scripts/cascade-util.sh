@@ -35,7 +35,7 @@ if [ -t 1 ]; then
   fi
 fi
 
-SAFE_TMP_DIR=$(mktemp -d)
+SAFE_TMP_DIR=$(mktemp -d 2>/dev/null || mktemp -d -t 'cascade_tmp')
 trap "rm -rf ${SAFE_TMP_DIR}" EXIT
 
 check_cascade()
