@@ -6,4 +6,4 @@ done
 ABSPATH=$(cd "$(dirname "$@")"; pwd)
 echo $ABSPATH
 }
-which realpath || alias realpath='real_path'
+$(command -v readlink) -f ~ &>/dev/null || alias readlink='real_path'
