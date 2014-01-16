@@ -38,7 +38,20 @@ http://creativecommons.org/licenses/by-nc-nd/3.0/
 EOF
 }
 
+<<<<<<< HEAD
 DIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )"
+=======
+source $(dirname $0)/portability.sh
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -h "$SOURCE" ]
+do 
+  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+>>>>>>> 9417ac4b6f0d5a0a7ecbe6565e33539ffd9592d1
 
 export NUMCPU=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || echo 1)
 export CASCADESCRIPT=$DIR

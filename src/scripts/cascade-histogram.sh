@@ -20,7 +20,8 @@ usage()
 cat << EOF
 ${bold}usage${normal}: $0 options
 
-This script creats a heuristic based mask for possible position of a lesion
+This script calculates the histogram of the majority of the WM+GM tissues,
+discarding simple outliers.
 
 ${bold}OPTIONS$normal:
    -r      Image root directory
@@ -74,8 +75,9 @@ set_filenames
 
 runname "Calculating effective histogram"
 (
-set -e
+set +e
 ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
+set -e
 for IMGNAME in $ALL_IMAGES
 do
   IMGNAME=$(basename $IMGNAME)
