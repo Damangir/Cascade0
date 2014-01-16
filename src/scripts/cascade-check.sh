@@ -25,7 +25,7 @@ This script checks if the Cascade and its dependencies is properly configured
 EOF
 }
 
-source $(dirname $0)/cascade-setup.sh
+source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 cascade_copyright
 
 runname "Checking Cascade installation"

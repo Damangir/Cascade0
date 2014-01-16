@@ -31,7 +31,7 @@ ${bold}OPTIONS$normal:
 EOF
 }
 
-source $(dirname $0)/cascade-setup.sh
+source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 
 
 
@@ -98,5 +98,5 @@ done
 )
 rundone $?
 set -e
-$(dirname $0)/cascade-hyp.sh -r $IMAGEROOT
+$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-hyp.sh -r $IMAGEROOT
 set +e

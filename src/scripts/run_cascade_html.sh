@@ -19,7 +19,7 @@
 [ -z "$PRJHOME" ] && [ -d "$1" ] && [ -f "${1}/project_setting.sh" ] && PRJSETTINGS="${1}/project_setting.sh"
 [ -z "$PRJHOME" ] && [ -f "./project_setting.sh" ] && PRJSETTINGS="./project_setting.sh"
 
-source $(dirname $0)/cascade-setup.sh
+source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 
 [ -z "$PRJHOME" ] && echo "No proper settings. Are you sure you have a proper project_setting.sh file?" >&2 && exit 1
 
@@ -58,7 +58,7 @@ cat << EOF
   <div class="results">
 EOF
 
-awk -v header=yes -f $(dirname $0)/cascade-results-html.awk $RESULT
+awk -v header=yes -f $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-results-html.awk $RESULT
 
 cat << EOF
   </div>

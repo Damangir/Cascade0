@@ -31,7 +31,7 @@ ${bold}OPTIONS$normal:
 EOF
 }
 
-source $(dirname $0)/cascade-setup.sh
+source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 
 while getopts “hr:l” OPTION
 do
@@ -100,7 +100,7 @@ cat << EOF
   <div class="results">
 EOF
 
-awk -v header=yes -f $(dirname $0)/cascade-csv-html.awk $REPORTCSV
+awk -v header=yes -f $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-csv-html.awk $REPORTCSV
 
 cat << EOF
   </div>

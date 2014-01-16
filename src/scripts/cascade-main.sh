@@ -37,7 +37,7 @@ Misc.:
 EOF
 }
 
-source $(dirname $0)/cascade-setup.sh
+source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 
 
 IMAGEROOT=.

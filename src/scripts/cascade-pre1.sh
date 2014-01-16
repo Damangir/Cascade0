@@ -41,7 +41,7 @@ ${bold}OPTIONS$normal:
 EOF
 }
 
-source $(dirname $0)/cascade-setup.sh
+source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 
 IMAGEROOT=.
 VERBOSE=
@@ -283,6 +283,6 @@ then
 fi
 
 set -e
-$(dirname $0)/cascade-tissue-type.sh -r $IMAGEROOT
-$(dirname $0)/cascade-histogram.sh -r $IMAGEROOT
+$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-tissue-type.sh -r $IMAGEROOT
+$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-histogram.sh -r $IMAGEROOT
 set +e

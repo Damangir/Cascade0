@@ -38,15 +38,7 @@ http://creativecommons.org/licenses/by-nc-nd/3.0/
 EOF
 }
 
-
-SOURCE="${BASH_SOURCE[0]}"
-while [ -h "$SOURCE" ]
-do 
-  DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
-  SOURCE="$(readlink "$SOURCE")"
-  [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
-done
-DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+DIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )"
 
 export NUMCPU=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || echo 1)
 export CASCADESCRIPT=$DIR
