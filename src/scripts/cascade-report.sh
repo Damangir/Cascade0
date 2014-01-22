@@ -42,7 +42,7 @@ do
       exit 1
       ;;
     r)
-      IMAGEROOT=`readlink -f $OPTARG`
+      IMAGEROOT="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     l)
       cascade_copyright
@@ -64,7 +64,7 @@ then
 fi
 
 mkdir -p $IMAGEROOT/${report_dir}
-IMAGEROOT=$(readlink -f $IMAGEROOT)
+IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )
 
 set_filenames
 

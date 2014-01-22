@@ -57,7 +57,7 @@ do
   esac
 done
 
-IMAGEROOT=$(readlink -f $IMAGEROOT)     
+IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )     
 if [ ! -d "${IMAGEROOT}" ]
 then
   echo_fatal "IMAGEROOT is not a directory."

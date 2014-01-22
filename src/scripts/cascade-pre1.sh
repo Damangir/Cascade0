@@ -57,23 +57,23 @@ do
       ;;
 ## Brain mask    
     b)
-      INPUT_BRAIN_MASK=$(readlink -f $OPTARG)
+      INPUT_BRAIN_MASK="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     n)
       BRAIN_MASK_SPACE=$(echo $OPTARG | tr '[:lower:]' '[:upper:]' )
       ;;
 ## Sequences      
     t)
-      T1=$(readlink -f $OPTARG)
+      T1="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     f)
-      FLAIR=$(readlink -f $OPTARG)
+      FLAIR="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     p)
-      PD=$(readlink -f $OPTARG)
+      PD="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     s)
-      T2=$(readlink -f $OPTARG)
+      T2="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
 ## Running behaviours        
     a)
@@ -133,7 +133,7 @@ fi
 # By here, we are sure that T1 image is there and also either FLAIR and T2 is
 # available
 
-IMAGEROOT=$(readlink -f $IMAGEROOT)
+IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )
 echo "${bold}The Cascade Pre-processing step 1${normal}"
 set_filenames
 [ $REMOVEALL == "YES" ] && rm -rf ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}

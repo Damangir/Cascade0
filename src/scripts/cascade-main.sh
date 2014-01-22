@@ -52,18 +52,18 @@ do
       exit 1
       ;;
     r)
-      IMAGEROOT=`readlink -f $OPTARG`
+      IMAGEROOT="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     n)
-      NEWSTATEIMAGE=`readlink -f $OPTARG`
+      NEWSTATEIMAGE="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       MODE="TRAIN"
       ;;
     m)
-      MASKIMAGE=`readlink -f $OPTARG`
+      MASKIMAGE="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       MODE="TRAIN"
       ;;
     s)
-      STATEIMAGE=`readlink -f $OPTARG`
+      STATEIMAGE="$(cd $(dirname "$OPTARG") && pwd -P )/$(basename "$OPTARG")"
       ;;
     f)
       FOURCERUN=
@@ -101,7 +101,7 @@ else
   [ $MASKIMAGE ] || echo_warning "Mask file not set. Training will perform assuming most of the brain is healthy."
 fi
 
-IMAGEROOT=$(readlink -f $IMAGEROOT)
+IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )
 SUBJECTID=$(basename $IMAGEROOT)
 
 
