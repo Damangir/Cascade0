@@ -93,7 +93,7 @@ then
       
 	if [ -s $FLAIR_BRAIN ]
 	then  
-	  PERCENTILE=($(fsl5.0-fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95 -P 99))
+	  PERCENTILE=($(${FSLPREFIX}fslstats $FLAIR_BRAIN -k ${BRAIN_WM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95 -P 99))
 
 ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[3]} -bin ${SAFE_TMP_DIR}/est_wml_80_flair.nii.gz
 ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[4]} -bin ${SAFE_TMP_DIR}/est_wml_90_flair.nii.gz

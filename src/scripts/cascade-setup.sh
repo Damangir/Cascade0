@@ -53,6 +53,9 @@ export REPORT_ROOT=$CASCADEDATA/report
 
 if [ -s "$PRJSETTINGS" ]
 then
+  echo "Loading project setting from:"
+  echo $(cd $(dirname "$PRJSETTINGS") && pwd -P )/$(basename "$PRJSETTINGS")
+  
   source $PRJSETTINGS
   [ -z "$PRJHOME" ] && echo "PRJHOME not set. Please double check your project setting. Current setting is: $PRJSETTINGS" >&2 && exit 1
   
