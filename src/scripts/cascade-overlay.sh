@@ -67,7 +67,9 @@ fi
 
 set_filenames
 
-ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t2,t1,pd}.nii.gz 2>/dev/null)
+set +e
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
+set -e
 for img in $ALL_IMAGES
 do
   do_overlay $img 

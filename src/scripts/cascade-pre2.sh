@@ -72,6 +72,7 @@ echo "${bold}The Cascade Pre-processing step 2${normal}"
 
 runname "Normalizing input images"
 (
+set +e
 ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
 set -e
 

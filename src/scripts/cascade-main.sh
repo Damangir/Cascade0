@@ -107,8 +107,10 @@ SUBJECTID=$(basename $IMAGEROOT)
 
 
 set_filenames
-  
-ALL_IMAGES=$(echo ${IMAGEROOT}/${ranges_dir}/brain_{flair,t1,t2,pd}.nii.gz)
+
+set +e
+ALL_IMAGES=$(ls ${IMAGEROOT}/${images_dir}/brain_{flair,t1,t2,pd}.nii.gz 2>/dev/null)
+set -e  
 
 if [ ! -s $FSL_STD_TRANSFORM ]
 then
