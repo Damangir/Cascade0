@@ -54,44 +54,39 @@ STD_MIDDLE_20=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_err_20.nii.gz
 STD_OUTER_20=$MASK_ROOT/MNI152_T1_1mm_middle_brain_mask_outer_20.nii.gz
 STD_IMAGE=$STANDARD_ROOT/MNI152_T1_1mm_brain.nii.gz
 
-if [ ! -f $STD_IMAGE ]
+if [ ! -f "$STD_IMAGE" ]
 then
-  echo_fatal "Can not find the standard image at $STD_IMAGE. Please check your Cascade installation."
+  echo_fatal "Can not find the standard image at "$STD_IMAGE". Please check your Cascade installation."
 fi
 
 if [ "$ATLAS_TO_USE" ]
 then
   STD_ATLAS=
-  [ -e "$ATLAS_TO_USE" ] && STD_ATLAS=$ATLAS_TO_USE
-  [ -e "$ATLAS_ROOT/$ATLAS_TO_USE" ] && STD_ATLAS=$ATLAS_ROOT/$ATLAS_TO_USE
+  [ -e "$ATLAS_TO_USE" ] && STD_ATLAS="$ATLAS_TO_USE"
+  [ -e "${ATLAS_ROOT}/$ATLAS_TO_USE" ] && STD_ATLAS=${ATLAS_ROOT}/$ATLAS_TO_USE
 fi
 
 }
 
 check_fsl()
 {
-if [ ! $FSLDIR ]
-then
-  echo_fatal "Can not find FSL installation."
-else
-  FSLPREFIX=
-  for pref in fsl{5.0,4.9}-
-  do
-    if [ "$(command -v ${pref}fslmaths)" ]
-    then
-	    FSLPREFIX=$pref
-      break
-    fi
-  done
-  for ce in ${FSLPREFIX}{fslmaths,fslstats,fslcpgeom,flirt,fast}
-  do
-    if [ -z "$(command -v $ce)" ]
-    then
-      echo_fatal "$ce executable is not available. Please check your FSL installation."
-    fi
-  done
-  FLAIR_OPTIONS_FOR_ATLAS="-interp nearestneighbour"
-fi
+FSLPREFIX=
+for pref in fsl{5.0,4.9}-
+do
+  if [ "$(command -v ${pref}fslmaths)" ]
+  then
+   FSLPREFIX=$pref
+    break
+  fi
+done
+for ce in ${FSLPREFIX}{fslmaths,fslstats,fslcpgeom,flirt,fast}
+do
+  if [ -z "$(command -v $ce)" ]
+  then
+    echo_fatal "$ce executable is not available. Please check your FSL installation."
+  fi
+done
+FLIRT_OPTIONS_FOR_ATLAS="-interp nearestneighbour"
 }
 
 echo_warning()

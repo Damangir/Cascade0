@@ -107,25 +107,25 @@ then
 fi
 
 # TODO: Check for allowed combination and produce readable error.
-if [ ! -f $T1 ]
+if [ ! -f "$T1" ]
 then
   echo_fatal "T1 image not found."
 fi
-if [ ! -f $T2 ] && [ ! -f $FLAIR ]
+if [ ! -f "$T2" ] && [ ! -f "$FLAIR" ]
 then
   echo_fatal "Either FLAIR or T2 should be available."
 fi
-if [ -f $T2 ] && [ -f $FLAIR ]
+if [ -f "$T2" ] && [ -f "$FLAIR" ]
 then
   echo_warning "It is not advised to use both T2 and FLAIR."
 fi
-if [ $BRAIN_MASK_SPACE != "NONE" ]
+if [ "$BRAIN_MASK_SPACE" != "NONE" ]
 then
   if [ ! -f "$INPUT_BRAIN_MASK" ]
   then
     echo_fatal "No input brain mask. Hint! If the images are already brain extracted use -n NONE."
   fi
-  if [ $BRAIN_MASK_SPACE != "T1" ] && [ $BRAIN_MASK_SPACE != "T2" ] && [ $BRAIN_MASK_SPACE != "PD" ] && [ $BRAIN_MASK_SPACE != "FLAIR" ]
+  if [ "$BRAIN_MASK_SPACE" != "T1" ] && [ "$BRAIN_MASK_SPACE" != "T2" ] && [ "$BRAIN_MASK_SPACE" != "PD" ] && [ "$BRAIN_MASK_SPACE" != "FLAIR" ]
   then
     echo_fatal "Invalid space for brain mask. T1, T2, FLAIR, PD or NONE is allowed." 
   fi
@@ -170,8 +170,8 @@ then
 fi
 if  [ ! -s $BRAIN_MASK ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  if [  $FLAIR ]
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  if [  "$FLAIR" ]
   then
     if [ $BRAIN_MASK_SPACE == "T1" ]; then
       register INPUT_BRAIN_MASK FLAIR - $(fsl_trans_name T1 FLAIR ) $BRAIN_MASK
@@ -222,43 +222,46 @@ runname "Registering atlases and masks from MNI space"
 set -e
 if [ ! -s "$ATLAS" ] && [ -e "$STD_ATLAS" ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_ATLAS FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $ATLAS
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  register STD_ATLAS T1_BRAIN - $(fsl_trans_name STD_IMAGE PROC ) $ATLAS
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $ATLAS
 fi
 if [ ! -s "$MIDDLE" ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_MIDDLE FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  register STD_MIDDLE T1_BRAIN - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE
 fi
 if [ ! -s "$OUTER_10" ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_OUTER_10 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_10
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  register STD_OUTER_10 T1_BRAIN - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_10
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $OUTER_10
 fi
 if [ ! -s "$MIDDLE_10" ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_MIDDLE_10 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_10
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  register STD_MIDDLE_10 T1_BRAIN - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_10
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE_10
 fi
 if [ ! -s "$OUTER_20" ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_OUTER_20 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_20
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  register STD_OUTER_20 T1_BRAIN - $(fsl_trans_name STD_IMAGE PROC ) $OUTER_20
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $OUTER_20
 fi
 if [ ! -s "$MIDDLE_20" ]
 then
-  FLIRT_OPTION=${FLAIR_OPTIONS_FOR_ATLAS}
-  register STD_MIDDLE_20 FLAIR - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_20
+  FLIRT_OPTION=${FLIRT_OPTIONS_FOR_ATLAS}
+  register STD_MIDDLE_20 T1_BRAIN - $(fsl_trans_name STD_IMAGE PROC ) $MIDDLE_20
   ${FSLPREFIX}fslcpgeom $T1_BRAIN $MIDDLE_20
 fi
 )
 rundone $?
 
+#TODO: Tune it brain mask check!
+if []; then
+  
 runname "Checking brain mask"
 ${FSLPREFIX}fslmaths $MIDDLE -mul 2 -add $BRAIN_MASK ${IMAGEROOT}/${temp_dir}/std_vs_mask.nii.gz
 dets=($(${FSLPREFIX}fslstats ${IMAGEROOT}/${temp_dir}/std_vs_mask.nii.gz -l 0 -H 3 1 3))
@@ -280,6 +283,8 @@ then
 		true
 	)
   rundone $?
+fi
+
 fi
 
 set -e
