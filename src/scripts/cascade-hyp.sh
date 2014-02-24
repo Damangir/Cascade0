@@ -15,51 +15,6 @@
 #  http://creativecommons.org/licenses/by-nc-nd/3.0/
 #  
 
-usage()
-{
-cat << EOF
-${bold}usage${normal}: $0 options
-
-This script creats a heuristic based mask for possible position of a lesion
-
-${bold}OPTIONS$normal:
-   -h      Show this message
-   -r      Image root directory
-
-   -l      Show license
-   
-EOF
-}
-
-source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
-
-
-
-while getopts “hr:l” OPTION
-do
-  case $OPTION in
-## Subject directory
-    r)
-      IMAGEROOT=$OPTARG
-      ;;
-## Help and license      
-    l)
-      cascade_copyright
-      cascade_license
-      exit 1
-      ;;
-    h)
-      usage
-      exit 1
-      ;;
-    ?)
-      usage
-      exit
-      ;;
-  esac
-done
-
-IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )     
 if [ ! -d "${IMAGEROOT}" ]
 then
   echo_fatal "IMAGEROOT is not a directory."
@@ -68,39 +23,125 @@ fi
 
 set_filenames
 
-mkdir -p ${IMAGEROOT}/{${temp_dir},${trans_dir},${images_dir},${ranges_dir}}
+for pve_ in $(echo ${IMAGEROOT}/${temp_dir}/brain_pve_{0,1,2}.nii.gz )
+do
+  if [ ! -s "${pve_}" ]
+  then
+runname "Segmenting brain tissues"
+(
+    set -e
+    ${FSLPREFIX}fast -t 1 -o ${IMAGEROOT}/${temp_dir}/brain -n 3 ${T1_BRAIN}
+    rm -rf ${BRAIN_CSF} ${BRAIN_GM} ${BRAIN_WM}
+)
+rundone $?
+    break
+  fi
+done
+
 
 echo "${bold}Calculating heuristics${normal}"
 
-[ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mas ${MIDDLE_10} -mas ${T1_BRAIN} -bin $MASK_FOR_HISTOGRAM
+${FSLPREFIX}fslmaths ${T1_BRAIN} -bin $HYP_MASK
 
-runname "    Heuristic: Light part on FLAIR or T2"
-(
-set -e
-cp $MIDDLE $HYP_MASK
-if [ -s $FLAIR_BRAIN ]
+
+WM_IMAGE=${IMAGEROOT}/${temp_dir}/brain_pve_2.nii.gz
+GM_IMAGE=${IMAGEROOT}/${temp_dir}/brain_pve_1.nii.gz
+
+# If we already refined the brain tissue we can have a better guess
+[ -s "${BRAIN_WM}" ] && WM_IMAGE=${BRAIN_WM}
+[ -s "${BRAIN_GM}" ] && GM_IMAGE=${BRAIN_GM}
+
+if [ -s "$FLAIR_BRAIN" ]
 then
-  PERCENTILE=($(${FSLPREFIX}fslstats $FLAIR_BRAIN -k ${MASK_FOR_HISTOGRAM} -P 50 -P 60 -P 70 -P 80 -P 90 -P 95))
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[0]} -mul $HYP_MASK -bin $HYP_MASK
-
-  ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr ${PERCENTILE[5]} -mas $OUTER_10 -mas ${BRAIN_WM} -add $MIDDLE_10 -bin -mul $HYP_MASK -bin $HYP_MASK 
+  runname "    Heuristic: Should be light FLAIR"
+  (
+    set -e
+    flair_thresh=$(${FSLPREFIX}fslstats $FLAIR_BRAIN -k ${WM_IMAGE} -P 80)
+    ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr $flair_thresh -add ${GM_IMAGE} -mul $HYP_MASK -bin $HYP_MASK
+    flair_thresh=$(${FSLPREFIX}fslstats $FLAIR_BRAIN -k ${GM_IMAGE} -P 90)
+    ${FSLPREFIX}fslmaths $FLAIR_BRAIN -thr $flair_thresh -add ${WM_IMAGE} -mul $HYP_MASK -bin $HYP_MASK
+  )
+  if [ $? -eq 0 ]
+  then
+    rundone 0
+  else
+    rundone 1
+    rm "$HYP_MASK"  >/dev/null 2>&1
+    echo_fatal "Unable to process. Please try again."
+  fi
 fi
-if [ -s $T2_BRAIN ]
+
+if [ -s "$T2_BRAIN" ]
 then
-  t2_thresh=$(${FSLPREFIX}fslstats $T2_BRAIN -k ${MASK_FOR_HISTOGRAM} -P 50)
-  ${FSLPREFIX}fslmaths $T2_BRAIN -thr $t2_thresh -mul $HYP_MASK -bin $HYP_MASK
+  runname "    Heuristic: Should be light T2"
+  (
+    set -e
+    t2_thresh=$(${FSLPREFIX}fslstats $T2_BRAIN -k ${WM_IMAGE} -P 80)
+    ${FSLPREFIX}fslmaths $T2_BRAIN -thr $t2_thresh -add ${GM_IMAGE} -mul $HYP_MASK -bin $HYP_MASK
+    t2_thresh=$(${FSLPREFIX}fslstats $T2_BRAIN -k ${GM_IMAGE} -P 90)
+    ${FSLPREFIX}fslmaths $T2_BRAIN -thr $t2_thresh -add ${WM_IMAGE} -mul $HYP_MASK -bin $HYP_MASK
+  )
+  if [ $? -eq 0 ]
+  then
+    rundone 0
+  else
+    rundone 1
+    rm "$HYP_MASK"  >/dev/null 2>&1
+    echo_fatal "Unable to process. Please try again."
+  fi
 fi
-)
-rundone $?
 
-runname "    Heuristic: Not bright on T1"
-(
-set -e
-if [ -s $T1_BRAIN ]
+if [ -s "$T1_BRAIN" ]
 then
-  t1_thresh=$(${FSLPREFIX}fslstats $T1_BRAIN -k $BRAIN_WM -P 90)
-  ${FSLPREFIX}fslmaths $T1_BRAIN -uthr $t1_thresh -mul $HYP_MASK -bin $HYP_MASK
+  runname "    Heuristic: Not bright on T1"
+  (
+    set -e
+    t1_thresh=$(${FSLPREFIX}fslstats $T1_BRAIN -k ${WM_IMAGE} -P 80)
+    ${FSLPREFIX}fslmaths $T1_BRAIN -uthr $t1_thresh -bin -mul $HYP_MASK -bin $HYP_MASK
+  )
+  if [ $? -eq 0 ]
+  then
+    rundone 0
+  else
+    rundone 1
+    rm "$HYP_MASK"  >/dev/null 2>&1
+    echo_fatal "Unable to process. Please try again."
+  fi
 fi
-)
-rundone $?
+
+if [ -s "${BRAIN_WM}" ]
+then
+  runname "    Heuristic: Either WM or in the WM-GM boundary"
+  (
+    set -e
+    ${FSLPREFIX}fslmaths ${BRAIN_WM} -bin -kernel sphere 1 -dilF ${SAFE_TMP_DIR}/enlarged-wm.nii.gz
+    ${FSLPREFIX}fslmaths ${SAFE_TMP_DIR}/enlarged-wm.nii.gz -mul $HYP_MASK -bin $HYP_MASK
+  )
+  if [ $? -eq 0 ]
+  then
+    rundone 0
+  else
+    rundone 1
+    rm "$HYP_MASK"  >/dev/null 2>&1
+    echo_fatal "Unable to process. Please try again."
+  fi
+fi
+
+if [ -s "${BRAIN_CSF}" ] 
+then
+  runname "    Heuristic: Either Not in CSF"
+  (
+    set -e
+    ${FSLPREFIX}fslmaths ${BRAIN_CSF} -bin -mul -1 -add 1 -mul $HYP_MASK -bin $HYP_MASK
+  )
+  if [ $? -eq 0 ]
+  then
+    rundone 0
+  else
+    rundone 1
+    rm "$HYP_MASK"  >/dev/null 2>&1
+    echo_fatal "Unable to process. Please try again."
+  fi
+fi
+
+

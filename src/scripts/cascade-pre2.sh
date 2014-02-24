@@ -33,14 +33,12 @@ EOF
 
 source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
 
-
-
 while getopts “hr:l” OPTION
 do
   case $OPTION in
 ## Subject directory
     r)
-      IMAGEROOT=$OPTARG
+      IMAGEROOT=$(cd $(dirname "$OPTARG") && pwd -P )
       ;;
 ## Help and license      
     l)
@@ -58,16 +56,14 @@ do
       ;;
   esac
 done
-
-IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )     
-    
+  
 if [ ! -d "${IMAGEROOT}" ]
 then
   echo_fatal "IMAGEROOT is not a directory."
 fi
 
-
 set_filenames
+
 echo "${bold}The Cascade Pre-processing step 2${normal}"
 
 runname "Normalizing input images"
@@ -78,26 +74,29 @@ set -e
 
 for img in $ALL_IMAGES
 do
+  ranged_img=$(range_image $img)
+  [ "$BASH_SOURCE" -nt "$ranged_img" ] || continue
+  
   img_type=$(basename $img .nii.gz)
   transform_file=${IMAGEROOT}/${trans_dir}/${img_type}.trans
+  histogram_file=${IMAGEROOT}/${trans_dir}/${img_type}.hist
+  normal_histogram=${HIST_ROOT}/$(basename $histogram_file)
   
-  ranged_img=$(range_image $img)
-  if [ ! -s $ranged_img ]
-  then
-    [ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mas ${MIDDLE_10} -mas ${img} -bin $MASK_FOR_HISTOGRAM
-    
-    $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale     
-    if [ -s $transform_file ]
-    then
-      $CASCADEDIR/cascade-transform --input ${ranged_img} --transform ${transform_file} --out ${ranged_img}
-    else
-      scale_factor=$(${FSLPREFIX}fslstats ${ranged_img} -k ${MASK_FOR_HISTOGRAM} -P 75)
-      ${FSLPREFIX}fslmaths ${ranged_img} -div ${scale_factor} ${ranged_img}
-    fi
-  fi
+  ${CASCADESCRIPT}/cascade-histogram-match.sh $histogram_file $normal_histogram $transform_file
+  
+  $CASCADEDIR/cascade-range --input ${img} --mask ${BRAIN_WMGM} --out ${ranged_img} --no-scale     
+  $CASCADEDIR/cascade-transform --input ${ranged_img} --transform ${transform_file} --out ${ranged_img}
 done
 )
-rundone $?
+if [ $? -eq 0 ]
+then
+  rundone 0
+else
+  rundone 1
+  rm ${IMAGEROOT}/${ranges_dir}/brain_*.nii.gz  >/dev/null 2>&1
+  echo_fatal "Unable normalize images. Please try again."
+fi
+
 set -e
-$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-hyp.sh -r $IMAGEROOT
+source ${CASCADESCRIPT}/cascade-std-register.sh
 set +e

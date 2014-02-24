@@ -15,58 +15,8 @@
 #  http://creativecommons.org/licenses/by-nc-nd/3.0/
 #  
 
-usage()
-{
-cat << EOF
-${bold}usage${normal}: $0 options
+NBIN=${NBIN:-"100"}
 
-This script calculates the histogram of the majority of the WM+GM tissues,
-discarding simple outliers.
-
-${bold}OPTIONS$normal:
-   -r      Image root directory
-   -n      Number of bins
-   
-   -h      Show this message
-   -l      Show license
-   
-EOF
-}
-
-source $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P )/cascade-setup.sh
-
-
-NBIN=100
-while getopts “hr:n:l” OPTION
-do
-  case $OPTION in
-## Subject directory
-    r)
-      IMAGEROOT=$OPTARG
-      ;;
-## Settings
-    n)
-      NBIN=$OPTARG
-      ;;
-## Help and license      
-    l)
-      cascade_copyright
-      cascade_license
-      exit 1
-      ;;
-    h)
-      usage
-      exit 1
-      ;;
-    ?)
-      usage
-      exit
-      ;;
-  esac
-done
-
-IMAGEROOT=$(cd "$IMAGEROOT" && pwd -P )
-  
 if [ ! -d "${IMAGEROOT}" ]
 then
   echo_fatal "IMAGEROOT is not a directory."
@@ -87,7 +37,8 @@ do
   
   if ! [ -s $HISTOGRAM_FILE ]
   then
-	  [ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -mas ${MIDDLE_10} -mas ${IMAGEROOT}/${images_dir}/${IMGNAME} -bin $MASK_FOR_HISTOGRAM
+    MASK_FOR_HISTOGRAM=${SAFE_TMP_DIR}/mask_for_histogram.nii.gz
+	  [ ! -s $MASK_FOR_HISTOGRAM ] && ${FSLPREFIX}fslmaths ${BRAIN_WMGM} -kernel -sphere 2 -mas ${IMAGEROOT}/${images_dir}/${IMGNAME} -bin $MASK_FOR_HISTOGRAM
 		MASK_OPTIONS="-k $MASK_FOR_HISTOGRAM"
 		
 		this_maximum=$(${FSLPREFIX}fslstats ${IMAGEROOT}/${images_dir}/${IMGNAME} -P 95 )
@@ -109,4 +60,11 @@ do
   fi
 done
 )
-rundone $?
+if [ $? -eq 0 ]
+then
+  rundone 0
+else
+  rundone 1
+  rm ${IMAGEROOT}/${trans_dir}/*.hist  >/dev/null 2>&1
+  echo_fatal "Unable to process images. Please try again."
+fi

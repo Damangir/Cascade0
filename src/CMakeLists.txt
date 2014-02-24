@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
  
-project(Cascade)
+project(Cascade-Academic)
 
 SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS}" )
 
@@ -16,18 +16,6 @@ include_directories(${Cascade_SOURCE_DIR})
 add_executable(range range-main.cxx)
 target_link_libraries(range ${ITK_LIBRARIES})
 
-add_executable(train train-main.cxx)
-target_link_libraries(train ${ITK_LIBRARIES})
-
-add_executable(likelihood likelihood-main.cxx)
-target_link_libraries(likelihood ${ITK_LIBRARIES})
-
-add_executable(report report-main.cxx)
-target_link_libraries(report ${ITK_LIBRARIES})
-
-add_executable(inspect inspectstate-main.cxx)
-target_link_libraries(inspect ${ITK_LIBRARIES})
-
 add_executable(transform transform-main.cxx)
 target_link_libraries(transform ${ITK_LIBRARIES})
 
@@ -37,22 +25,27 @@ target_link_libraries(property-filter ${ITK_LIBRARIES})
 add_executable(statistics-filter statistics-filter-main.cxx)
 target_link_libraries(statistics-filter ${ITK_LIBRARIES})
 
-#add_executable(register register-main.cxx)
-#target_link_libraries(register ${ITK_LIBRARIES})
-
 message("Installation root is ${CMAKE_INSTALL_PREFIX}")
-foreach(targ train likelihood range report inspect property-filter statistics-filter transform)
- message("Install rule: ${targ} as ${TARGET_PREFIX}${targ}")
- set_property(TARGET ${targ} PROPERTY INSTALL_RPATH_USE_LINK_PATH true)
- set_property(TARGET ${targ} PROPERTY OUTPUT_NAME "${TARGET_PREFIX}${targ}")
- install(TARGETS
+foreach(targ range property-filter statistics-filter transform )
+  message("Install executable: ${TARGET_PREFIX}${targ}")
+  set_property(TARGET ${targ} PROPERTY INSTALL_RPATH_USE_LINK_PATH true)
+  set_property(TARGET ${targ} PROPERTY OUTPUT_NAME "${TARGET_PREFIX}${targ}")
+  install(TARGETS
    ${targ}
-   RUNTIME DESTINATION bin
-   LIBRARY DESTINATION lib
-   ARCHIVE DESTINATION lib
- )
+   RUNTIME DESTINATION ${CMAKE_PROJECT_NAME}/bin
+   LIBRARY DESTINATION ${CMAKE_PROJECT_NAME}/lib
+   ARCHIVE DESTINATION ${CMAKE_PROJECT_NAME}/lib
+  )
 endforeach()
 
-# Third party executable
-ADD_EXECUTABLE(c3d_affine_tool 3rdparty/AffineTransformTools/AffineTransformTool.cxx)
-TARGET_LINK_LIBRARIES(c3d_affine_tool ${ITK_LIBRARIES})
+FILE(GLOB script_files "${CMAKE_SOURCE_DIR}/scripts/*.sh")
+foreach(script ${script_files} )
+  GET_FILENAME_COMPONENT(scriptName ${script} NAME )
+  message("Install script: ${scriptName}")
+  INSTALL(FILES ${script} DESTINATION ${CMAKE_PROJECT_NAME}/bin)
+endforeach()
+
+INSTALL( DIRECTORY ${CMAKE_SOURCE_DIR}/../data/atlas DESTINATION ${CMAKE_PROJECT_NAME}/data)
+INSTALL( DIRECTORY ${CMAKE_SOURCE_DIR}/../data/histograms DESTINATION ${CMAKE_PROJECT_NAME}/data)
+INSTALL( DIRECTORY ${CMAKE_SOURCE_DIR}/../data/mask DESTINATION ${CMAKE_PROJECT_NAME}/data)
+INSTALL( DIRECTORY ${CMAKE_SOURCE_DIR}/../data/standard DESTINATION ${CMAKE_PROJECT_NAME}/data)

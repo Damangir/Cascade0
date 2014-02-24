@@ -22,7 +22,6 @@
 #include "itkUnaryFunctorImageFilter.h"
 
 #include "util/itkIntensityTableLookupFunctor.h"
-#include "3rdparty/gnuplot-cpp/gnuplot_i.hpp"
 #include "util/helpers.h"
 
 namespace itk

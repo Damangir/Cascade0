@@ -1,11 +1,17 @@
 Cascade: Classification of White Matter Lesions
 =======
 
+__This is the Cascade, academic version. Cascade-academic depends on FSL so you need acknowledge FSL terms of use before using this software.__
+
+__For the full version of the Cascade please contact the author [here](http://www.linkedin.com/in/soheildamangir)__
+
+
 Content
 -------
 * [Introduction](#introduction)
 * [Installation](#install)
 * [Getting started](#getting-started)
+* [Quality control](#quality-control)
 * [Manual](#manual)
   * [Preprocessing](#preprocessing)
   * [White matter lesion segmentation](#wml-segmentation)
@@ -62,18 +68,6 @@ Optionally if you want to install the software systemwide you can do so by (you 
 build$ sudo make install
 ```
 
-___This is a development version. It is not recommended to globaly install it is under developement. Instead you can run using the full path to the executables in the folder you downloaded. Alternatively you can:___
-
-```bash
-export PATH=$PATH:Cascadev-master/src/script
-```
-
-You can assert the installation
-
-```bash
-~$ cascade-check.sh
-```
-
 Getting started
 ---------------
 For the basic use of the software, it is recommended to use the project structure and use the helper scripts. The required folder structure is:
@@ -97,8 +91,12 @@ You can copy project_seeting.sh from the CASCADE scripts to your project home an
 
 ```bash
 ~$ cd MyProject
-MyProject$ run_cascade.sh
+MyProject$ cascade.sh
 ```
+
+Quality control
+-------
+The results of the Cascade is dependent on the quality of brain extraction and brain tissue segmentation. It is advicable to perform quality control on the brain mask and also brain tissue segmentation located at: `images/TissueType.nii.gz`
 
 Manual
 -------
@@ -119,13 +117,7 @@ You should be provided with a state file series alongside your **cascade** insta
  * Likelihood calculation
  * False positive removal and post processing
 
-There is a helper script to do these steps called `cascade_main.sh` and `cascade_post.sh`.
-
-### Reporting
-There is also a reporting part which will provide a comma-separated values (CSV) file containing WML volume, WML volume per lobe, brain tissue fractions (WM, GM and CSF). The reporting system will also create overlays on all input sequences on NIFTI (for 3d viewing) and PNG (for use in publication).
-
-You can use `cascade_report.sh` and `cascade_html.sh` for reporting.
-
+There is a helper script to do these steps called `cascade-std-train.sh` and `cascade-std-normal.sh`.
 
 ### Sample usage
 Suppose that for your subject you have T1-weighted and FLAIR sequence. Select a folder name where you want your result to be. For this example I'll use `/home/soheil/Project_1/Cascade/Subject_1`
@@ -147,15 +139,8 @@ This will create a directory structure and put all needed files in place. You sh
 Once the preprocessing completed you should run the main script:
 
 ```bash
-cascade-main.sh -r /home/soheil/Project_1/Cascade/Subject_1 -s ${CASCADEDIR}/states/FLAIR_T1
+cascade-std-normal.sh -r /home/soheil/Project_1/Cascade/Subject_1 -s ${CASCADEDIR}/states/FLAIR_T1
 ```
-where `${CASCADEDIR}/states/FLAIR_T1` is the location of state images.
-Then you will be able to run the reporting systm:
-```bash
-cascade-report.sh -r /home/soheil/Project_1/Cascade/Subject_1
-cascade-html.sh -r /home/soheil/Project_1/Cascade/Subject_1
-```
-
 
 After running the main script your directory structure would be:
 ```
@@ -164,7 +149,6 @@ After running the main script your directory structure would be:
 ├── images
 ├── ranges
 ├── report
-│   └── overlays
 └── transformations
 ```
 

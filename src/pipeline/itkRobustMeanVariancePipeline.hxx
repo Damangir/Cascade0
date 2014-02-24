@@ -19,7 +19,6 @@
 #include "itkRobustMeanVariancePipeline.h"
 
 #include "itkNumericTraits.h"
-#include "3rdparty/gnuplot-cpp/gnuplot_i.hpp"
 
 #include <fstream>
 #include <iostream>
