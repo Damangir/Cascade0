@@ -125,7 +125,7 @@ trap "rm -rf ${SAFE_TMP_DIR}" EXIT
 
 check_cascade()
 {
-for ce in {cascade-{range,property-filter}}
+for ce in cascade-{range,transform,property-filter,statistics-filter}
 do
   if [ ! -x $CASCADEDIR/$ce ]
   then
