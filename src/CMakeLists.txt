@@ -11,7 +11,7 @@ ENDIF(NOT DEFINED TARGET_PREFIX)
 
 FIND_PACKAGE(ITK REQUIRED)
 include(${ITK_USE_FILE})
-include_directories(${Cascade_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(range range-main.cxx)
 target_link_libraries(range ${ITK_LIBRARIES})
